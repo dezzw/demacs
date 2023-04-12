@@ -67,7 +67,7 @@
           '';
         };
 
-        emacs = (prev.emacs.override { srcRepo = true; nativeComp = true; withXwidgets = true; withGTK3 = true; withSQLite3 = true; withWebP = true; }).overrideAttrs (
+        emacs = (prev.emacs.override { srcRepo = true; nativeComp = true; withXwidgets = true; withGTK3 = true; withSQLite3 = true; withWebP = true; withTreeSitter = true; }).overrideAttrs (
           o: rec {
             version = "29.0.90";
             src = emacs-src;
