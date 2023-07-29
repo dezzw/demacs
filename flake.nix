@@ -76,33 +76,33 @@
       emacs-augmented = (pkgs.emacs-git).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
         buildInputs = old.buildInputs ++ dependencies ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
-        patches =
-          (old.patches or [])
-          ++ [
-            # Fix OS window role (needed for window managers like yabai)
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-              sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
-            })
-            # Use poll instead of select to get file descriptors
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
-              sha256 = "sha256-jN9MlD8/ZrnLuP2/HUXXEVVd6A+aRZNYFdZF8ReJGfY=";
-            })
-            # Enable rounded window with no decoration
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-              sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
-            })
-            # Make Emacs aware of OS-level light/dark mode
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-              sha256 = "sha256-oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
-            })
-          ];
+        # patches =
+        #   (old.patches or [])
+        #   ++ [
+        #     # Fix OS window role (needed for window managers like yabai)
+        #     (pkgs.fetchpatch {
+        #       url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
+        #       sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
+        #     })
+        #     # Use poll instead of select to get file descriptors
+        #     (pkgs.fetchpatch {
+        #       url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
+        #       sha256 = "sha256-jN9MlD8/ZrnLuP2/HUXXEVVd6A+aRZNYFdZF8ReJGfY=";
+        #     })
+        #     # Enable rounded window with no decoration
+        #     (pkgs.fetchpatch {
+        #       url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
+        #       sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
+        #     })
+        #     # Make Emacs aware of OS-level light/dark mode
+        #     (pkgs.fetchpatch {
+        #       url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
+        #       sha256 = "sha256-oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
+        #     })
+        #   ];
       });
       packages.demacs = pkgs.emacsWithPackagesFromUsePackage {
-        config = ./demacs.org;
+        config = ./test.el;
 
         # Whether to include your config as a default init file.
         # If being bool, the value of config is used.
@@ -113,7 +113,7 @@
         #     src = ./emacs.el;
         #     inherit (config.xdg) configHome dataHome;
         #   };
-        # defaultInitFile = true;
+        defaultInitFile = true;
         
         package = emacs-augmented;
 
@@ -124,7 +124,7 @@
         # `:ensure nil` or `:disabled`.
         # Note that this is NOT recommended unless you've actually set
         # `use-package-always-ensure` to `t` in your config.
-        # alwaysEnsure = true;
+        alwaysEnsure = true;
 
         # For Org mode babel files, by default only code blocks with
         # `:tangle yes` are considered. Setting `alwaysTangle` to `true`
@@ -133,7 +133,7 @@
         # Note that this is NOT recommended unless you have something like
         # `#+PROPERTY: header-args:emacs-lisp :tangle yes` in your config,
         # which defaults `:tangle` to `yes`.
-        # alwaysTangle = true;
+        alwaysTangle = true;
 
         # Optionally provide extra packages not in the configuration file.
         extraEmacsPackages = epkgs: with epkgs; [
