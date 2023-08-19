@@ -69,11 +69,21 @@
           # org-download
           pngpaste
 
+          # (python3.withPackages (ps: with ps; [
+          #   epc
+          #   orjson
+          #   sexpdata
+          #   six
+          #   inflect
+          #   pyqt6
+          #   pyqt6-sip
+          # ]))
+
           # Spelling checking
           # enchant
         ];
 
-      emacs-augmented = (pkgs.emacs-git).overrideAttrs (old: {
+      emacs-augmented = (pkgs.emacs-unstable).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
         buildInputs = old.buildInputs ++ dependencies ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
         # patches =
@@ -102,19 +112,19 @@
         #   ];
       });
       packages.demacs = pkgs.emacsWithPackagesFromUsePackage {
-        config = ./test.el;
+        config = ./init.el;
 
         # Whether to include your config as a default init file.
         # If being bool, the value of config is used.
         # Its value can also be a derivation like this if you want to do some
         # substitution:
-        #   defaultInitFile = pkgs.substituteAll {
-        #     name = "default.el";
-        #     src = ./emacs.el;
-        #     inherit (config.xdg) configHome dataHome;
-        #   };
-        defaultInitFile = true;
-        
+        # defaultInitFile = pkgs.substituteAll { #
+        #   name = "default.el";
+        #   src = ./test.el;
+        #   # inherit (config.xdg) configHome dataHome;
+        # };
+        # defaultInitFile = true;
+
         package = emacs-augmented;
 
         # By default emacsWithPackagesFromUsePackage will only pull in
@@ -139,9 +149,32 @@
         extraEmacsPackages = epkgs: with epkgs; [
           auctex
           vterm
+          rainbow-delimiters
           pdf-tools
           jinx
+          yasnippet
+          lsp-bridge
+
+          (callPackage ./site-packages/holo-layer.nix {
+            inherit (pkgs) fetchFromGitHub;
+            inherit (epkgs) trivialBuild;
+          })
         ];
+
+        # Optionally override derivations.
+        # override = epkgs: epkgs // {
+        #    lsp-mode = epkgs.melpaPackages.lsp-mode.overrideAttrs(old: {
+        #     # Apply fixes here
+        #     postinstall =
+        #   });
+        # };
+        #
+        # override = epkgs: epkgs // {
+        #   holo-layer = pkgs.callPackage ./site-packages/holo-layer.nix {
+        #     inherit (pkgs) fetchFromGitHub;
+        #     inherit (epkgs) trivialBuild;
+        #   };
+        # };
       };
 
       apps.demacs = flake-utils.lib.mkApp {

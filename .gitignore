@@ -1,1 +1,8 @@
 result
+.lsp-session-*
+auto-save-list
+eln-cache
+org-roam.db
+recentf
+history
+transient
