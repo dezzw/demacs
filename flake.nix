@@ -69,6 +69,8 @@
           # org-download
           pngpaste
 
+          nerdfonts
+
           # (python3.withPackages (ps: with ps; [
           #   epc
           #   orjson
@@ -83,7 +85,7 @@
           # enchant
         ];
 
-      emacs-augmented = (pkgs.emacs-unstable).overrideAttrs (old: {
+      emacs-augmented = (pkgs.emacs-git).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
         buildInputs = old.buildInputs ++ dependencies ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
         patches =
@@ -154,8 +156,6 @@
           jinx
           yasnippet
           lsp-bridge
-
-          nerd-icons
 
           (callPackage ./site-packages/holo-layer.nix {
             inherit (pkgs) fetchFromGitHub;
