@@ -357,6 +357,13 @@
   (if (display-graphic-p)
       (dw/set-fonts)))
 
+(use-package holo-layer
+  :custom
+  (holo-layer-enable-cursor-animation t)
+  :config
+  (holo-layer-enable))
+
+
 (use-package beframe
   :when (daemonp)
   :config
