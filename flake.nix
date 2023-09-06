@@ -155,6 +155,8 @@
           yasnippet
           lsp-bridge
 
+          nerd-icons
+
           (callPackage ./site-packages/holo-layer.nix {
             inherit (pkgs) fetchFromGitHub;
             inherit (epkgs) trivialBuild;
