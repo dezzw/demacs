@@ -358,6 +358,7 @@
       (dw/set-fonts)))
 
 (use-package holo-layer
+  :ensure nil
   :custom
   (holo-layer-enable-cursor-animation t)
   :config
@@ -1230,6 +1231,10 @@
 ;;   :after swift-mode
 ;;   :config
 ;;   (eval-after-load 'flycheck '(flycheck-swift-setup)))
+
+(use-package zig-mode
+  :mode "\\.zig\\'")
+
 
 (use-package docker
   :bind ("C-c d" . docker))
