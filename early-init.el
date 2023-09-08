@@ -51,7 +51,7 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
-;; (push '(undecorated . t) default-frame-alist)
+(push '(undecorated . t) default-frame-alist)
 
 (setq make-backup-files       nil
       auto-save-default       nil
@@ -63,8 +63,8 @@
 (pixel-scroll-precision-mode 1)
 
 
-(when (featurep 'ns)
-  (push '(ns-transparent-titlebar . t) default-frame-alist))
+;; (when (featurep 'ns)
+;;   (push '(ns-transparent-titlebar . t) default-frame-alist))
 (setq-default mode-line-format nil)
 
 (defconst IS-MAC (eq system-type 'darwin))

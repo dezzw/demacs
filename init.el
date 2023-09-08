@@ -359,6 +359,7 @@
 
 (use-package holo-layer
   :ensure nil
+  :when (not (daemonp))
   :custom
   (holo-layer-enable-cursor-animation t)
   :config
@@ -421,8 +422,7 @@
           "^\\*term.*\\*$"   term-mode   ;term as a popup
           "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
           ))
-  (popper-mode +1)
-  (popper-echo-mode +1))                ; For echo area hints
+  (popper-mode +1))                ; For echo area hints
 
 (use-package dired-single
   :commands (dired-single-buffer dired-single-up-directory))
@@ -682,9 +682,9 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-(use-package org-inline-anim
-  :commands (org-inline-anim-animate)
-  :hook org-mode)
+;; (use-package org-inline-anim
+;;   :commands (org-inline-anim-animate)
+;;   :hook org-mode)
 
 ;; (use-package org-imagine
 ;;   :after org
@@ -880,42 +880,42 @@
 ;; (use-package consult-applemusic
 ;;   :commands (consult-applemusic-playlists applemusic-toggle-play))
 
-(use-package corfu
-  :demand t
-  :bind (:map corfu-map
-              ("M-SPC"      . corfu-insert-separator)
-              ("TAB"        . corfu-next)
-              ([tab]        . corfu-next)
-              ("S-TAB"      . corfu-previous)
-              ([backtab]    . corfu-previous)
-              ("S-<return>" . corfu-insert)
-              ("RET"        . nil))
-  :custom
-  (corfu-cycle t)
-  (corfu-auto t)
-  (corfu-auto-prefix 2)
-  (corfu-auto-delay 0)
-  (corfu-preselect 'prompt)
-  (corfu-preselect-first nil)
-  (corfu-on-exact-match nil)
-  (corfu-popupinfo-delay '(0.5 . 0.2))
-  :config
-  (global-corfu-mode)
-  ;; (corfu-history-mode)
-  ;; (corfu-popupinfo-mode)
+;; (use-package corfu
+;;   :demand t
+;;   :bind (:map corfu-map
+;;               ("M-SPC"      . corfu-insert-separator)
+;;               ("TAB"        . corfu-next)
+;;               ([tab]        . corfu-next)
+;;               ("S-TAB"      . corfu-previous)
+;;               ([backtab]    . corfu-previous)
+;;               ("S-<return>" . corfu-insert)
+;;               ("RET"        . nil))
+;;   :custom
+;;   (corfu-cycle t)
+;;   (corfu-auto t)
+;;   (corfu-auto-prefix 2)
+;;   (corfu-auto-delay 0)
+;;   (corfu-preselect 'prompt)
+;;   (corfu-preselect-first nil)
+;;   (corfu-on-exact-match nil)
+;;   (corfu-popupinfo-delay '(0.5 . 0.2))
+;;   :config
+;;   (global-corfu-mode)
+;;   ;; (corfu-history-mode)
+;;   ;; (corfu-popupinfo-mode)
 
-  (add-hook 'eshell-mode-hook
-            (lambda () (setq-local corfu-quit-at-boundary t
-                              corfu-quit-no-match t
-                              corfu-auto nil)
-              (corfu-mode))))
+;;   (add-hook 'eshell-mode-hook
+;;             (lambda () (setq-local corfu-quit-at-boundary t
+;;                               corfu-quit-no-match t
+;;                               corfu-auto nil)
+;;               (corfu-mode))))
 
-(use-package cape
-  :custom
-  (cape-dabbrev-min-length 3)
-  :config
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev)
-  (add-to-list 'completion-at-point-functions #'cape-file))
+;; (use-package cape
+;;   :custom
+;;   (cape-dabbrev-min-length 3)
+;;   :config
+;;   (add-to-list 'completion-at-point-functions #'cape-dabbrev)
+;;   (add-to-list 'completion-at-point-functions #'cape-file))
 
 ;; (use-package tabnine
 ;;   ;; :hook (prog-mode . tabnine-mode)
@@ -923,51 +923,51 @@
 ;;   :config
 ;;   (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point))
 
-(use-package kind-icon
-  :custom
-  (kind-icon-default-face 'corfu-default)
-  :config
-  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
-  (setq kind-icon-use-icons nil)
-  (setq kind-icon-mapping
-        `(
-          (array ,(nerd-icons-codicon "nf-cod-symbol_array") :face font-lock-type-face)
-          (boolean ,(nerd-icons-codicon "nf-cod-symbol_boolean") :face font-lock-builtin-face)
-          (class ,(nerd-icons-codicon "nf-cod-symbol_class") :face font-lock-type-face)
-          (color ,(nerd-icons-codicon "nf-cod-symbol_color") :face success)
-          (command ,(nerd-icons-codicon "nf-cod-terminal") :face default)
-          (constant ,(nerd-icons-codicon "nf-cod-symbol_constant") :face font-lock-constant-face)
-          (constructor ,(nerd-icons-codicon "nf-cod-triangle_right") :face font-lock-function-name-face)
-          (enummember ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
-          (enum-member ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
-          (enum ,(nerd-icons-codicon "nf-cod-symbol_enum") :face font-lock-builtin-face)
-          (event ,(nerd-icons-codicon "nf-cod-symbol_event") :face font-lock-warning-face)
-          (field ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-variable-name-face)
-          (file ,(nerd-icons-codicon "nf-cod-symbol_file") :face font-lock-string-face)
-          (folder ,(nerd-icons-codicon "nf-cod-folder") :face font-lock-doc-face)
-          (interface ,(nerd-icons-codicon "nf-cod-symbol_interface") :face font-lock-type-face)
-          (keyword ,(nerd-icons-codicon "nf-cod-symbol_keyword") :face font-lock-keyword-face)
-          (macro ,(nerd-icons-codicon "nf-cod-symbol_misc") :face font-lock-keyword-face)
-          (magic ,(nerd-icons-codicon "nf-cod-wand") :face font-lock-builtin-face)
-          (method ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
-          (function ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
-          (module ,(nerd-icons-codicon "nf-cod-file_submodule") :face font-lock-preprocessor-face)
-          (numeric ,(nerd-icons-codicon "nf-cod-symbol_numeric") :face font-lock-builtin-face)
-          (operator ,(nerd-icons-codicon "nf-cod-symbol_operator") :face font-lock-comment-delimiter-face)
-          (param ,(nerd-icons-codicon "nf-cod-symbol_parameter") :face default)
-          (property ,(nerd-icons-codicon "nf-cod-symbol_property") :face font-lock-variable-name-face)
-          (reference ,(nerd-icons-codicon "nf-cod-references") :face font-lock-variable-name-face)
-          (snippet ,(nerd-icons-codicon "nf-cod-symbol_snippet") :face font-lock-string-face)
-          (string ,(nerd-icons-codicon "nf-cod-symbol_string") :face font-lock-string-face)
-          (struct ,(nerd-icons-codicon "nf-cod-symbol_structure") :face font-lock-variable-name-face)
-          (text ,(nerd-icons-codicon "nf-cod-text_size") :face font-lock-doc-face)
-          (typeparameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
-          (type-parameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
-          (unit ,(nerd-icons-codicon "nf-cod-symbol_ruler") :face font-lock-constant-face)
-          (value ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-builtin-face)
-          (variable ,(nerd-icons-codicon "nf-cod-symbol_variable") :face font-lock-variable-name-face)
-          (t ,(nerd-icons-codicon "nf-cod-code") :face font-lock-warning-face)
-          (tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face))))
+;; (use-package kind-icon
+;;   :custom
+;;   (kind-icon-default-face 'corfu-default)
+;;   :config
+;;   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter)
+;;   (setq kind-icon-use-icons nil)
+;;   (setq kind-icon-mapping
+;;         `(
+;;           (array ,(nerd-icons-codicon "nf-cod-symbol_array") :face font-lock-type-face)
+;;           (boolean ,(nerd-icons-codicon "nf-cod-symbol_boolean") :face font-lock-builtin-face)
+;;           (class ,(nerd-icons-codicon "nf-cod-symbol_class") :face font-lock-type-face)
+;;           (color ,(nerd-icons-codicon "nf-cod-symbol_color") :face success)
+;;           (command ,(nerd-icons-codicon "nf-cod-terminal") :face default)
+;;           (constant ,(nerd-icons-codicon "nf-cod-symbol_constant") :face font-lock-constant-face)
+;;           (constructor ,(nerd-icons-codicon "nf-cod-triangle_right") :face font-lock-function-name-face)
+;;           (enummember ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
+;;           (enum-member ,(nerd-icons-codicon "nf-cod-symbol_enum_member") :face font-lock-builtin-face)
+;;           (enum ,(nerd-icons-codicon "nf-cod-symbol_enum") :face font-lock-builtin-face)
+;;           (event ,(nerd-icons-codicon "nf-cod-symbol_event") :face font-lock-warning-face)
+;;           (field ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-variable-name-face)
+;;           (file ,(nerd-icons-codicon "nf-cod-symbol_file") :face font-lock-string-face)
+;;           (folder ,(nerd-icons-codicon "nf-cod-folder") :face font-lock-doc-face)
+;;           (interface ,(nerd-icons-codicon "nf-cod-symbol_interface") :face font-lock-type-face)
+;;           (keyword ,(nerd-icons-codicon "nf-cod-symbol_keyword") :face font-lock-keyword-face)
+;;           (macro ,(nerd-icons-codicon "nf-cod-symbol_misc") :face font-lock-keyword-face)
+;;           (magic ,(nerd-icons-codicon "nf-cod-wand") :face font-lock-builtin-face)
+;;           (method ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
+;;           (function ,(nerd-icons-codicon "nf-cod-symbol_method") :face font-lock-function-name-face)
+;;           (module ,(nerd-icons-codicon "nf-cod-file_submodule") :face font-lock-preprocessor-face)
+;;           (numeric ,(nerd-icons-codicon "nf-cod-symbol_numeric") :face font-lock-builtin-face)
+;;           (operator ,(nerd-icons-codicon "nf-cod-symbol_operator") :face font-lock-comment-delimiter-face)
+;;           (param ,(nerd-icons-codicon "nf-cod-symbol_parameter") :face default)
+;;           (property ,(nerd-icons-codicon "nf-cod-symbol_property") :face font-lock-variable-name-face)
+;;           (reference ,(nerd-icons-codicon "nf-cod-references") :face font-lock-variable-name-face)
+;;           (snippet ,(nerd-icons-codicon "nf-cod-symbol_snippet") :face font-lock-string-face)
+;;           (string ,(nerd-icons-codicon "nf-cod-symbol_string") :face font-lock-string-face)
+;;           (struct ,(nerd-icons-codicon "nf-cod-symbol_structure") :face font-lock-variable-name-face)
+;;           (text ,(nerd-icons-codicon "nf-cod-text_size") :face font-lock-doc-face)
+;;           (typeparameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
+;;           (type-parameter ,(nerd-icons-codicon "nf-cod-list_unordered") :face font-lock-type-face)
+;;           (unit ,(nerd-icons-codicon "nf-cod-symbol_ruler") :face font-lock-constant-face)
+;;           (value ,(nerd-icons-codicon "nf-cod-symbol_field") :face font-lock-builtin-face)
+;;           (variable ,(nerd-icons-codicon "nf-cod-symbol_variable") :face font-lock-variable-name-face)
+;;           (t ,(nerd-icons-codicon "nf-cod-code") :face font-lock-warning-face)
+;;           (tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face))))
 
 ;; (use-package tempel
 ;;   :defer 10
@@ -1100,6 +1100,53 @@
   :config
   (global-treesit-auto-mode))
 
+;; lsp-bridge
+(use-package yasnippet
+  :defer t
+  :hook
+  (prog-mode . yas-minor-mode)
+  :custom
+  (yas-snippet-dirs '("~/.dotfiles/Emacs/snippets"))
+  :config
+  (yas-reload-all))
+
+(use-package lsp-bridge
+  :ensure nil
+  :after yasnippet
+  :custom
+  (lsp-bridge-enable-mode-line nil)
+  (acm-enable-search-words nil)
+  (acm-enable-icon t)
+  ;; (acm-enable-tempel t)
+  (acm-enable-tabnine-helper t)
+  (lsp-bridge-complete-manually nil)
+  (lsp-bridge-c-lsp-server "clangd")
+  :config
+  (global-lsp-bridge-mode)
+  
+  ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
+  (defun lsp-bridge-jump ()
+    (interactive)
+    (cond
+     ((eq major-mode 'emacs-lisp-mode)
+      (let ((symb (function-called-at-point)))
+	(when symb
+	  (find-function symb))))
+     (lsp-bridge-mode
+      (lsp-bridge-find-def))
+     (t
+      (require 'dumb-jump)
+      (dumb-jump-go))))
+
+  (defun lsp-bridge-jump-back ()
+    (interactive)
+    (cond
+     (lsp-bridge-mode
+      (lsp-bridge-return-from-def))
+     (t
+      (require 'dumb-jump)
+      (dumb-jump-back)))))
+
 (use-package jupyter
   :commands (jupyter-run-repl jupyter-connect-repl))
 
@@ -1208,7 +1255,6 @@
 (use-package gdscript-mode)
 
 (use-package swift-mode
-  :hook (swift-mode . (lambda () (lsp-deferred)))
   :config
   (defun xcode-build()
     (interactive)

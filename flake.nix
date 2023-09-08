@@ -53,7 +53,7 @@
 
           python39Packages.pylint
           
-          # rnix-lsp
+          rnix-lsp
           nil
           
           universal-ctags
@@ -68,18 +68,6 @@
 
           # org-download
           pngpaste
-
-          nerdfonts
-
-          # (python3.withPackages (ps: with ps; [
-          #   epc
-          #   orjson
-          #   sexpdata
-          #   six
-          #   inflect
-          #   pyqt6
-          #   pyqt6-sip
-          # ]))
 
           # Spelling checking
           # enchant
@@ -154,12 +142,13 @@
           rainbow-delimiters
           pdf-tools
           jinx
-          yasnippet
-          lsp-bridge
 
-          (callPackage ./site-packages/holo-layer.nix {
+          (callPackage ./site-packages/holo-layer/holo-layer.nix {
             inherit (pkgs) fetchFromGitHub;
-            inherit (epkgs) trivialBuild;
+          })
+
+          (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
+            inherit (pkgs) fetchFromGitHub;
           })
         ];
 
