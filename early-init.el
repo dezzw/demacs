@@ -74,5 +74,3 @@
     (progn
       (setq frame-resize-pixelwise  t)
       (menu-bar-mode t)))
-
-(fset 'yes-or-no-p 'y-or-n-p)

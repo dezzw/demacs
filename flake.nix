@@ -13,13 +13,9 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    fenix.url = "github:nix-community/fenix";
-    fenix.inputs.nixpkgs.follows = "nixpkgs";
-    emacs-overlay = {
-      url = "github:nix-community/emacs-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
+    emacs-src = {
+      url = "github:emacs-mirror/emacs";
+      flake = false;
     };
   };
   outputs = inputs @ {
@@ -32,9 +28,6 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [
-          emacs-overlay.overlay
-        ];
       };
     in rec {
       dependencies = with pkgs;
@@ -68,12 +61,9 @@
 
           # org-download
           pngpaste
-
-          # Spelling checking
-          # enchant
         ];
 
-      emacs-augmented = (pkgs.emacs-git).overrideAttrs (old: {
+      emacs-augmented = (pkgs.emacs29).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
         buildInputs = old.buildInputs ++ dependencies ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
         patches =
@@ -101,72 +91,136 @@
             })
           ];
       });
-      packages.demacs = pkgs.emacsWithPackagesFromUsePackage {
-        config = ./init.el;
 
-        # Whether to include your config as a default init file.
-        # If being bool, the value of config is used.
-        # Its value can also be a derivation like this if you want to do some
-        # substitution:
-        # defaultInitFile = pkgs.substituteAll { #
-        #   name = "default.el";
-        #   src = ./test.el;
-        #   # inherit (config.xdg) configHome dataHome;
-        # };
-        # defaultInitFile = true;
+      packages.demacs = ((pkgs.emacsPackagesFor  emacs-augmented).emacsWithPackages (epkgs: with epkgs;
+      [
+	gcmh
+	exec-path-from-shell
+	posframe
+	
+        # UI
+	doom-themes
+	doom-modeline
+	nerd-icons
+	ligature
+	hl-todo
+	diff-hl
+	rainbow-delimiters
+	highlight-indent-guides
+	rainbow-mode
 
-        package = emacs-augmented;
-
-        # By default emacsWithPackagesFromUsePackage will only pull in
-        # packages with `:ensure`, `:ensure t` or `:ensure <package name>`.
-        # Setting `alwaysEnsure` to `true` emulates `use-package-always-ensure`
-        # and pulls in all use-package references not explicitly disabled via
-        # `:ensure nil` or `:disabled`.
-        # Note that this is NOT recommended unless you've actually set
-        # `use-package-always-ensure` to `t` in your config.
-        alwaysEnsure = true;
-
-        # For Org mode babel files, by default only code blocks with
-        # `:tangle yes` are considered. Setting `alwaysTangle` to `true`
-        # will include all code blocks missing the `:tangle` argument,
-        # defaulting it to `yes`.
-        # Note that this is NOT recommended unless you have something like
-        # `#+PROPERTY: header-args:emacs-lisp :tangle yes` in your config,
-        # which defaults `:tangle` to `yes`.
-        alwaysTangle = true;
-
-        # Optionally provide extra packages not in the configuration file.
-        extraEmacsPackages = epkgs: with epkgs; [
-          auctex
-          vterm
-          rainbow-delimiters
-          pdf-tools
-          jinx
-
-          (callPackage ./site-packages/holo-layer/holo-layer.nix {
+	(callPackage ./site-packages/holo-layer/holo-layer.nix {
             inherit (pkgs) fetchFromGitHub;
-          })
+        })
 
-          (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
+	# frame/windows management
+	beframe
+	ace-window
+	popper
+	
+	# Edit
+	evil
+	evil-nerd-commenter
+	evil-escape
+	evil-visualstar
+	evil-surround
+	evil-multiedit
+	evil-mc
+	evil-matchit
+	evil-collection
+	evil-tex
+
+	vundo
+	hungry-delete
+	avy
+
+	general
+
+	#dired
+	dired-single
+	dired-hide-dotfiles
+	dirvish
+
+	# org
+	org-superstar
+	visual-fill-column
+	valign
+	org-appear
+	# org-modern-indent
+	org-super-agenda
+	org-roam
+	org-roam-ui
+	org-download
+
+	# completion
+	vertico
+	orderless
+	consult
+	consult-dir
+	marginalia
+	embark
+	embark-consult
+	corfu
+	cape
+	kind-icon
+	tempel
+	citre
+
+	# Productivity
+	vdiff
+	helpful
+	format-all
+	restclient
+	password-store
+	pdf-tools
+
+	# Developing Tools
+	(callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
             inherit (pkgs) fetchFromGitHub;
-          })
-        ];
+        })
 
-        # Optionally override derivations.
-        # override = epkgs: epkgs // {
-        #    lsp-mode = epkgs.melpaPackages.lsp-mode.overrideAttrs(old: {
-        #     # Apply fixes here
-        #     postinstall =
-        #   });
-        # };
-        #
-        # override = epkgs: epkgs // {
-        #   holo-layer = pkgs.callPackage ./site-packages/holo-layer.nix {
-        #     inherit (pkgs) fetchFromGitHub;
-        #     inherit (epkgs) trivialBuild;
-        #   };
-        # };
-      };
+	envrc
+
+	# language
+	web-mode
+	js2-mode
+	rjsx-mode
+	add-node-modules-path
+	scss-mode
+	nix-mode
+	sly
+	haskell-mode
+	cdlatex
+	auctex
+	markdown-mode
+	gdscript-mode
+	swift-mode
+	docker
+	emmet-mode
+  zig-mode
+	
+	# term/shell
+        vterm
+	multi-vterm
+	vterm-toggle
+
+	# eshell
+	eshell-prompt-extras
+	eshell-up
+	eshell-syntax-highlighting
+	eshell-z
+	esh-help
+
+	# git
+	magit
+	magit-delta
+
+	# irc cheet
+	circe
+
+	# new packages want to try
+        jinx
+      ]));
 
       apps.demacs = flake-utils.lib.mkApp {
         drv = packages.demacs;

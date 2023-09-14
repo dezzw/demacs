@@ -6,3 +6,5 @@ org-roam.db
 recentf
 history
 transient
+.org-id-locations
+bookmarks

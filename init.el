@@ -59,20 +59,33 @@
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize)))
 
-(use-package super-save
+;;; Editing utils
+(use-package emacs
   :custom
-  (super-save-auto-save-when-idle t)
-  (super-save-remore-files nil)
-  (super-save-exclude '(".gpg"))
+  (scroll-preserve-screen-position 'always)
+  (truncate-partial-width-windows nil)
+  (use-short-answers t)
+  (frame-resize-pixelwise t)
+  (create-lockfiles nil)
+  (auto-save-default nil)
+  (make-backup-files nil)
+  (global-auto-revert-mode 1)
+  (delete-selection-mode t)
+  (auto-save-visited-interval 1.1)
+  (auto-save-visited-predicate
+   (lambda () (and (not (buffer-live-p (get-buffer " *vundo tree*")))
+                   (not (string-suffix-p "gpg" (file-name-extension (buffer-name)) t))
+                   (not (eq (buffer-base-buffer (get-buffer (concat "CAPTURE-" (buffer-name))))
+                            (current-buffer)))
+                   (or (not (boundp 'corfu--total)) (zerop corfu--total))
+                   (or (not (boundp 'yas--active-snippets)) (not yas--active-snippets)))))
+  (display-fill-column-indicator-character ?\u254e)
+  :hook ((prog-mode . display-fill-column-indicator-mode)
+         ((prog-mode text-mode) . indicate-buffer-boundaries-left)
+         (after-init . auto-save-visited-mode))
   :config
-  ;; add integration with ace-window
-  (add-to-list 'super-save-triggers 'ace-window)
-  ;; save when back to meow normal state
-  (add-to-list 'super-save-triggers 'evil-normal-state)
-  (add-to-list 'super-save-triggers 'evil-force-normal-state)
-  ;; save on find-file
-  (add-to-list 'super-save-hook-triggers 'find-file-hook)
-  (super-save-mode +1))
+  (defun indicate-buffer-boundaries-left ()
+    (setq indicate-buffer-boundaries 'left)))
 
 (use-package recentf
   :ensure nil
@@ -89,9 +102,6 @@
   (midnight-period 7200)
   :config
   (midnight-mode))
-
-(global-auto-revert-mode 1)
-(delete-selection-mode t)
 
 (use-package posframe)
 
@@ -226,8 +236,8 @@
   :config
   (evil-collection-init))
 
-(use-package evil-tex
-  :hook (LaTeX-mode org-mode))
+;; (use-package evil-tex
+;;   :hook (LaTeX-mode org-mode))
 
 
 (use-package general)
@@ -500,17 +510,13 @@
 (use-package org-superstar
   :hook org-mode
   :custom
-  (org-superstar-remove-leading-stars t
-                                      org-superstar-headline-bullets-list '("◉" "○" "●" "○" "●" "○" "●")))
-
-(defun dw/org-mode-visual-fill ()
-  (setq visual-fill-column-width 110
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
+  (org-superstar-remove-leading-stars t))
 
 (use-package visual-fill-column
-  :defer t
-  :hook (org-mode . dw/org-mode-visual-fill))
+  :hook org-mode
+  :custom
+  (visual-fill-column-width 110)
+  (visual-fill-column-center-text t))
 
 (use-package valign
   :hook org-mode)
@@ -547,23 +553,7 @@
      (shell . t)
      (python . t)))
 
-  (setq org-confirm-babel-evaluate nil)
-
-  (use-package ob-swift
-    :config
-    (org-babel-do-load-languages 'org-babel-load-languages
-                                 (append org-babel-load-languages
-                                         '((swift . t))))
-
-    (defun ar/org-refresh-inline-images ()
-      (when org-inline-image-overlays
-        (org-redisplay-inline-images)))
-
-    ;; Automatically refresh inline images.
-    (add-hook 'org-babel-after-execute-hook 'ar/org-refresh-inline-images))
-  (use-package ob-swiftui
-    :config
-    (ob-swiftui-setup)))
+  (setq org-confirm-babel-evaluate nil))
 
 (with-eval-after-load "org"
   ;; Custom TODO states and Agendas
@@ -1061,44 +1051,62 @@
 
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)))
-
-;; (use-package treesit
-;;   :ensure nil
-;;   :when (and (fboundp 'treesit-available-p)
-;;              (treesit-available-p))
-;;   :custom
-;;   (major-mode-remap-alist
-;;    '((c-mode          . c-ts-mode)
-;;      (c++-mode        . c++-ts-mode)
-;;      (csharp-mode     . csharp-ts-mode)
-;;      (conf-toml-mode  . toml-ts-mode)
-;;      (css-mode        . css-ts-mode)
-;;      (java-mode       . java-ts-mode)
-;;      (javascript-mode . js-ts-mode)
-;;      (js-json-mode    . json-ts-mode)
-;;      (python-mode     . python-ts-mode)
-;;      (ruby-mode       . ruby-ts-mode)
-;;      (sh-mode         . bash-ts-mode)))
-;;   (treesit-font-lock-level 4)
-;;   :config
-;;   (add-to-list 'auto-mode-alist '("\\(?:CMakeLists\\.txt\\|\\.cmake\\)\\'" . cmake-ts-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-ts-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
-;;   (add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
-;;   (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-ts-mode)))
-
 (use-package treesit
-  :ensure nil
-  :when (and (fboundp 'treesit-available-p)
-             (treesit-available-p))
-  :custom
-  (treesit-font-lock-level 4))
-
-(use-package treesit-auto
-  :demand t
-  :config
-  (global-treesit-auto-mode))
+  :when (and (fboundp 'treesit-available-p) (treesit-available-p))
+  :mode (("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode)
+	 ("\\.go\\'" . go-ts-mode)
+	 ("/go\\.mod\\'" . go-mod-ts-mode)
+	 ("\\.rs\\'" . rust-ts-mode)
+	 ("\\.ts\\'" . typescript-ts-mode)
+	 ("\\.tsx\\'" . tsx-ts-mode)
+	 ("\\.y[a]?ml\\'" . yaml-ts-mode)
+	 ("\\.zig\\'" . zig-ts-mode))
+  :config (setq treesit-font-lock-level 4)
+  :init
+  (setq major-mode-remap-alist
+	'((sh-mode         . bash-ts-mode)
+	  (c-mode          . c-ts-mode)
+	  (c++-mode        . c++-ts-mode)
+	  (c-or-c++-mode   . c-or-c++-ts-mode)
+	  (css-mode        . css-ts-mode)
+	  (js-mode         . js-ts-mode)
+	  (java-mode       . java-ts-mode)
+	  (js-json-mode    . json-ts-mode)
+	  (makefile-mode   . cmake-ts-mode)
+	  (python-mode     . python-ts-mode)
+	  (ruby-mode       . ruby-ts-mode)
+	  (conf-toml-mode  . toml-ts-mode)))
+  (setq treesit-language-source-alist
+	'((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
+	  (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
+	  (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
+	  (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
+	  (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
+	  (csharp     . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
+	  (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
+	  (elisp      . ("https://github.com/Wilfred/tree-sitter-elisp"))
+	  (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
+	  (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod.git"))
+	  (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
+	  (java       . ("https://github.com/tree-sitter/tree-sitter-java.git"))
+	  (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
+	  (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
+	  (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
+	  (make       . ("https://github.com/alemuller/tree-sitter-make"))
+	  (markdown   . ("https://github.com/MDeiml/tree-sitter-markdown" nil "tree-sitter-markdown/src"))
+	  (ocaml      . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
+	  (org        . ("https://github.com/milisims/tree-sitter-org"))
+	  (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
+	  (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
+	  (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
+	  (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
+	  (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
+	  (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
+	  (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
+	  (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
+	  (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
+	  (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
+	  (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))))
 
 ;; lsp-bridge
 (use-package yasnippet
@@ -1147,11 +1155,11 @@
       (require 'dumb-jump)
       (dumb-jump-back)))))
 
-(use-package jupyter
-  :commands (jupyter-run-repl jupyter-connect-repl))
+;;(use-package jupyter
+;;  :commands (jupyter-run-repl jupyter-connect-repl))
 
-(use-package ein
-  :commands (ein:run ein:login))
+;;(use-package ein
+;;  :commands (ein:run ein:login))
 
 (use-package web-mode
   :mode "\\.html?\\'"
@@ -1163,11 +1171,11 @@
 
 ;; 1. Start the server with `httpd-start'
 ;; 2. Use `impatient-mode' on any buffer
-(use-package impatient-mode
-  :commands (impatient-mode))
+;;(use-package impatient-mode
+;;  :commands (impatient-mode))
 
-(use-package skewer-mode
-  :commands (skewer-mode))
+;;(use-package skewer-mode
+;;  :commands (skewer-mode))
 
 (defun dw/set-js-indentation ()
   (setq-default js-indent-level 2)
@@ -1229,6 +1237,9 @@
 
 ;;        (:file-match "\\.lisp\\'"))
 
+(use-package zig-mode
+  :mode "\\.zig\\'")
+
 (use-package sly
   :mode "\\.lisp\\'")
 
@@ -1247,10 +1258,8 @@
   (markdown-command "multimarkdown"))
 
 (use-package edit-indirect
+  :disabled
   :after markdown-mode)
-
-(use-package ob-sql-mode
-  :after sql-mode)
 
 (use-package gdscript-mode)
 
@@ -1540,13 +1549,6 @@
 
 (use-package pdf-tools)
 
-(use-package leetcode
-  :commands (leetcode)
-  :custom
-  (leetcode-prefer-language "typescript")
-  (leetcode-prefer-sql "mysql")
-  (leetcode-save-solutions t)
-  (leetcode-directory "~/Documents/leetcode"))
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
 (setq tramp-default-method "ssh"
