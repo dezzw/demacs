@@ -65,7 +65,7 @@
 
       emacs-augmented = (pkgs.emacs29).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
-        buildInputs = old.buildInputs ++ dependencies ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
+        buildInputs = old.buildInputs ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
         patches =
           (old.patches or [])
           ++ [
@@ -93,134 +93,135 @@
       });
 
       packages.demacs = ((pkgs.emacsPackagesFor  emacs-augmented).emacsWithPackages (epkgs: with epkgs;
-      [
-	gcmh
-	exec-path-from-shell
-	posframe
-	
-        # UI
-	doom-themes
-	doom-modeline
-	nerd-icons
-	ligature
-	hl-todo
-	diff-hl
-	rainbow-delimiters
-	highlight-indent-guides
-	rainbow-mode
+        [
+	        gcmh
+	        exec-path-from-shell
+	        posframe
+	        
+          # UI
+	        doom-themes
+	        doom-modeline
+	        nerd-icons
+	        ligature
+	        hl-todo
+	        diff-hl
+	        rainbow-delimiters
+	        highlight-indent-guides
+	        rainbow-mode
 
-	(callPackage ./site-packages/holo-layer/holo-layer.nix {
+	        (callPackage ./site-packages/holo-layer/holo-layer.nix {
             inherit (pkgs) fetchFromGitHub;
-        })
+          })
 
-	# frame/windows management
-	beframe
-	ace-window
-	popper
-	
-	# Edit
-	evil
-	evil-nerd-commenter
-	evil-escape
-	evil-visualstar
-	evil-surround
-	evil-multiedit
-	evil-mc
-	evil-matchit
-	evil-collection
-	evil-tex
+	        # frame/windows management
+	        beframe
+	        ace-window
+	        popper
+	        
+	        # Edit
+	        evil
+	        evil-nerd-commenter
+	        evil-escape
+	        evil-visualstar
+	        evil-surround
+	        evil-multiedit
+	        evil-mc
+	        evil-matchit
+	        evil-collection
+	        evil-tex
 
-	vundo
-	hungry-delete
-	avy
+	        vundo
+	        hungry-delete
+	        avy
 
-	general
+	        general
 
-	#dired
-	dired-single
-	dired-hide-dotfiles
-	dirvish
+	        #dired
+	        dired-single
+	        dired-hide-dotfiles
+	        dirvish
 
-	# org
-	org-superstar
-	visual-fill-column
-	valign
-	org-appear
-	# org-modern-indent
-	org-super-agenda
-	org-roam
-	org-roam-ui
-	org-download
+	        # org
+	        org-superstar
+	        visual-fill-column
+	        valign
+	        org-appear
+	        # org-modern-indent
+	        org-super-agenda
+	        org-roam
+	        org-roam-ui
+	        org-download
 
-	# completion
-	vertico
-	orderless
-	consult
-	consult-dir
-	marginalia
-	embark
-	embark-consult
-	corfu
-	cape
-	kind-icon
-	tempel
-	citre
+	        # completion
+	        vertico
+	        orderless
+	        consult
+	        consult-dir
+	        marginalia
+	        embark
+	        embark-consult
+	        corfu
+	        cape
+	        kind-icon
+	        tempel
+	        citre
 
-	# Productivity
-	vdiff
-	helpful
-	format-all
-	restclient
-	password-store
-	pdf-tools
+	        # Productivity
+	        vdiff
+	        helpful
+	        format-all
+	        restclient
+	        password-store
+	        pdf-tools
 
-	# Developing Tools
-	(callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
+	        # Developing Tools
+	        (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
             inherit (pkgs) fetchFromGitHub;
-        })
+          })
 
-	envrc
+	        envrc
 
-	# language
-	web-mode
-	js2-mode
-	rjsx-mode
-	add-node-modules-path
-	scss-mode
-	nix-mode
-	sly
-	haskell-mode
-	cdlatex
-	auctex
-	markdown-mode
-	gdscript-mode
-	swift-mode
-	docker
-	emmet-mode
-  zig-mode
-	
-	# term/shell
-        vterm
-	multi-vterm
-	vterm-toggle
+	        # language
+	        web-mode
+	        js2-mode
+	        rjsx-mode
+	        add-node-modules-path
+	        scss-mode
+          svelte-mode
+	        nix-mode
+	        sly
+	        haskell-mode
+	        cdlatex
+	        auctex
+	        markdown-mode
+	        gdscript-mode
+	        swift-mode
+	        docker
+	        emmet-mode
+          zig-mode
+	        
+	        # term/shell
+          vterm
+	        multi-vterm
+	        vterm-toggle
 
-	# eshell
-	eshell-prompt-extras
-	eshell-up
-	eshell-syntax-highlighting
-	eshell-z
-	esh-help
+	        # eshell
+	        eshell-prompt-extras
+	        eshell-up
+	        eshell-syntax-highlighting
+	        eshell-z
+	        esh-help
 
-	# git
-	magit
-	magit-delta
+	        # git
+	        magit
+	        magit-delta
 
-	# irc cheet
-	circe
+	        # irc cheet
+	        circe
 
-	# new packages want to try
-        jinx
-      ]));
+	        # new packages want to try
+          jinx
+        ]));
 
       apps.demacs = flake-utils.lib.mkApp {
         drv = packages.demacs;

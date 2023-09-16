@@ -1,0 +1,36 @@
+;; -*- emacs-lisp -*- <23/09/15 11:43:12 ~/demacs/tramp>
+;; Tramp connection history.  Don't change this file.
+;; Run `M-x tramp-cleanup-all-connections' instead.
+
+(((tramp-file-name "cache" nil nil nil nil nil nil)
+  ("tramp-version" "2.6.0.29.1"))
+ ((tramp-file-name "ssh" "wangpe90" nil "dh2020pc22.utm.utoronto.ca" nil nil nil)
+  ("null-device" "/dev/null")
+  ("uname" "Linux 6.2.0-32-generic")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("pipe-buf" 4096)
+  ("remote-shell" "/bin/sh")
+  ("~" "/student/wangpe90")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("file-exists" "test -e")
+  ("case-insensitive" nil)
+  ("readlink" "\\readlink")
+  ("stat" "env QUOTING_STYLE=locale \\stat")
+  ("id" "/bin/id")
+  ("uid-integer" 34435)
+  ("uid-string" "wangpe90")
+  ("gid-integer" 300)
+  ("gid-string" "student")
+  ("groups-integer"
+   (300))
+  ("groups-string"
+   ("student"))
+  ("bzr" nil)
+  ("git" "\\git")
+  ("hg" nil)
+  ("dev-tty" t)))

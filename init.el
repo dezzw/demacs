@@ -1019,23 +1019,20 @@
   :ensure nil
   :config (electric-indent-mode))
 
-;; (use-package rainbow-delimiters
-;;   :hook prog-mode)
-;;
-;;
-(require 'rainbow-delimiters)
+(use-package rainbow-delimiters
+  :hook prog-mode)
 
-;; (use-package highlight-indent-guides
-;;   :defer 0.5
-;;   :hook prog-mode
-;;   :custom
-;;   (highlight-indent-guides-auto-enabled nil)
-;;   (highlight-indent-guides-delay 0)
-;;   (highlight-indent-guides-method 'character)
-;;   :config
-;;   (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-;;   (set-face-background 'highlight-indent-guides-even-face "dimgray")
-;;   (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+(use-package highlight-indent-guides
+  :defer 0.5
+  :hook prog-mode
+  :custom
+  (highlight-indent-guides-auto-enabled nil)
+  (highlight-indent-guides-delay 0)
+  (highlight-indent-guides-method 'character)
+  :config
+  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  (set-face-background 'highlight-indent-guides-even-face "dimgray")
+  (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
 
 ;; (use-package aggressive-indent
 ;;   :hook (emacs-lisp-mode lisp-mode python-ts-mode))
@@ -1043,8 +1040,8 @@
 (use-package rainbow-mode
   :hook (web-mode js2-mode emacs-lisp-mode))
 
-;; (use-package format-all
-;;   :hook prog-mode)
+(use-package format-all
+  :hook prog-mode)
 
 (with-eval-after-load 'prog-mode
   (add-hook #'prog-mode-hook 'hs-minor-mode))
