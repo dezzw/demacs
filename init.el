@@ -350,10 +350,10 @@
           ("UNCHECK"   . "#1E90FF")))
   (global-hl-todo-mode))
 
-(use-package diff-hl
-  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
-         (after-init . global-diff-hl-mode)
-         (dired-mode . diff-hl-dired-mode)))
+;; (use-package diff-hl
+;;   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
+;;          (after-init . global-diff-hl-mode)
+;;          (dired-mode . diff-hl-dired-mode)))
 
 (use-package vdiff
   :commands (vdiff-buffer))
@@ -1216,6 +1216,9 @@
   (scss-compile-at-save t)
   (scss-output-directory "../css")
   (scss-sass-command "sass --no-source-map"))
+
+(use-package svelte-mode
+  :mode "\\.svelte\\'")
 
 ;; (setq c-default-style "gnu")
 
