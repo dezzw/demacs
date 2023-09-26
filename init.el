@@ -333,6 +333,7 @@
                 vterm-mode-hook
                 shell-mode-hook
                 eshell-mode-hook
+								pdf-view-mode-hook
                 xwidget-webkit-mode-hook
                 eaf-mode-hook
                 doc-view-mode-hook))
@@ -1246,6 +1247,9 @@
 (use-package haskell-mode
   :mode "\\.hs\\'")
 
+(use-package tex
+  :ensure auctex)
+
 (use-package cdlatex
   :hook
   ((LaTeX-mode .  #'turn-on-cdlatex)
@@ -1547,7 +1551,11 @@
   :custom
   (password-store-password-length 12))
 
-(use-package pdf-tools)
+(use-package pdf-tools
+	:config
+	;; Update PDF buffers after successful LaTeX runs
+	(add-hook 'TeX-after-compilation-finished-functions
+          #'TeX-revert-document-buffer))
 
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
