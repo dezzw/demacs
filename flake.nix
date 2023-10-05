@@ -173,6 +173,10 @@
 	        restclient
 	        password-store
 	        pdf-tools
+               
+          # (callPackage ./site-packages/mind-wave/mind-wave.nix {
+          #   inherit (pkgs) fetchFromGitHub;
+          # })
 
 	        # Developing Tools
 	        (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {

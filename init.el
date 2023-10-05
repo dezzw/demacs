@@ -236,8 +236,8 @@
   :config
   (evil-collection-init))
 
-;; (use-package evil-tex
-;;   :hook (LaTeX-mode org-mode))
+(use-package evil-tex
+  :hook (TeX-latex-mode))
 
 
 (use-package general)
@@ -1111,9 +1111,8 @@
   :defer t
   :hook
   (prog-mode . yas-minor-mode)
-  :custom
-  (yas-snippet-dirs '("~/.dotfiles/Emacs/snippets"))
   :config
+  (use-package yasnippet-snippets)
   (yas-reload-all))
 
 (use-package lsp-bridge
@@ -1552,10 +1551,11 @@
   (password-store-password-length 12))
 
 (use-package pdf-tools
-	:config
-	;; Update PDF buffers after successful LaTeX runs
-	(add-hook 'TeX-after-compilation-finished-functions
-          #'TeX-revert-document-buffer))
+  :mode (("\\.pdf\\'" . pdf-view-mode))
+  :config
+  ;; Update PDF buffers after successful LaTeX runs
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer))
 
 
 (eval-after-load 'tramp '(setenv "SHELL" "/bin/bash"))
