@@ -17,6 +17,10 @@
       url = "github:emacs-mirror/emacs";
       flake = false;
     };
+    emacs-overlay = {
+      url = "github:dezzw/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
   outputs = inputs @ {
     self,
@@ -28,6 +32,9 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import nixpkgs {
         inherit system;
+        overlays = [
+          emacs-overlay.overlay
+        ];
       };
     in rec {
       dependencies = with pkgs;
@@ -63,7 +70,7 @@
           pngpaste
         ];
 
-      emacs-augmented = (pkgs.emacs29).overrideAttrs (old: {
+      emacs-patched = (pkgs.emacs-git).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
         buildInputs = old.buildInputs ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
         patches =
@@ -92,7 +99,7 @@
           ];
       });
 
-      packages.demacs = ((pkgs.emacsPackagesFor  emacs-augmented).emacsWithPackages (epkgs: with epkgs;
+      emacs-augmented =  ((pkgs.emacsPackagesFor  emacs-patched).emacsWithPackages (epkgs: with epkgs;
         [
 	        gcmh
 	        exec-path-from-shell
@@ -109,9 +116,9 @@
 	        highlight-indent-guides
 	        rainbow-mode
 
-	        (callPackage ./site-packages/holo-layer/holo-layer.nix {
-            inherit (pkgs) fetchFromGitHub;
-          })
+	        # (callPackage ./site-packages/holo-layer/holo-layer.nix {
+          #   inherit (pkgs) fetchFromGitHub;
+          # })
 
 	        # frame/windows management
 	        beframe
@@ -173,7 +180,7 @@
 	        restclient
 	        password-store
 	        pdf-tools
-               
+          
           # (callPackage ./site-packages/mind-wave/mind-wave.nix {
           #   inherit (pkgs) fetchFromGitHub;
           # })
@@ -208,6 +215,7 @@
           vterm
 	        multi-vterm
 	        vterm-toggle
+                eat
 
 	        # eshell
 	        eshell-prompt-extras
@@ -227,6 +235,18 @@
           jinx
         ]));
 
+      packages.demacs = emacs-augmented;
+      #   pkgs.emacsWithPackagesFromUsePackage {
+      #   config = ./init.el;
+
+      #   defaultInitFile = true;
+
+      #   package = emacs-augmented;
+
+      #   alwaysEnsure = false;
+      #   alwaysTangle = false;
+      # };
+      
       apps.demacs = flake-utils.lib.mkApp {
         drv = packages.demacs;
         name = "demacs";
