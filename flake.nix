@@ -256,6 +256,10 @@
       apps.default = apps.demacs;
       devShell = pkgs.mkShell {
         buildInputs = with pkgs; [packages.demacs] ++ dependencies;
+
+        shellHook = ''
+          ${pkgs.demacs}/bin/emacs &
+        '';
       };
     });
 }
