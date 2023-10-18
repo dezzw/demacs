@@ -39,6 +39,8 @@
     in rec {
       dependencies = with pkgs;
         [
+          git
+
           # Language Server
           ccls
 
@@ -258,7 +260,10 @@
         buildInputs = with pkgs; [packages.demacs] ++ dependencies;
 
         shellHook = ''
-          ${pkgs.demacs}/bin/emacs &
+          if [ ! -d $HOME/.emacs.d/ ]; then
+            mkdir -p $HOME/.emacs.d
+            git clone git@github.com:dezzw/demacs.git $HOME/.emacs.d 
+          fi
         '';
       };
     });
