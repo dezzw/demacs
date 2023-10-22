@@ -43,35 +43,45 @@
         [
           git
 
-          # Language Server
-          ccls
+    # Language Server
+    ccls
 
-          nodePackages.pyright
-          nodePackages.typescript-language-server
-          nodePackages.vscode-langservers-extracted
-          nodePackages.bash-language-server
-          nodePackages.vscode-css-languageserver-bin
-          nodePackages.vscode-html-languageserver-bin
+    nodePackages.pyright
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    nodePackages.bash-language-server
+    nodePackages.vscode-css-languageserver-bin
+    nodePackages.vscode-html-languageserver-bin
+    nodePackages.svelte-language-server
 
-          nodePackages.eslint
+    nodePackages.eslint
 
-          python39Packages.pylint
-          
-          rnix-lsp
-          nil
-          
-          universal-ctags
-          
-          # Code Formating
-          nixfmt
+    python39Packages.pylint
+    
+    rnix-lsp
+    nil
 
-          # dirvish
-          imagemagick
-          ffmpegthumbnailer
-          mediainfo
+    texlab
 
-          # org-download
-          pngpaste
+    zls
+    
+    universal-ctags
+    
+    # Code Formating
+    nixfmt
+
+    # dirvish
+    imagemagick
+    ffmpegthumbnailer
+    mediainfo
+
+    # org-download
+    pngpaste
+
+    # Spelling checking
+    # enchant
+
+    emacs-all-the-icons-fonts
         ];
 
       emacs-patched = (pkgs.emacs-git).overrideAttrs (old: {
