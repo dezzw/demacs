@@ -194,6 +194,10 @@
             inherit (pkgs) fetchFromGitHub;
           })
 
+          (callPackage ./site-packages/dape {
+            inherit (pkgs) fetchFromGitHub;
+          })
+
 	        envrc
 
 	        # language

@@ -8,3 +8,6 @@ history
 transient
 .org-id-locations
 bookmarks
+
+lsp-bridge/
+tramp
