@@ -241,6 +241,7 @@
 
 	        # new packages want to try
           jinx
+          pkgs.emacsPackages.treesit-grammars.with-all-grammars
         ]));
 
       packages.demacs = emacs-augmented;
