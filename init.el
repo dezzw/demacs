@@ -97,7 +97,7 @@
 
 (use-package midnight
   :ensure nil
-  :defer 10
+  :defer t
   :custom
   (midnight-period 7200)
   :config
@@ -340,7 +340,7 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package hl-todo
-  :defer 10
+  :defer t
   :config
   (setq hl-todo-keyword-faces
         '(("TODO"   . "#FF0000")
@@ -472,7 +472,7 @@
   (visual-line-mode 1))
 
 (use-package org
-  :defer
+  :defer t
   :hook (org-mode . dw/org-mode-setup)
   :config
   (setq org-html-head-include-default-style nil
@@ -1073,42 +1073,11 @@
 	  (makefile-mode   . cmake-ts-mode)
 	  (python-mode     . python-ts-mode)
 	  (ruby-mode       . ruby-ts-mode)
-	  (conf-toml-mode  . toml-ts-mode)))
-  (setq treesit-language-source-alist
-	'((bash       . ("https://github.com/tree-sitter/tree-sitter-bash"))
-	  (c          . ("https://github.com/tree-sitter/tree-sitter-c"))
-	  (cpp        . ("https://github.com/tree-sitter/tree-sitter-cpp"))
-	  (css        . ("https://github.com/tree-sitter/tree-sitter-css"))
-	  (cmake      . ("https://github.com/uyha/tree-sitter-cmake"))
-	  (csharp     . ("https://github.com/tree-sitter/tree-sitter-c-sharp.git"))
-	  (dockerfile . ("https://github.com/camdencheek/tree-sitter-dockerfile"))
-	  (elisp      . ("https://github.com/Wilfred/tree-sitter-elisp"))
-	  (go         . ("https://github.com/tree-sitter/tree-sitter-go"))
-	  (gomod      . ("https://github.com/camdencheek/tree-sitter-go-mod.git"))
-	  (html       . ("https://github.com/tree-sitter/tree-sitter-html"))
-	  (java       . ("https://github.com/tree-sitter/tree-sitter-java.git"))
-	  (javascript . ("https://github.com/tree-sitter/tree-sitter-javascript"))
-	  (json       . ("https://github.com/tree-sitter/tree-sitter-json"))
-	  (lua        . ("https://github.com/Azganoth/tree-sitter-lua"))
-	  (make       . ("https://github.com/alemuller/tree-sitter-make"))
-	  (markdown   . ("https://github.com/MDeiml/tree-sitter-markdown" nil "tree-sitter-markdown/src"))
-	  (ocaml      . ("https://github.com/tree-sitter/tree-sitter-ocaml" nil "ocaml/src"))
-	  (org        . ("https://github.com/milisims/tree-sitter-org"))
-	  (python     . ("https://github.com/tree-sitter/tree-sitter-python"))
-	  (php        . ("https://github.com/tree-sitter/tree-sitter-php"))
-	  (typescript . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src"))
-	  (tsx        . ("https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src"))
-	  (ruby       . ("https://github.com/tree-sitter/tree-sitter-ruby"))
-	  (rust       . ("https://github.com/tree-sitter/tree-sitter-rust"))
-	  (sql        . ("https://github.com/m-novikov/tree-sitter-sql"))
-	  (vue        . ("https://github.com/merico-dev/tree-sitter-vue"))
-	  (yaml       . ("https://github.com/ikatyang/tree-sitter-yaml"))
-	  (toml       . ("https://github.com/tree-sitter/tree-sitter-toml"))
-	  (zig        . ("https://github.com/GrayJack/tree-sitter-zig")))))
+	  (conf-toml-mode  . toml-ts-mode))))
+
 
 ;; lsp-bridge
 (use-package yasnippet
-  :defer t
   :hook
   (prog-mode . yas-minor-mode)
   :config
@@ -1116,41 +1085,44 @@
   (yas-reload-all))
 
 (use-package lsp-bridge
-  :ensure nil
-  :after yasnippet
+  :defer 0.5
   :custom
-  (lsp-bridge-enable-mode-line nil)
-  (acm-enable-search-words nil)
-  (acm-enable-icon t)
-  ;; (acm-enable-tempel t)
-  (acm-enable-tabnine-helper t)
-  (lsp-bridge-complete-manually nil)
-  (lsp-bridge-c-lsp-server "clangd")
+  (lsp-bridge-enable-completion-in-minibuffer t)
+  (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
+  (lsp-bridge-enable-with-tramp t)
+  (acm-enable-quick-access t)
+  (acm-backend-yas-match-by-trigger-keyword t)
+  (acm-enable-tabnine t)
+  (acm-enable-codeium nil)
+  ;; (lsp-bridge-enable-mode-line nil)
+  ;; :bind (:map acm-mode-map
+  ;; 	      ("C-n" . acm-select-next)
+  ;; 	      ("C-p" . acm-select-prev))
   :config
   (global-lsp-bridge-mode)
   
   ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
-  (defun lsp-bridge-jump ()
-    (interactive)
-    (cond
-     ((eq major-mode 'emacs-lisp-mode)
-      (let ((symb (function-called-at-point)))
-	(when symb
-	  (find-function symb))))
-     (lsp-bridge-mode
-      (lsp-bridge-find-def))
-     (t
-      (require 'dumb-jump)
-      (dumb-jump-go))))
+  ;; (defun lsp-bridge-jump ()
+  ;;   (interactive)
+  ;;   (cond
+  ;;    ((eq major-mode 'emacs-lisp-mode)
+  ;;     (let ((symb (function-called-at-point)))
+  ;; 	(when symb
+  ;; 	  (find-function symb))))
+  ;;    (lsp-bridge-mode
+  ;;     (lsp-bridge-find-def))
+  ;;    (t
+  ;;     (require 'dumb-jump)
+  ;;     (dumb-jump-go))))
 
-  (defun lsp-bridge-jump-back ()
-    (interactive)
-    (cond
-     (lsp-bridge-mode
-      (lsp-bridge-return-from-def))
-     (t
-      (require 'dumb-jump)
-      (dumb-jump-back))))
+  ;; (defun lsp-bridge-jump-back ()
+  ;;   (interactive)
+  ;;   (cond
+  ;;    (lsp-bridge-mode
+  ;;     (lsp-bridge-return-from-def))
+  ;;    (t
+  ;;     (require 'dumb-jump)
+  ;;     (dumb-jump-back))))
   
   (setq lsp-bridge-get-project-path-by-filepath
       (lambda (filepath)
@@ -1215,12 +1187,12 @@
 ;; (use-package auto-rename-tag
 ;;   :hook ((web-mode rjsx-mode tsx-ts-mode) . auto-rename-tag-mode))
 
-(use-package scss-mode
-  :mode "\\.scss\\'"
-  :custom
-  (scss-compile-at-save t)
-  (scss-output-directory "../css")
-  (scss-sass-command "sass --no-source-map"))
+;; (use-package scss-mode
+;;   :mode "\\.scss\\'"
+;;   :custom
+;;   (scss-compile-at-save t)
+;;   (scss-output-directory "../css")
+;;   (scss-sass-command "sass --no-source-map"))
 
 (use-package svelte-mode
   :mode "\\.svelte\\'")
@@ -1252,12 +1224,12 @@
   :mode "\\.hs\\'")
 
 (use-package tex
+  :after (TeX-latex-mode)
   :ensure auctex)
 
 (use-package cdlatex
   :hook
-  ((LaTeX-mode .  #'turn-on-cdlatex)
-   (latex-mode .  #'turn-on-cdlatex)
+  ((Tex-latex-mode . #'turn-on-cdlatex)
    (org-mode . org-cdlatex-mode)))
 
 (use-package markdown-mode
@@ -1269,9 +1241,11 @@
   :disabled
   :after markdown-mode)
 
-(use-package gdscript-mode)
+(use-package gdscript-mode
+  :mode "\\.gd\\'")
 
 (use-package swift-mode
+  :mode "\\.swift\\'"
   :config
   (defun xcode-build()
     (interactive)
