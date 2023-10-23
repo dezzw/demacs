@@ -43,45 +43,45 @@
         [
           git
 
-    # Language Server
-    ccls
+          # Language Server
+          ccls
 
-    nodePackages.pyright
-    nodePackages.typescript-language-server
-    nodePackages.vscode-langservers-extracted
-    nodePackages.bash-language-server
-    nodePackages.vscode-css-languageserver-bin
-    nodePackages.vscode-html-languageserver-bin
-    nodePackages.svelte-language-server
+          nodePackages.pyright
+          nodePackages.typescript-language-server
+          nodePackages.vscode-langservers-extracted
+          nodePackages.bash-language-server
+          nodePackages.vscode-css-languageserver-bin
+          nodePackages.vscode-html-languageserver-bin
+          nodePackages.svelte-language-server
 
-    nodePackages.eslint
+          nodePackages.eslint
 
-    python39Packages.pylint
-    
-    rnix-lsp
-    nil
+          python39Packages.pylint
+          
+          rnix-lsp
+          nil
 
-    texlab
+          texlab
 
-    zls
-    
-    universal-ctags
-    
-    # Code Formating
-    nixfmt
+          zls
+          
+          universal-ctags
+          
+          # Code Formating
+          nixfmt
 
-    # dirvish
-    imagemagick
-    ffmpegthumbnailer
-    mediainfo
+          # dirvish
+          imagemagick
+          ffmpegthumbnailer
+          mediainfo
 
-    # org-download
-    pngpaste
+          # org-download
+          pngpaste
 
-    # Spelling checking
-    # enchant
+          # Spelling checking
+          # enchant
 
-    emacs-all-the-icons-fonts
+          emacs-all-the-icons-fonts
         ];
 
       emacs-patched = (pkgs.emacs-git).overrideAttrs (old: {
@@ -120,7 +120,10 @@
 	        posframe
 	        
           # UI
-	        doom-themes
+	        (doom-themes.overrideAttrs (final: prev: {
+            patches = (prev.patches or [])
+                      ++ [./patches/override-theme.patch];
+          }))
 	        doom-modeline
 	        nerd-icons
 	        ligature
@@ -233,7 +236,7 @@
           vterm
 	        multi-vterm
 	        vterm-toggle
-                eat
+          eat
 
 	        # eshell
 	        eshell-prompt-extras
