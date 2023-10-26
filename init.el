@@ -1,4 +1,4 @@
-;; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
+; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
 (defconst IS-GUI (or (display-graphic-p) (and (daemonp) (not (string= (daemonp) "tty")))))
 (defconst IS-TTY (or (not (display-graphic-p)) (and (daemonp) (string= (daemonp) "tty"))))
 
@@ -286,12 +286,6 @@
   ;; 		    :weight 'light)
   )
 
-
-(dw/set-fonts)
-(when (daemonp)
-  (dw/set-fonts))
-
-
 (use-package ligature
   :defer 0.5
   :config
@@ -362,11 +356,11 @@
 (if (daemonp)
     (add-hook 'after-make-frame-functions
               (lambda (frame)
-                (setq doom-modeline-icon t)
-                (with-selected-frame frame
-                  (dw/set-fonts))))
+		(setq doom-modeline-icon t)
+		(with-selected-frame frame
+		  (dw/set-fonts))))
   (if (display-graphic-p)
-      (dw/set-fonts)))
+      (dw/set-fonts)))  
 
 ;; (use-package holo-layer
 ;;   :ensure nil
@@ -1085,7 +1079,7 @@
   (yas-reload-all))
 
 (use-package lsp-bridge
-  :defer 0.5
+  ;; :defer 0.5
   :custom
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
@@ -1128,6 +1122,22 @@
       (lambda (filepath)
         (when (locate-dominating-file filepath ".envrc")
 	      (expand-file-name (locate-dominating-file filepath ".envrc"))))))
+
+(use-package dape
+  :commands (dape dape-toggle-breakpoint)
+  :custom
+  (dape-key-prefix "\C-x\C-a")
+  (dape-repl-use-shorthand t)
+  :config
+  (add-to-list 'dape-configs
+             `(debugpy
+               modes (python-ts-mode python-mode)
+               command "python3"
+               command-args ("-m" "debugpy.adapter")
+               :type "executable"
+               :request "launch"
+               :cwd dape-cwd-fn
+               :program dape-find-file-buffer-default)))
 
 ;;(use-package jupyter
 ;;  :commands (jupyter-run-repl jupyter-connect-repl))

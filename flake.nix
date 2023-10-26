@@ -84,7 +84,7 @@
           emacs-all-the-icons-fonts
         ];
 
-      emacs-patched = (pkgs.emacs29).overrideAttrs (old: {
+      emacs-patched = (pkgs.emacs-git).overrideAttrs (old: {
         # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
         buildInputs = old.buildInputs ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
         patches =
