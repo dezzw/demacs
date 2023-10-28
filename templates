@@ -42,6 +42,7 @@ latex-mode org-mode
 (frac "\\frac{" p "}{" p "}")
 (enumerate "\\begin{enumerate}\n\\item " r> n> "\\end{enumerate}")
 (itemize "\\begin{itemize}\n\\item " r> n> "\\end{itemize}")
+(comment " \Comment{\parbox[t]{.5\linewidth}{" p "}}")
 
 org-mode
 

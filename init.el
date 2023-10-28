@@ -955,14 +955,9 @@
 ;;           (tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face))))
 
 ;; (use-package tempel
-;;   :defer 10
 ;;   :custom
-;;   (tempel-path "~/.dotfiles/Emacs/templates")
-;;   :bind (("M-+" . tempel-insert) ;; Alternative tempel-expand
-;;          :map tempel-map
-;;          ([remap keyboard-escape-quit] . tempel-done)
-;;          ("TAB" . tempel-next)
-;;          ("<backtab>" . tempel-previous))
+;;   (tempel-path (expand-file-name "templates" user-emacs-directory)))
+
 ;;   :init
 ;;   (defun tempel-setup-capf ()
 ;;     ;; Add the Tempel Capf to `completion-at-point-functions'.
@@ -1084,9 +1079,13 @@
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
   (lsp-bridge-enable-with-tramp t)
+  (lsp-bridge-enable-hover-diagnostic t)
+
+  (acm-candidate-match-function 'orderless-flex)
   (acm-enable-quick-access t)
   (acm-backend-yas-match-by-trigger-keyword t)
   (acm-enable-tabnine t)
+  ;; (acm-enable-tempel t)
   (acm-enable-codeium nil)
   ;; (lsp-bridge-enable-mode-line nil)
   ;; :bind (:map acm-mode-map
