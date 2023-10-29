@@ -37,7 +37,18 @@
         overlays = [
           emacs-overlay.overlay
         ];
+
+
       };
+      myruff-lsp = pkgs.ruff-lsp.overrideAttrs (final: prev: {
+         version = "0.0.42";
+         src = pkgs.fetchFromGitHub {
+           owner = "astral-sh";
+           repo = "ruff-lsp";
+           rev = "v0.0.42";
+           hash = "sha256-Dn/xPjYCyJYlDNMUfl61L/tWq5mRJ8WD0G5qZH9OepY=";
+         };
+       });
     in rec {
       dependencies = with pkgs;
         [
@@ -45,6 +56,8 @@
 
           # Language Server
           ccls
+          
+          myruff-lsp
 
           nodePackages.pyright
           nodePackages.typescript-language-server
@@ -139,6 +152,7 @@
 
 	        # frame/windows management
 	        beframe
+                tabspaces       
 	        ace-window
 	        popper
 	        
