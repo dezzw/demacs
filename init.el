@@ -1,4 +1,4 @@
-; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
+					; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
 (defconst IS-GUI (or (display-graphic-p) (and (daemonp) (not (string= (daemonp) "tty")))))
 (defconst IS-TTY (or (not (display-graphic-p)) (and (daemonp) (string= (daemonp) "tty"))))
 
@@ -258,11 +258,11 @@
  "gJ" 'jester/evil-join-no-whitespace)
 
 (dw/leader-key-def
- "SPC" 'execute-extended-command
- "f" 'find-file
- "b" 'consult-buffer
- "d" 'consult-dir
- "a" 'org-agenda)
+  "SPC" 'execute-extended-command
+  "f" 'find-file
+  "b" 'consult-buffer
+  "d" 'consult-dir
+  "a" 'org-agenda)
 
 ;; Set default font
 (defun dw/set-fonts()
@@ -327,7 +327,7 @@
                 vterm-mode-hook
                 shell-mode-hook
                 eshell-mode-hook
-								pdf-view-mode-hook
+		pdf-view-mode-hook
                 xwidget-webkit-mode-hook
                 eaf-mode-hook
                 doc-view-mode-hook))
@@ -381,7 +381,28 @@
   (tabspaces-include-buffers '("*scratch*"))
   ;; sessions
   (tabspaces-session t)
-  (tabspaces-session-auto-restore t))
+  (tabspaces-session-auto-restore t)
+  :config
+  ;; Filter Buffers for Consult-Buffer
+
+  (with-eval-after-load 'consult
+    ;; hide full buffer list (still available with "b" prefix)
+    (consult-customize consult--source-buffer :hidden t :default nil)
+    ;; set consult-workspace buffer list
+    (defvar consult--source-workspace
+      (list :name     "Workspace Buffers"
+            :narrow   ?w
+            :history  'buffer-name-history
+            :category 'buffer
+            :state    #'consult--buffer-state
+            :default  t
+            :items    (lambda () (consult--buffer-query
+				  :predicate #'tabspaces--local-buffer-p
+				  :sort 'visibility
+				  :as #'buffer-name)))
+
+      "Set workspace buffer list for consult-buffer.")
+    (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
 
 
 (use-package beframe
@@ -512,7 +533,7 @@
       (org-babel-tangle)))
   
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dw/org-babel-tangle-dont-ask
-                                           'run-at-end 'only-in-org-mode))))
+						'run-at-end 'only-in-org-mode))))
 
 ;; change bullets for headings
 (use-package org-superstar
@@ -605,37 +626,37 @@
 
                         (org-super-agenda-groups
                          '((:name "Today"
-                            :time-grid t
-                            :date today
-                            :scheduled today
-                            :order 1)
+				  :time-grid t
+				  :date today
+				  :scheduled today
+				  :order 1)
                            (:name "Due Soon"
-                            :deadline future
-                            :order 2)
+				  :deadline future
+				  :order 2)
                            (:discard (:anything t))))))
             (alltodo "" ((org-agenda-overriding-header "")
                          (org-super-agenda-groups
                           '((:name "Overdue"
-                             :deadline past
-                             :order 1)
+				   :deadline past
+				   :order 1)
                             (:name "Assignments"
-                             :tag "assignment"
-                             :order 2)
+				   :tag "assignment"
+				   :order 2)
                             (:name "Labs"
-                             :tag "lab"
-                             :order 3)
+				   :tag "lab"
+				   :order 3)
                             (:name "Quizs"
-                             :tag "quiz"
-                             :order 4)
+				   :tag "quiz"
+				   :order 4)
                             (:name "Tests/Exam"
-                             :tag "test"
-                             :order  5)
+				   :tag "test"
+				   :order  5)
                             (:name "Projects"
-                             :tag "Project"
-                             :order 14)
+				   :tag "Project"
+				   :order 14)
                             (:name "Emacs"
-                             :tag "Emacs"
-                             :order 13)
+				   :tag "Emacs"
+				   :order 13)
                             (:discard (:anything t)))))))))))
 
 ;; Refiling
@@ -967,9 +988,9 @@
 ;;           (t ,(nerd-icons-codicon "nf-cod-code") :face font-lock-warning-face)
 ;;           (tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face))))
 
-;; (use-package tempel
-;;   :custom
-;;   (tempel-path (expand-file-name "templates" user-emacs-directory)))
+(use-package tempel)
+;; :custom
+;; (tempel-path (expand-file-name "templates" user-emacs-directory)))
 
 ;;   :init
 ;;   (defun tempel-setup-capf ()
@@ -1098,7 +1119,7 @@
   (acm-enable-quick-access t)
   (acm-backend-yas-match-by-trigger-keyword t)
   (acm-enable-tabnine t)
-  ;; (acm-enable-tempel t)
+  (acm-enable-tempel t)
   (acm-enable-codeium nil)
   ;; (lsp-bridge-enable-mode-line nil)
   ;; :bind (:map acm-mode-map
@@ -1131,9 +1152,9 @@
   ;;     (dumb-jump-back))))
   
   (setq lsp-bridge-get-project-path-by-filepath
-      (lambda (filepath)
-        (when (locate-dominating-file filepath ".envrc")
-	      (expand-file-name (locate-dominating-file filepath ".envrc"))))))
+	(lambda (filepath)
+          (when (locate-dominating-file filepath ".envrc")
+	    (expand-file-name (locate-dominating-file filepath ".envrc"))))))
 
 (use-package dape
   :commands (dape dape-toggle-breakpoint)
@@ -1142,14 +1163,14 @@
   (dape-repl-use-shorthand t)
   :config
   (add-to-list 'dape-configs
-             `(debugpy
-               modes (python-ts-mode python-mode)
-               command "python3"
-               command-args ("-m" "debugpy.adapter")
-               :type "executable"
-               :request "launch"
-               :cwd dape-cwd-fn
-               :program dape-find-file-buffer-default)))
+               `(debugpy
+		 modes (python-ts-mode python-mode)
+		 command "python3"
+		 command-args ("-m" "debugpy.adapter")
+		 :type "executable"
+		 :request "launch"
+		 :cwd dape-cwd-fn
+		 :program dape-find-file-buffer-default)))
 
 ;;(use-package jupyter
 ;;  :commands (jupyter-run-repl jupyter-connect-repl))
@@ -1246,8 +1267,15 @@
   :mode "\\.hs\\'")
 
 (use-package tex
-  :after (TeX-latex-mode)
-  :ensure auctex)
+  :ensure auctex
+  :config
+  (defun remove-tex-trash()
+    (interactive)
+    (let ((current-directory default-directory)
+	  (extensions '("\\.log\\'" "\\.out\\'" "\\.aux\\'")))
+      (dolist (ext extensions)
+	(dolist (file (directory-files current-directory nil ext))
+	  (delete-file (concat current-directory file)))))))
 
 (use-package cdlatex
   :hook
@@ -1486,7 +1514,7 @@
                    :accept-focus t)))))))
 
   (dw/leader-key-def
-   "'" 'vterm-posframe-toggle))
+    "'" 'vterm-posframe-toggle))
 
 (use-package multi-vterm
   :commands (multi-vterm))
