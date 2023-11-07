@@ -52,6 +52,8 @@
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
 (push '(undecorated . t) default-frame-alist)
+;; (push '(ns-transparent-titlebar . t) default-frame-alist)
+;; (push '(ns-appearance . dark) default-frame-alist)
 
 (setq make-backup-files       nil
       auto-save-default       nil

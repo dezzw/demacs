@@ -40,15 +40,6 @@
 
 
       };
-      myruff-lsp = pkgs.ruff-lsp.overrideAttrs (final: prev: {
-         version = "0.0.42";
-         src = pkgs.fetchFromGitHub {
-           owner = "astral-sh";
-           repo = "ruff-lsp";
-           rev = "v0.0.42";
-           hash = "sha256-Dn/xPjYCyJYlDNMUfl61L/tWq5mRJ8WD0G5qZH9OepY=";
-         };
-       });
     in rec {
       dependencies = with pkgs;
         [
@@ -57,8 +48,8 @@
           # Language Server
           ccls
           
-          myruff-lsp
-
+          ruff-lsp
+          
           nodePackages.pyright
           nodePackages.typescript-language-server
           nodePackages.vscode-langservers-extracted
@@ -297,6 +288,9 @@
           if [ ! -d $HOME/.emacs.d/ ]; then
             mkdir -p $HOME/.emacs.d
             git clone git@github.com:dezzw/demacs.git $HOME/.emacs.d 
+          else
+            cd $HOME/.emacs.d/
+            git pull
           fi
         '';
       };
