@@ -8,6 +8,7 @@ history
 transient
 .org-id-locations
 bookmarks
+tabsession.el
 
 lsp-bridge/
 tramp
