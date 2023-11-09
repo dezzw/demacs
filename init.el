@@ -1,4 +1,4 @@
-					; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
+;; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
 (defconst IS-GUI (or (display-graphic-p) (and (daemonp) (not (string= (daemonp) "tty")))))
 (defconst IS-TTY (or (not (display-graphic-p)) (and (daemonp) (string= (daemonp) "tty"))))
 
@@ -337,11 +337,11 @@
   :defer t
   :config
   (setq hl-todo-keyword-faces
-        '(("TODO"   . "#FF0000")
+        '(("TODO"   . "#61d290")
+	  ("IMPLEMENT" . "#61d290")
           ("FIXME"  . "#FF0000")
           ("DEBUG"  . "#A020F0")
           ("NEXT" . "#FF4500")
-          ("TBA" . "#61d290")
           ("UNCHECK"   . "#1E90FF")))
   (global-hl-todo-mode))
 
@@ -371,6 +371,7 @@
 ;;   (holo-layer-enable))
 
 (use-package tabspaces
+  :disabled
   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
@@ -446,10 +447,12 @@
   :config (winner-mode 1))
 
 (use-package popper
-  :bind (("C-`"   . popper-toggle-latest)
-         ("M-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
-  :config
+  :bind (:map popper-mode-map
+         ("C-h z"       . popper-toggle)
+         ("C-<tab>"     . popper-cycle)
+         ("C-M-<tab>"   . popper-toggle-type))
+  :hook (emacs-startup . popper-mode)
+  :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
           "Output\\*$"
@@ -457,11 +460,8 @@
           help-mode
           compilation-mode
           ;; "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
-          "^\\*shell.*\\*$"  shell-mode  ;shell as a popup
-          "^\\*term.*\\*$"   term-mode   ;term as a popup
           "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
-          ))
-  (popper-mode +1))                ; For echo area hints
+          )))
 
 (use-package dired-single
   :commands (dired-single-buffer dired-single-up-directory))
@@ -1008,21 +1008,21 @@
 ;;   (add-hook 'text-mode-hook 'tempel-setup-capf))
 
 (use-package citre
-  :bind
-  (("C-x c j" . citre-jump)
-   ("C-x c J" . citre-jump-back)
-   ("C-x c p" . citre-ace-peek)
-   ("C-x c u" . citre-update-this-tags-file))
-  :custom
-  (citre-readtags-program "/etc/profiles/per-user/dez/bin/readtags")
-  (citre-ctags-program "/etc/profiles/per-user/dez/bin/ctags")
-  ;; Set this if you want to always use one location to create a tags file.
-  (citre-default-create-tags-file-location 'global-cache)
-  (citre-use-project-root-when-creating-tags t)
-  (citre-prompt-language-for-ctags-command t)
-  (citre-auto-enable-citre-mode-modes '(prog-mode))
+  :bind (:map citre-mode-map
+	 ("C-x c j" . citre-jump)
+	 ("C-x c J" . citre-jump-back)
+	 ("C-x c p" . citre-ace-peek)
+	 ("C-x c u" . citre-update-this-tags-file))
+  :init
+  (require 'citre)
+  (require 'citre-config)
   :config
-  (require 'citre-config))
+  (setq
+   citre-readtags-program "/etc/profiles/per-user/dez/bin/readtags"
+   citre-ctags-program "/etc/profiles/per-user/dez/bin/ctags"
+   ;; Set this if you want to always use one location to create a tags file.
+   citre-use-project-root-when-creating-tags t
+   citre-prompt-language-for-ctags-command t))
 
 (use-package helpful
   :custom
@@ -1118,10 +1118,11 @@
   (acm-candidate-match-function 'orderless-flex)
   (acm-enable-quick-access t)
   (acm-backend-yas-match-by-trigger-keyword t)
-  (acm-enable-tabnine t)
+  (acm-enable-tabnine nil)
   (acm-enable-tempel t)
   (acm-enable-codeium nil)
-  ;; (lsp-bridge-enable-mode-line nil)
+  (acm-enable-citre t)
+  (lsp-bridge-enable-mode-line nil)
   ;; :bind (:map acm-mode-map
   ;; 	      ("C-n" . acm-select-next)
   ;; 	      ("C-p" . acm-select-prev))
