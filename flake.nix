@@ -121,6 +121,8 @@
         emacs-augmented =
           ((pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (epkgs:
             with epkgs; [
+              setup
+
               gcmh
               exec-path-from-shell
               posframe
@@ -198,6 +200,7 @@
               citre
 
               # Productivity
+              snap-indent
               vdiff
               helpful
               format-all
@@ -240,6 +243,8 @@
               docker
               emmet-mode
               zig-mode
+              jupyter
+              ein
 
               # term/shell
               vterm

@@ -458,6 +458,7 @@
           "Output\\*$"
           "\\*Async Shell Command\\*"
           help-mode
+	  helpful-mode
           compilation-mode
           ;; "^\\*eshell.*\\*$" eshell-mode ;eshell as a popup
           "^\\*vterm.*\\*$"  vterm-mode  ;vterm as a popup
@@ -1008,6 +1009,7 @@
 ;;   (add-hook 'text-mode-hook 'tempel-setup-capf))
 
 (use-package citre
+  :disabled
   :bind (:map citre-mode-map
 	 ("C-x c j" . citre-jump)
 	 ("C-x c J" . citre-jump-back)
@@ -1108,50 +1110,26 @@
   (yas-reload-all))
 
 (use-package lsp-bridge
-  ;; :defer 0.5
   :custom
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
+  (lsp-bridge-signature-show-with-frame-position "top-right")
   (lsp-bridge-enable-with-tramp t)
   (lsp-bridge-enable-hover-diagnostic t)
 
   (acm-candidate-match-function 'orderless-flex)
-  (acm-enable-quick-access t)
   (acm-backend-yas-match-by-trigger-keyword t)
-  (acm-enable-tabnine nil)
+  (acm-enable-tabnine t)
   (acm-enable-tempel t)
-  (acm-enable-codeium nil)
-  (acm-enable-citre t)
+  ;; (acm-enable-codeium t)
+  ;; (acm-enable-citre t)
   (lsp-bridge-enable-mode-line nil)
   ;; :bind (:map acm-mode-map
   ;; 	      ("C-n" . acm-select-next)
   ;; 	      ("C-p" . acm-select-prev))
   :config
   (global-lsp-bridge-mode)
-  
-  ;; 融合 `lsp-bridge' `find-function' 以及 `dumb-jump' 的智能跳转
-  ;; (defun lsp-bridge-jump ()
-  ;;   (interactive)
-  ;;   (cond
-  ;;    ((eq major-mode 'emacs-lisp-mode)
-  ;;     (let ((symb (function-called-at-point)))
-  ;; 	(when symb
-  ;; 	  (find-function symb))))
-  ;;    (lsp-bridge-mode
-  ;;     (lsp-bridge-find-def))
-  ;;    (t
-  ;;     (require 'dumb-jump)
-  ;;     (dumb-jump-go))))
 
-  ;; (defun lsp-bridge-jump-back ()
-  ;;   (interactive)
-  ;;   (cond
-  ;;    (lsp-bridge-mode
-  ;;     (lsp-bridge-return-from-def))
-  ;;    (t
-  ;;     (require 'dumb-jump)
-  ;;     (dumb-jump-back))))
-  
   (setq lsp-bridge-get-project-path-by-filepath
 	(lambda (filepath)
           (when (locate-dominating-file filepath ".envrc")
@@ -1173,11 +1151,11 @@
 		 :cwd dape-cwd-fn
 		 :program dape-find-file-buffer-default)))
 
-;;(use-package jupyter
-;;  :commands (jupyter-run-repl jupyter-connect-repl))
+(use-package jupyter
+ :commands (jupyter-run-repl jupyter-connect-repl))
 
-;;(use-package ein
-;;  :commands (ein:run ein:login))
+(use-package ein
+ :commands (ein:run ein:login))
 
 (use-package web-mode
   :mode "\\.html?\\'"
@@ -1614,3 +1592,35 @@
            :sasl-username "dezzw"
            :sasl-password "Irc0x577063"
            :channels ("#emacs-circe")))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(ace-window add-node-modules-path beframe cape cdlatex circe citre
+		consult-dir corfu diff-hl dired-hide-dotfiles
+		dired-single dirvish docker doom-modeline doom-themes
+		eat ein embark-consult emmet-mode envrc esh-help
+		eshell-prompt-extras eshell-syntax-highlighting
+		eshell-up eshell-z evil-collection evil-escape
+		evil-matchit evil-mc evil-multiedit
+		evil-nerd-commenter evil-surround evil-tex
+		evil-visualstar exec-path-from-shell format-all gcmh
+		gdscript-mode general gptel haskell-mode helpful
+		highlight-indent-guides hl-todo hungry-delete jinx
+		kind-icon ligature lsp-bridge magit-delta marginalia
+		mind-wave multi-vterm nix-mode orderless org-appear
+		org-download org-roam-ui org-super-agenda
+		org-superstar password-store pdf-tools popper posframe
+		rainbow-delimiters rainbow-mode restclient rjsx-mode
+		sage-shell-mode scss-mode sly svelte-mode swift-mode
+		tabspaces tempel valign vdiff vertico
+		visual-fill-column vterm-toggle vundo web-mode
+		yasnippet-snippets zig-mode)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
