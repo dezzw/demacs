@@ -148,6 +148,7 @@
               # frame/windows management
               beframe
               tabspaces
+              persp-mode
               ace-window
               popper
 
@@ -265,6 +266,8 @@
 
               # irc cheet
               circe
+              ement
+              telega
 
               # new packages want to try
               jinx
