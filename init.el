@@ -14,9 +14,11 @@
 ;; Set the right directory to store the native comp cache
 (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-one t))
+;; (use-package doom-themes
+;;   :config
+;;   (load-theme 'doom-one t))
+
+(load-theme 'modus-vivendi t)
 
 (use-package doom-modeline
   :hook

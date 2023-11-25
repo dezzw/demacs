@@ -134,6 +134,7 @@
               }))
               doom-modeline
               nerd-icons
+              all-the-icons
               ligature
               hl-todo
               diff-hl
