@@ -226,6 +226,7 @@
               })
 
               envrc
+              devdocs
 
               # language
               web-mode
@@ -236,6 +237,7 @@
               svelte-mode
               nix-mode
               sly
+              cider
               haskell-mode
               cdlatex
               auctex
