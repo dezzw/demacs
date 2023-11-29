@@ -14,11 +14,11 @@
 ;; Set the right directory to store the native comp cache
 (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
 
-;; (use-package doom-themes
-;;   :config
-;;   (load-theme 'doom-one t))
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one t))
 
-(load-theme 'modus-vivendi t)
+;; (load-theme 'modus-vivendi t)
 
 (use-package doom-modeline
   :hook
@@ -1048,19 +1048,19 @@
   :config (electric-indent-mode))
 
 (use-package rainbow-delimiters
-  :hook prog-mode)
+  :hook emacs-lisp-mode)
 
-(use-package highlight-indent-guides
-  :defer 0.5
-  :hook prog-mode
-  :custom
-  (highlight-indent-guides-auto-enabled nil)
-  (highlight-indent-guides-delay 0)
-  (highlight-indent-guides-method 'character)
-  :config
-  (set-face-background 'highlight-indent-guides-odd-face "darkgray")
-  (set-face-background 'highlight-indent-guides-even-face "dimgray")
-  (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
+;; (use-package highlight-indent-guides
+;;   :defer 0.5
+;;   :hook prog-mode
+;;   :custom
+  ;; (highlight-indent-guides-auto-enabled nil)
+;;   (highlight-indent-guides-delay 0)
+;;   (highlight-indent-guides-method 'character))
+  ;; :config
+  ;; (set-face-background 'highlight-indent-guides-odd-face "darkgray")
+  ;; (set-face-background 'highlight-indent-guides-even-face "dimgray")
+  ;; (set-face-foreground 'highlight-indent-guides-character-face "dimgray"))
 
 ;; (use-package aggressive-indent
 ;;   :hook (emacs-lisp-mode lisp-mode python-ts-mode))

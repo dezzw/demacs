@@ -238,6 +238,7 @@
               nix-mode
               sly
               cider
+              clojure-mode
               haskell-mode
               cdlatex
               auctex
