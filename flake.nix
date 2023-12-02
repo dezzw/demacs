@@ -121,7 +121,7 @@
         emacs-augmented =
           ((pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (epkgs:
             with epkgs; [
-              setup
+              setup #temp try
 
               gcmh
               exec-path-from-shell
@@ -154,6 +154,7 @@
               popper
 
               # Edit
+              meow # temp try
               evil
               evil-nerd-commenter
               evil-escape
@@ -209,7 +210,7 @@
               restclient
               password-store
               pdf-tools
-              gptel
+              gptel #temp try
 
 
               (callPackage ./site-packages/mind-wave/mind-wave.nix {
