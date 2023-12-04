@@ -14,11 +14,11 @@
 ;; Set the right directory to store the native comp cache
 (add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
 
-(use-package doom-themes
-  :config
-  (load-theme 'doom-one t))
+;; (use-package doom-themes
+;;   :config
+;;   (load-theme 'doom-one t))
 
-;; (load-theme 'modus-vivendi t)
+(load-theme 'modus-vivendi t)
 
 (use-package doom-modeline
   :hook
@@ -1076,31 +1076,6 @@
 
 (use-package restclient
   :mode (("\\.http\\'" . restclient-mode)))
-(use-package treesit
-  :when (and (fboundp 'treesit-available-p) (treesit-available-p))
-  :mode (("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode)
-	 ("\\.go\\'" . go-ts-mode)
-	 ("/go\\.mod\\'" . go-mod-ts-mode)
-	 ("\\.rs\\'" . rust-ts-mode)
-	 ("\\.ts\\'" . typescript-ts-mode)
-	 ("\\.tsx\\'" . tsx-ts-mode)
-	 ("\\.y[a]?ml\\'" . yaml-ts-mode)
-	 ("\\.zig\\'" . zig-ts-mode))
-  :config (setq treesit-font-lock-level 4)
-  :init
-  (setq major-mode-remap-alist
-	'((sh-mode         . bash-ts-mode)
-	  (c-mode          . c-ts-mode)
-	  (c++-mode        . c++-ts-mode)
-	  (c-or-c++-mode   . c-or-c++-ts-mode)
-	  (css-mode        . css-ts-mode)
-	  (js-mode         . js-ts-mode)
-	  (java-mode       . java-ts-mode)
-	  (js-json-mode    . json-ts-mode)
-	  (makefile-mode   . cmake-ts-mode)
-	  (python-mode     . python-ts-mode)
-	  (ruby-mode       . ruby-ts-mode)
-	  (conf-toml-mode  . toml-ts-mode))))
 
 
 ;; lsp-bridge
@@ -1624,4 +1599,12 @@
 (add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (require 'init-setup)
+
+(require 'init-tabbar)
+
+;;; lang
+(require 'init-treesit)
+(require 'init-python)
+(require 'init-clojure)
+
 (require 'init-telega)

@@ -238,8 +238,14 @@
               svelte-mode
               nix-mode
               sly
+              
+              # clojure
               cider
               clojure-mode
+              clj-refactor
+              neil
+              jet
+
               haskell-mode
               cdlatex
               auctex
