@@ -121,167 +121,167 @@
         emacs-augmented =
           ((pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (epkgs:
             with epkgs; [
-              setup #temp try
+              # setup #temp try
 
-              gcmh
-              exec-path-from-shell
-              posframe
+              # gcmh
+              # exec-path-from-shell
+              # posframe
 
-              # UI
-              (doom-themes.overrideAttrs (final: prev: {
-                patches = (prev.patches or [ ])
-                  ++ [ ./patches/override-theme.patch ];
-              }))
-              doom-modeline
-              nerd-icons
-              all-the-icons
-              ligature
-              hl-todo
-              diff-hl
-              rainbow-delimiters
-              highlight-indent-guides
-              rainbow-mode
+              # # UI
+              # (doom-themes.overrideAttrs (final: prev: {
+              #   patches = (prev.patches or [ ])
+              #     ++ [ ./patches/override-theme.patch ];
+              # }))
+              # doom-modeline
+              # nerd-icons
+              # all-the-icons
+              # ligature
+              # hl-todo
+              # diff-hl
+              # rainbow-delimiters
+              # highlight-indent-guides
+              # rainbow-mode
 
               # (callPackage ./site-packages/holo-layer/holo-layer.nix {
               #   inherit (pkgs) fetchFromGitHub;
               # })
 
               # frame/windows management
-              beframe
-              tabspaces
-              persp-mode
-              ace-window
-              popper
+              # beframe
+              # tabspaces
+              # persp-mode
+              # ace-window
+              # popper
 
               # Edit
-              meow # temp try
-              evil
-              evil-nerd-commenter
-              evil-escape
-              evil-visualstar
-              evil-surround
-              evil-multiedit
-              evil-mc
-              evil-matchit
-              evil-collection
-              evil-tex
+              # meow # temp try
+              # evil
+              # evil-nerd-commenter
+              # evil-escape
+              # evil-visualstar
+              # evil-surround
+              # evil-multiedit
+              # evil-mc
+              # evil-matchit
+              # evil-collection
+              # evil-tex
 
-              vundo
-              hungry-delete
-              avy
+              # vundo
+              # hungry-delete
+              # avy
 
-              general
+              # general
 
               #dired
-              dired-single
-              dired-hide-dotfiles
-              dirvish
+              # dired-single
+              # dired-hide-dotfiles
+              # dirvish
 
               # org
-              org-superstar
-              visual-fill-column
-              valign
-              org-appear
+              # org-superstar
+              # visual-fill-column
+              # valign
+              # org-appear
               # org-modern-indent
-              org-super-agenda
-              org-roam
-              org-roam-ui
-              org-download
+              # org-super-agenda
+              # org-roam
+              # org-roam-ui
+              # org-download
 
               # completion
-              vertico
-              orderless
-              consult
-              consult-dir
-              marginalia
-              embark
-              embark-consult
-              corfu
-              cape
-              kind-icon
-              tempel
-              citre
+              # vertico
+              # orderless
+              # consult
+              # consult-dir
+              # marginalia
+              # embark
+              # embark-consult
+              # corfu
+              # cape
+              # kind-icon
+              # tempel
+              # citre
 
-              # Productivity
-              snap-indent
-              vdiff
-              helpful
-              format-all
-              restclient
-              password-store
-              pdf-tools
-              gptel #temp try
+              # # Productivity
+              # snap-indent
+              # vdiff
+              # helpful
+              # format-all
+              # restclient
+              # password-store
+              # pdf-tools
+              # gptel #temp try
 
 
-              (callPackage ./site-packages/mind-wave/mind-wave.nix {
-                inherit (pkgs) fetchFromGitHub;
-              })
+              # (callPackage ./site-packages/mind-wave/mind-wave.nix {
+              #   inherit (pkgs) fetchFromGitHub;
+              # })
 
               # Developing Tools
               (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
                 inherit (pkgs) fetchFromGitHub;
               })
 
-              (callPackage ./site-packages/dape {
-                inherit (pkgs) fetchFromGitHub;
-              })
+              # (callPackage ./site-packages/dape {
+              #   inherit (pkgs) fetchFromGitHub;
+              # })
 
-              envrc
-              devdocs
+              # envrc
+              # devdocs
 
-              # language
-              web-mode
-              js2-mode
-              rjsx-mode
-              add-node-modules-path
-              scss-mode
-              svelte-mode
-              nix-mode
-              sly
+              # # language
+              # web-mode
+              # js2-mode
+              # rjsx-mode
+              # add-node-modules-path
+              # scss-mode
+              # svelte-mode
+              # nix-mode
+              # sly
               
-              # clojure
-              cider
-              clojure-mode
-              clj-refactor
-              neil
-              jet
+              # # clojure
+              # cider
+              # clojure-mode
+              # clj-refactor
+              # neil
+              # jet
 
-              haskell-mode
-              cdlatex
-              auctex
-              markdown-mode
-              gdscript-mode
-              swift-mode
-              docker
-              emmet-mode
-              zig-mode
-              jupyter
-              ein
+              # haskell-mode
+              # cdlatex
+              # auctex
+              # markdown-mode
+              # gdscript-mode
+              # swift-mode
+              # docker
+              # emmet-mode
+              # zig-mode
+              # jupyter
+              # ein
 
-              # term/shell
-              vterm
-              multi-vterm
-              vterm-toggle
-              eat
+              # # term/shell
+              # vterm
+              # multi-vterm
+              # vterm-toggle
+              # eat
 
-              # eshell
-              eshell-prompt-extras
-              eshell-up
-              eshell-syntax-highlighting
-              eshell-z
-              esh-help
+              # # eshell
+              # eshell-prompt-extras
+              # eshell-up
+              # eshell-syntax-highlighting
+              # eshell-z
+              # esh-help
 
-              # git
-              magit
-              magit-delta
+              # # git
+              # magit
+              # magit-delta
 
-              # irc cheet
-              circe
-              ement
-              telega
+              # # irc cheet
+              # circe
+              # ement
+              # telega
 
-              # new packages want to try
-              jinx
+              # # new packages want to try
+              # jinx
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
             ]));
 

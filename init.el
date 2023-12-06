@@ -4,7 +4,6 @@
 
 (setq native-comp-deferred-compilation-deny-list nil)
 
-(require 'use-package)
 (setq use-package-verbose t)
 (when (daemonp)
   (setq use-package-always-demand t))
@@ -63,6 +62,7 @@
 
 ;;; Editing utils
 (use-package emacs
+  :elpaca nil
   :custom
   (scroll-preserve-screen-position 'always)
   (truncate-partial-width-windows nil)
@@ -90,7 +90,7 @@
     (setq indicate-buffer-boundaries 'left)))
 
 (use-package recentf
-  :ensure nil
+  :elpaca nil
   :custom
   (recentf-max-saved-items 1000)
   (recentf-exclude `("/tmp/" "/ssh:" ,(concat user-emacs-directory "lib/.*-autoloads\\.el\\'")))
@@ -98,7 +98,7 @@
   (recentf-mode))
 
 (use-package midnight
-  :ensure nil
+  :elpaca nil
   :defer t
   :custom
   (midnight-period 7200)
@@ -124,21 +124,6 @@
   (avy-all-windows-alt t)
   (avy-timeout-seconds 0.3))
 
-;; (use-package jinx  
-;;   :hook (emacs-startup . global-jinx-mode))
-
-;; (use-package flyspell
-;;   :ensure nil
-;;   :diminish
-;;   :hook ((prog-mode . flyspell-prog-mode)
-;;          (git-commit-mode . flyspell-mode)
-;;          (flyspell-mode . (lambda ()
-;;                             (dolist (key '("C-;" "C-."))
-;;                               (unbind-key key flyspell-mode-map)))))
-;;   :custom
-;;   (flyspell-issue-message-flag nil)
-;;   (ispell-program-name "enchant-2")
-;;   (ispell-dictionary "english"))
 
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -270,7 +255,7 @@
 (defun dw/set-fonts()
   (interactive)
   (set-face-attribute 'default nil
-                      :font "Maple Mono"
+                      :font "Liga SFMono Nerd Font"
                       ;; :font "JetBrainsMono Nerd Font"
                       :weight 'regular
                       :height 140)
@@ -347,10 +332,10 @@
           ("UNCHECK"   . "#1E90FF")))
   (global-hl-todo-mode))
 
-;; (use-package diff-hl
-;;   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
-;;          (after-init . global-diff-hl-mode)
-;;          (dired-mode . diff-hl-dired-mode)))
+(use-package diff-hl
+  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
+         (after-init . global-diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode)))
 
 (use-package vdiff
   :commands (vdiff-buffer))
@@ -362,51 +347,7 @@
 		(with-selected-frame frame
 		  (dw/set-fonts))))
   (if (display-graphic-p)
-      (dw/set-fonts)))  
-
-;; (use-package holo-layer
-;;   :ensure nil
-;;   :when (not (daemonp))
-;;   :custom
-;;   (holo-layer-enable-cursor-animation t)
-;;   :config
-;;   (holo-layer-enable))
-
-(use-package tabspaces
-  :disabled
-  :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
-  :commands (tabspaces-switch-or-create-workspace
-             tabspaces-open-or-create-project-and-workspace)
-  :custom
-  (tabspaces-use-filtered-buffers-as-default t)
-  (tabspaces-default-tab "Default")
-  (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
-  ;; sessions
-  (tabspaces-session t)
-  (tabspaces-session-auto-restore t)
-  :config
-  ;; Filter Buffers for Consult-Buffer
-
-  (with-eval-after-load 'consult
-    ;; hide full buffer list (still available with "b" prefix)
-    (consult-customize consult--source-buffer :hidden t :default nil)
-    ;; set consult-workspace buffer list
-    (defvar consult--source-workspace
-      (list :name     "Workspace Buffers"
-            :narrow   ?w
-            :history  'buffer-name-history
-            :category 'buffer
-            :state    #'consult--buffer-state
-            :default  t
-            :items    (lambda () (consult--buffer-query
-				  :predicate #'tabspaces--local-buffer-p
-				  :sort 'visibility
-				  :as #'buffer-name)))
-
-      "Set workspace buffer list for consult-buffer.")
-    (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
-
+      (dw/set-fonts)))
 
 (use-package beframe
   :when (daemonp)
@@ -443,7 +384,7 @@
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winner
-  :ensure nil
+  :elpaca nil
   :bind (("M-N" . winner-redo)
          ("M-P" . winner-undo))
   :config (winner-mode 1))
@@ -473,7 +414,7 @@
   :hook dired-mode)
 
 (use-package dired
-  :ensure nil
+  :elpaca nil
   :custom
   (dired-dwim-target t)
   (dired-listing-switches "-alGh")
@@ -731,8 +672,8 @@
 
 ;; Configure directory extension.
 (use-package vertico-directory
+  :elpaca nil
   :after vertico
-  :ensure nil
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -743,7 +684,7 @@
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :ensure nil
+  :elpaca nil
   :init
   (savehist-mode)
   :config
@@ -1040,11 +981,11 @@
   ([remap describe-key] . helpful-key))
 
 (use-package elec-pair
-  :ensure nil
+  :elpaca nil
   :config (electric-pair-mode))
 
 (use-package electric
-  :ensure nil
+  :elpaca nil
   :config (electric-indent-mode))
 
 (use-package rainbow-delimiters
@@ -1087,6 +1028,7 @@
   (yas-reload-all))
 
 (use-package lsp-bridge
+  :elpaca nil
   :custom
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
@@ -1406,7 +1348,7 @@
 ;;   (setq dap-auto-configure-features '(sessions locals controls tooltip)))
 
 (use-package eglot
-  :ensure nil
+  :elpaca nil
   :commands (eglot eglot-ensure)
   :custom
   (eglot-inlay-hints-mode nil)
@@ -1479,7 +1421,7 @@
   :commands  (vterm-toggle-cd))
 
 (use-package eshell
-  :ensure nil
+  :elpaca nil
   :commands (eshell)
   :config
   (setq eshell-directory-name "~/.dotfiles/Emacs/eshell/")

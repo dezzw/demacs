@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
- (setup python-mode
-   (:with-mode python-ts-mode
-     (:hook electric-indent-local-mode))
-   (:hook electric-indent-local-mode))
+(with-eval-after-load 'python-mode
+  (with-eval-after-load 'lsp-bridge-mode
+      (electric-indent-local-mode t)))
 
 (provide 'init-python)

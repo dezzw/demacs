@@ -59,7 +59,8 @@
       auto-save-default       nil
       inhibit-startup-message t
       inhibit-splash-screen   t
-      ring-bell-function      'ignore)
+      ring-bell-function      'ignore
+      tab-bar-mode 1)
 
 
 (pixel-scroll-precision-mode 1)
