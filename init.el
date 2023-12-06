@@ -8,6 +8,8 @@
 (when (daemonp)
   (setq use-package-always-demand t))
 
+(require 'init-package)
+
 ;; Silence compiler warnings as they can be pretty disruptive
 (setq native-comp-async-report-warnings-errors nil)
 ;; Set the right directory to store the native comp cache
@@ -1511,34 +1513,6 @@
            :sasl-username "dezzw"
            :sasl-password "Irc0x577063"
            :channels ("#emacs-circe")))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(ace-window add-node-modules-path beframe cape cdlatex circe citre
-		consult-dir corfu diff-hl dired-hide-dotfiles
-		dired-single dirvish docker doom-modeline doom-themes
-		eat ein embark-consult emmet-mode envrc esh-help
-		eshell-prompt-extras eshell-syntax-highlighting
-		eshell-up eshell-z evil-collection evil-escape
-		evil-matchit evil-mc evil-multiedit
-		evil-nerd-commenter evil-surround evil-tex
-		evil-visualstar exec-path-from-shell format-all gcmh
-		gdscript-mode general gptel haskell-mode helpful
-		highlight-indent-guides hl-todo hungry-delete jinx
-		kind-icon ligature lsp-bridge magit-delta marginalia
-		mind-wave multi-vterm nix-mode orderless org-appear
-		org-download org-roam-ui org-super-agenda
-		org-superstar password-store pdf-tools popper posframe
-		rainbow-delimiters rainbow-mode restclient rjsx-mode
-		sage-shell-mode scss-mode sly svelte-mode swift-mode
-		tabspaces tempel valign vdiff vertico
-		visual-fill-column vterm-toggle vundo web-mode
-		yasnippet-snippets zig-mode)))
-
-(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (require 'init-setup)
 
