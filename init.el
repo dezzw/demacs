@@ -1,23 +1,10 @@
-;; Copy from https://github.com/willbush/system/blob/master/emacs/early-init.el
-(defconst IS-GUI (or (display-graphic-p) (and (daemonp) (not (string= (daemonp) "tty")))))
-(defconst IS-TTY (or (not (display-graphic-p)) (and (daemonp) (string= (daemonp) "tty"))))
+;;; -*- lexical-binding: t -*-
+
+(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))
 
 (setq native-comp-deferred-compilation-deny-list nil)
 
-(setq use-package-verbose t)
-(when (daemonp)
-  (setq use-package-always-demand t))
-
 (require 'init-package)
-
-;; Silence compiler warnings as they can be pretty disruptive
-(setq native-comp-async-report-warnings-errors nil)
-;; Set the right directory to store the native comp cache
-(add-to-list 'native-comp-eln-load-path (expand-file-name "eln-cache/" user-emacs-directory))
-
-;; (use-package doom-themes
-;;   :config
-;;   (load-theme 'doom-one t))
 
 (load-theme 'modus-vivendi t)
 
@@ -64,7 +51,7 @@
 
 ;;; Editing utils
 (use-package emacs
-  :elpaca nil
+  :straight nil
   :custom
   (scroll-preserve-screen-position 'always)
   (truncate-partial-width-windows nil)
@@ -92,7 +79,7 @@
     (setq indicate-buffer-boundaries 'left)))
 
 (use-package recentf
-  :elpaca nil
+  :straight nil
   :custom
   (recentf-max-saved-items 1000)
   (recentf-exclude `("/tmp/" "/ssh:" ,(concat user-emacs-directory "lib/.*-autoloads\\.el\\'")))
@@ -100,7 +87,7 @@
   (recentf-mode))
 
 (use-package midnight
-  :elpaca nil
+  :straight nil
   :defer t
   :custom
   (midnight-period 7200)
@@ -386,7 +373,7 @@
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winner
-  :elpaca nil
+  :straight nil
   :bind (("M-N" . winner-redo)
          ("M-P" . winner-undo))
   :config (winner-mode 1))
@@ -416,7 +403,7 @@
   :hook dired-mode)
 
 (use-package dired
-  :elpaca nil
+  :straight nil
   :custom
   (dired-dwim-target t)
   (dired-listing-switches "-alGh")
@@ -674,7 +661,7 @@
 
 ;; Configure directory extension.
 (use-package vertico-directory
-  :elpaca nil
+  :straight nil
   :after vertico
   ;; More convenient directory navigation commands
   :bind (:map vertico-map
@@ -686,7 +673,7 @@
 
 ;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
-  :elpaca nil
+  :straight nil
   :init
   (savehist-mode)
   :config
@@ -983,11 +970,11 @@
   ([remap describe-key] . helpful-key))
 
 (use-package elec-pair
-  :elpaca nil
+  :straight nil
   :config (electric-pair-mode))
 
 (use-package electric
-  :elpaca nil
+  :straight nil
   :config (electric-indent-mode))
 
 (use-package rainbow-delimiters
@@ -1030,7 +1017,7 @@
   (yas-reload-all))
 
 (use-package lsp-bridge
-  :elpaca nil
+  :straight nil
   :custom
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
@@ -1167,6 +1154,7 @@
   :mode "\\.hs\\'")
 
 (use-package tex
+  :straight nil
   :ensure auctex
   :config
   (defun remove-tex-trash()
@@ -1225,137 +1213,6 @@
 
 (use-package docker
   :bind ("C-c d" . docker))
-
-;; (use-package flycheck
-;;   :hook (lsp-mode . flycheck-mode)
-;;   :config
-;;   (setq flycheck-emacs-lisp-load-path 'inherit)
-
-;;   ;; Rerunning checks on every newline is a mote excessive.
-;;   (delq 'new-line flycheck-check-syntax-automatically)
-;;   ;; And don't recheck on idle as often
-;;   (setq flycheck-idle-change-delay 1.0)
-
-;;   ;; For the above functionality, check syntax in a buffer that you switched to
-;;   ;; only briefly. This allows "refreshing" the syntax check state for several
-;;   ;; buffers quickly after e.g. changing a config file.
-;;   (setq flycheck-buffer-switch-check-intermediate-buffers t)
-
-;;   ;; Display errors a little quicker (default is 0.9s)
-;;   (setq flycheck-display-errors-delay 0.25))
-
-;;; LSP
-;; Should boost performance with lsp
-;; https://emacs-lsp.github.io/lsp-mode/page/performance/
-;; (use-package lsp-mode
-;;   :hook ((python-mode web-mode js2-mode typescript-ts-mode tsx-ts-mode rjsx-mode) . lsp)
-;;   :bind ((:map lsp-mode-map
-;;                ("M-<return>" . lsp-execute-code-action)))
-;;   :commands (lsp lsp-deferred)
-;;   :init
-;;   (setenv "LSP_USE_PLISTS" "1")
-;;   ;; Increase the amount of data emacs reads from processes
-;;   (setq read-process-output-max (* 1024 1024))
-;;   (setq lsp-clients-clangd-args '("--header-insertion-decorators=0"
-;;                                   "--clang-tidy"
-;;                                   "--enable-config"))
-;;   ;; Disable features that have great potential to be slow.
-;;   (setq lsp-enable-folding nil
-;;         lsp-enable-text-document-color nil)
-;;   ;; Reduce unexpected modifications to code
-;;   (setq lsp-enable-on-type-formatting nil)
-;;   ;; Make breadcrumbs opt-in; they're redundant with the modeline and imenu
-;;   (setq lsp-headerline-breadcrumb-enable nil)
-
-;;   ;; General lsp-mode settings
-;;   (setq lsp-completion-provider :none
-;;         lsp-enable-snippet nil
-;;         lsp-enable-indentation nil
-;;         lsp-idle-delay 0.500
-;;         lsp-keymap-prefix "C-x L")
-;;   ;; to enable the lenses
-;;   (add-hook 'lsp-mode-hook #'lsp-lens-mode)
-;;   (add-hook 'lsp-completion-mode-hook
-;;             (lambda ()
-;;               (setf (alist-get 'lsp-capf completion-category-defaults)
-;;                     '((styles . (orderless flex))))))
-;;   :config
-;;   (defun dw/with-lsp-completion()
-;;     (setq-local completion-at-point-functions
-;;                 (list (cape-capf-buster
-;;                        (cape-super-capf
-;;                         #'lsp-completion-at-point
-;;                         #'tempel-complete
-;;                         #'cape-dabbrev
-;;                         #'tabnine-completion-at-point)))))
-;;   (add-hook 'lsp-completion-mode-hook #'dw/with-lsp-completion))
-
-;; (use-package lsp-tailwindcss
-;;   :commands (lsp lsp-deferred lsp-restart-workspace)
-;;   :init
-;;   (setq lsp-tailwindcss-add-on-mode t)
-;;   (setq lsp-tailwindcss-major-modes '(tsx-ts-mode rjsx-mode web-mode css-mode)))
-
-;; (use-package lsp-sourcekit
-;;   :after lsp-mode
-;;   :config
-;;   (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp"))
-
-;; (use-package lsp-haskell
-;;   :hook (haskell-mode . lsp-deferred))
-
-;; (use-package lsp-java
-;;   :hook (java-mode . lsp-deferred)
-;;   :config
-;;   (require 'lsp-java-boot)
-
-;;   ;; to enable the lenses
-;;   (add-hook 'lsp-mode-hook #'lsp-lens-mode)
-;;   (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
-
-;; (use-package lsp-pyright
-;;   :hook (python-ts-mode . (lambda ()
-;;                             (require 'lsp-pyright)
-;;                             (lsp-deferred))))  ; or lsp-deferred
-
-;; (use-package lsp-ui
-;;   :after lsp-mode
-;;   :init
-;;   (setq lsp-ui-doc-max-height 8
-;;         lsp-ui-doc-max-width 72         ; 150 (default) is too wide
-;;         lsp-ui-doc-delay 0.75           ; 0.2 (default) is too naggy
-;;         ;; lsp-ui doc
-;;         lsp-ui-doc-show-with-mouse nil  ; don't disappear on mouseover
-;;         lsp-ui-doc-show-with-cursor t
-;;         ;; lsp-ui sideline
-;;         lsp-ui-sideline-show-hover nil
-;;         lsp-ui-sideline-show-code-actions t))
-
-;; ;;; Debugging
-;; (use-package dap-mode
-;;   :commands (dap-debug dap-debug-last)
-;;   :bind (:map dap-mode-map
-;;               ("C-x D D" . dap-debug)
-;;               ("C-x D d" . dap-debug-last))
-;;   :config
-;;   (with-eval-after-load 'python-mode
-;;     (require 'dap-python)
-;;     ;; if you installed debugpy, you need to set this
-;;     ;; https://github.com/emacs-lsp/dap-mode/issues/306
-;;     (setq dap-python-debugger 'debugpy))
-
-;;   (with-eval-after-load 'c++-mode
-;;     (require 'dap-gdb-lldb)
-;;     (dap-gdb-lldb-setup))
-;;   (setq dap-auto-configure-features '(sessions locals controls tooltip)))
-
-(use-package eglot
-  :elpaca nil
-  :commands (eglot eglot-ensure)
-  :custom
-  (eglot-inlay-hints-mode nil)
-  (eglot-events-buffer-size 0)
-  (eldoc-idle-delay 1))
 
 (use-package emmet-mode
   :when (daemonp)
@@ -1423,7 +1280,7 @@
   :commands  (vterm-toggle-cd))
 
 (use-package eshell
-  :elpaca nil
+  :straight nil
   :commands (eshell)
   :config
   (setq eshell-directory-name "~/.dotfiles/Emacs/eshell/")
@@ -1514,8 +1371,6 @@
            :sasl-password "Irc0x577063"
            :channels ("#emacs-circe")))))
 
-(require 'init-setup)
-
 (require 'init-tabbar)
 
 ;;; lang
@@ -1523,4 +1378,4 @@
 (require 'init-python)
 (require 'init-clojure)
 
-(require 'init-telega)
+;; (require 'init-telega)

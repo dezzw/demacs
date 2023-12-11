@@ -1,0 +1,1 @@
+/Users/dez/.emacs.d/straight/repos/svelte-mode/svelte-mode.el

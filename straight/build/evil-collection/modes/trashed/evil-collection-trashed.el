@@ -1,0 +1,1 @@
+/Users/dez/.emacs.d/straight/repos/evil-collection/modes/trashed/evil-collection-trashed.el

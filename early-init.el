@@ -72,10 +72,8 @@
 
 (defconst IS-MAC (eq system-type 'darwin))
 
-
 (if IS-MAC
     (progn
       (setq frame-resize-pixelwise  t)
       (menu-bar-mode t)))
 
-(add-to-list 'load-path (expand-file-name "site-lisp" user-emacs-directory))

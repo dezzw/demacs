@@ -1,5 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 (use-package treesit
+  :straight nil
   :when (and (fboundp 'treesit-available-p) (treesit-available-p))
   :mode (("\\(?:Dockerfile\\(?:\\..*\\)?\\|\\.[Dd]ockerfile\\)\\'" . dockerfile-ts-mode)
 	 ("\\.go\\'" . go-ts-mode)

@@ -2,7 +2,7 @@
 (use-package clojure-mode
   :hook (clojure-mode . rainbow-delimiters-mode))
 
-(use-package cider-mode)
+(use-package cider)
   ;; :hook (cider-repl-mode . rainbow-delimiters-mode))
 
 (use-package neil

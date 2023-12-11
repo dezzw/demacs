@@ -1,6 +1,7 @@
 ;; -*- lexical-binding: t; -*-
 
 (use-package tabspaces
+  :disabled
   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
   :commands (tabspaces-switch-or-create-workspace
              tabspaces-open-or-create-project-and-workspace)
@@ -35,6 +36,7 @@
     (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
 
 (use-package tab-bar
+  :straight nil
   :custom (tab-bar-new-tab-choice "*scratch*"))
 
 (provide 'init-tabbar)
