@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/auctex/tests/latex/font-latex-test.el

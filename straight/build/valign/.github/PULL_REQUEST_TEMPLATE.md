@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/valign/.github/PULL_REQUEST_TEMPLATE.md

@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/dired-single/dired-single.el

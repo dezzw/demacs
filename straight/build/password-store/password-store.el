@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/password-store/contrib/emacs/password-store.el

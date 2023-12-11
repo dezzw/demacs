@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/hungry-delete/hungry-delete.el

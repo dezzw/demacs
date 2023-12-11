@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/rjsx-mode/rjsx-mode.el

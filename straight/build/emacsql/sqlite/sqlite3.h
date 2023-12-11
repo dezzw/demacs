@@ -1,1 +1,0 @@
-/Users/dez/.emacs.d/straight/repos/emacsql/sqlite/sqlite3.h
