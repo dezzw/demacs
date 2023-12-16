@@ -1,6 +1,8 @@
 
 (use-package clojure-mode
-  :hook (clojure-mode . rainbow-delimiters-mode))
+  :hook (((clojure-mode clojurescript-mode) . rainbow-delimiters-mode)
+	 ((clojure-mode clojurescript-mode) . hs-minor-mode)
+	 ((clojure-mode clojurescript-mode) . aggressive-indent-mode)))
 
 (use-package cider)
   ;; :hook (cider-repl-mode . rainbow-delimiters-mode))

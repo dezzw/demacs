@@ -124,6 +124,8 @@
                 inherit (pkgs) fetchFromGitHub;
               })
 
+              vterm
+              pdf-tools
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
             ]));
 

@@ -24,10 +24,14 @@
 
 ;;; Code:
 
-(require 'cl-lib)
-
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
+
+;; Prevent unwanted runtime compilation for gccemacs (native-comp) users;
+;; packages are compiled ahead-of-time when they are installed and site files
+;; are compiled when gccemacs is installed.
+(setq native-comp-deferred-compilation nil ;; obsolete since 29.1
+      native-comp-jit-compilation nil)
 
 ;; Package initialize occurs automatically, before `user-init-file' is
 ;; loaded, but after `early-init-file'. We handle package
@@ -51,28 +55,23 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
-(push '(undecorated . t) default-frame-alist)
+(push '(undecorated-round . t) default-frame-alist)
 ;; (push '(ns-transparent-titlebar . t) default-frame-alist)
 ;; (push '(ns-appearance . dark) default-frame-alist)
+;; (when (featurep 'ns)
+;;   (push '(ns-transparent-titlebar . t) default-frame-alist))
 
 (setq make-backup-files       nil
       auto-save-default       nil
       inhibit-startup-message t
       inhibit-splash-screen   t
       ring-bell-function      'ignore
-      tab-bar-mode 1)
+      tab-bar-mode 1
+      pixel-scroll-precision-mode 1)
 
-
-(pixel-scroll-precision-mode 1)
-
-
-;; (when (featurep 'ns)
-;;   (push '(ns-transparent-titlebar . t) default-frame-alist))
 (setq-default mode-line-format nil)
 
-(defconst IS-MAC (eq system-type 'darwin))
-
-(if IS-MAC
+(if (eq system-type 'darwin)
     (progn
       (setq frame-resize-pixelwise  t)
       (menu-bar-mode t)))
