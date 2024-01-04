@@ -9,7 +9,10 @@
         gcmh-high-cons-threshold #x1000000)) ; 16MB
 
 (use-package exec-path-from-shell
-    :init (exec-path-from-shell-initialize))
+  :init
+  (setq exec-path-from-shell-variables '("PATH" "MANPATH")
+          exec-path-from-shell-arguments '("-l"))
+  (exec-path-from-shell-initialize))
 
 (use-package emacs
   :straight nil
@@ -55,23 +58,10 @@
   (add-to-list 'recentf-filename-handlers #'abbreviate-file-name))
 
 (use-package midnight
-  :straight nil
   :when (daemonp)
   :custom
   (midnight-period 7200)
   :config
   (midnight-mode))
-
-(use-package savehist
-  :straight nil
-  :hook (after-init . savehist-mode)
-  :init (setq enable-recursive-minibuffers t ; Allow commands in minibuffers
-              history-length 1000
-              savehist-additional-variables '(mark-ring
-                                              global-mark-ring
-                                              search-ring
-                                              regexp-search-ring
-                                              extended-command-history)
-              savehist-autosave-interval 300))
 
 (provide 'init-base)

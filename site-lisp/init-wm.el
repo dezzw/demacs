@@ -1,6 +1,11 @@
 ;;; -*- lexical-binding: t -*-
 
+(use-package tab-bar
+  :ensure nil
+  :custom (tab-bar-new-tab-choice "*scratch*"))
+
 (use-package tabspaces
+  :disabled
   :hook (after-init . tabspaces-mode)
   :custom
   ;; (tab-bar-show nil)
@@ -68,7 +73,6 @@
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 
 (use-package winner
-  :straight nil
   :bind (("M-N" . winner-redo)
          ("M-P" . winner-undo))
   :config (winner-mode 1))

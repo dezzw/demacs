@@ -40,8 +40,9 @@
 ;;   (let ((default-directory (expand-file-name "site-lisp" user-emacs-directory)))
 ;;     (normal-top-level-add-subdirs-to-load-path)))
 
-;; (advice-add #'package-initialize :after #'update-load-path)
-;; (advice-add #'package-initialize :after #'add-subdirs-to-load-path)
+(advice-add #'package-initialize :after #'update-load-path)
+;; (advice-add #'package-initialize :after #'add-subdirs-to-load-path)a
+
 (update-load-path)
 
 (require 'init-package)
@@ -53,6 +54,7 @@
 (require 'init-ui)
 
 (require 'init-edit)
+(require 'init-helpful)
 (require 'init-completion)
 ;; (require 'init-corfu)
 (require 'init-snippets)

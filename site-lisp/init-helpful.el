@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package helpful
-  :disable
   :custom
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable)

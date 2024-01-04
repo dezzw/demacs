@@ -10,11 +10,11 @@
   (lsp-bridge-enable-with-tramp t)
   (lsp-bridge-enable-hover-diagnostic t)
 
-  (acm-candidate-match-function 'orderless-flex)
+  ;; (acm-candidate-match-function 'orderless-flex)
   (acm-backend-yas-match-by-trigger-keyword t)
-  (acm-enable-tabnine t)
-  (acm-enable-tempel t)
-  ;; (acm-enable-codeium t)
+  (acm-enable-tabnine nil)
+  (acm-enable-tempel nil)
+  (acm-enable-codeium t)
   ;; (acm-enable-citre t)
   (lsp-bridge-enable-mode-line nil)
   ;; :bind (:map acm-mode-map

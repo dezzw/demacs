@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package citre
-  :disabled
   :bind (:map citre-mode-map
 	 ("C-x c j" . citre-jump)
 	 ("C-x c J" . citre-jump-back)

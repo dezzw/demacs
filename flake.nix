@@ -80,7 +80,8 @@
         ];
 
         emacs-patched = (pkgs.emacs-git.override {
-          withXwidgets = false;
+          # withXwidgets = true;
+          # withGTK3 = true;
           withSQLite3 = true;
           withNS = true;
           withWebP = true;

@@ -1,7 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package eshell
-  :straight nil
+  :ensure nil
   :commands (eshell)
   :config
   (setq eshell-directory-name "~/.dotfiles/Emacs/eshell/")

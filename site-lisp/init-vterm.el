@@ -4,7 +4,7 @@
 ;; Better term
 ;; @see https://github.com/akermu/emacs-libvterm#installation
 (use-package vterm
-  :straight nil
+  :ensure nil
   :commands (vterm vterm-posframe-toggle)
   :bind ("C-c `" . vterm-posframe-toggle)
   :custom
