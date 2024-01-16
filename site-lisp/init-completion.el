@@ -154,7 +154,6 @@
   :config
   (setq corfu-cycle t                ;; Enable cycling for `corfu-next/previous'
         corfu-auto t                 ;; Enable auto completion
-        corfu-separator "&"          ;; Orderless field separator
         corfu-auto-prefix 2          ;; minimun prefix to enable completion
 	corfu-preselect 'prompt
         corfu-auto-delay 0.1)

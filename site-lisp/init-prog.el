@@ -24,8 +24,13 @@
 ;; (require 'init-lspbridge)
 (require 'init-eglot)
 
+;;; try out both developing documents
 (use-package devdocs
   :straight t
   :commands (devdocs-lookup))
+
+(use-package dash-at-point
+  :straight t
+  :commands (dash-at-point))
 
 (provide 'init-prog)
