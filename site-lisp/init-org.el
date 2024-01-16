@@ -8,10 +8,34 @@
   (visual-line-mode 1))
 
 (use-package org
+  :defer
+  :straight `(org
+              :fork (:host nil
+                           :repo "https://git.tecosaur.net/tec/org-mode.git"
+                           :branch "dev"
+                           :remote "tecosaur")
+              :files (:defaults "etc")
+              :build t
+              :pre-build
+              (with-temp-file "org-version.el"
+                (require 'lisp-mnt)
+                (let ((version
+                       (with-temp-buffer
+                         (insert-file-contents "lisp/org.el")
+                         (lm-header "version")))
+                      (git-version
+                       (string-trim
+                        (with-temp-buffer
+                          (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+                          (buffer-string)))))
+                  (insert
+                   (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+                   (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+                   "(provide 'org-version)\n")))
+              :pin nil)
   :hook (org-mode . dw/org-mode-setup)
   :config
   (setq org-html-head-include-default-style nil
-        ;; org-ellipsis " ▾"
         org-adapt-indentation t
         org-hide-emphasis-markers t
         org-src-fontify-natively t
@@ -22,16 +46,6 @@
         org-startup-folded 'content
         org-cycle-separator-lines 2)
 
-  (setq org-html-htmlize-output-type nil)
-
-  ;; config for images in org
-  (auto-image-file-mode t)
-  (setq org-image-actual-width nil)
-  ;; default image width
-  (setq org-image-actual-width '(300))
-
-  (setq org-export-with-sub-superscripts nil)
-
   ;; Since we don't want to disable org-confirm-babel-evaluate all
   ;; of the time, do it around the after-save-hook
   (defun dw/org-babel-tangle-dont-ask ()
@@ -40,7 +54,27 @@
       (org-babel-tangle)))
   
   (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dw/org-babel-tangle-dont-ask
-						'run-at-end 'only-in-org-mode))))
+						'run-at-end 'only-in-org-mode)))
+  (if (eq system-type 'darwin)
+      (setq org-agenda-files '("~/Documents/Org/Planner")))
+    ;; Custom TODO states and Agendas
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "TBA(b)" "|" "DONE(d!)")))
+
+  (setq org-tag-alist
+        '((:startgroup)
+          ;; Put mutually exclusive tags here
+          (:endgroup)
+          ("review" . ?r)
+          ("assignment" . ?a)
+          ("lab" . ?l)
+          ("test" . ?t)
+          ("quiz" . ?q)
+          ("pratice" . ?p)
+          ("emacs" . ?e)
+          ("note" . ?n)
+          ("idea" . ?i)))
+  )
 
 ;; change bullets for headings
 (use-package org-superstar
@@ -65,21 +99,6 @@
 ;;   :config
 ;;   (add-hook 'org-mode-hook #'org-modern-indent-mode))
 
-(with-eval-after-load "org-export-dispatch"
-  ;; Edited from http://emacs.stackexchange.com/a/9838
-  (defun dw/org-html-wrap-blocks-in-code (src backend info)
-    "Wrap a source block in <pre><code class=\"lang\">.</code></pre>"
-    (when (org-export-derived-backend-p backend 'html)
-      (replace-regexp-in-string
-       "\\(</pre>\\)" "</code>\n\\1"
-       (replace-regexp-in-string "<pre class=\"src src-\\([^\"]*?\\)\">"
-                                 "<pre>\n<code class=\"\\1\">" src))))
-
-  (require 'ox-html)
-
-  (add-to-list 'org-export-filter-src-block-functions
-               'dw/org-html-wrap-blocks-in-code)
-  )
 
 (with-eval-after-load "ob"
   (org-babel-do-load-languages
@@ -90,28 +109,6 @@
      (python . t)))
 
   (setq org-confirm-babel-evaluate nil))
-
-(with-eval-after-load "org"
-  ;; Custom TODO states and Agendas
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "TBA(b)" "|" "DONE(d!)")))
-
-  (setq org-tag-alist
-        '((:startgroup)
-          ;; Put mutually exclusive tags here
-          (:endgroup)
-          ("review" . ?r)
-          ("assignment" . ?a)
-          ("lab" . ?l)
-          ("test" . ?t)
-          ("quiz" . ?q)
-          ("pratice" . ?p)
-          ("emacs" . ?e)
-          ("note" . ?n)
-          ("idea" . ?i))))
-
-(if (eq system-type 'darwin)
-    (setq org-agenda-files '("~/Documents/Org/Planner")))
 
 (use-package org-super-agenda
   :hook org-agenda-mode
@@ -199,14 +196,6 @@
 
   :config
   (org-roam-db-autosync-mode))
-
-(use-package org-roam-ui
-  :commands (org-roam-ui-open)
-  :config
-  (setq org-roam-ui-sync-theme t
-        org-roam-ui-follow t
-        org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
 
 (use-package org-download
   :hook (org-mode . org-download-enable)

@@ -18,6 +18,14 @@
   :commands (vdiff-buffer))
 
 (use-package restclient
-  :mode (("\\.http\\'" . restclient-mode)))
+  :mode (("\\.rest\\'" . restclient-mode)))
+
+;;; lsp config
+;; (require 'init-lspbridge)
+(require 'init-eglot)
+
+(use-package devdocs
+  :straight t
+  :commands (devdocs-lookup))
 
 (provide 'init-prog)

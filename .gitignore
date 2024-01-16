@@ -1,3 +1,4 @@
+.DS_Store
 tramp
 straight/repos
 straight/build
@@ -25,3 +26,4 @@ dev-profile*
 mind-wave/
 url/
 request/
+devdocs/

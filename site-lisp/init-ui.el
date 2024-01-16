@@ -50,21 +50,21 @@
                 doc-view-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
-(use-package hl-todo
-  :config
-  (setq hl-todo-keyword-faces
-        '(("TODO"   . "#61d290")
-	  ("IMPLEMENT" . "#61d290")
-          ("FIXME"  . "#FF0000")
-          ("DEBUG"  . "#A020F0")
-          ("NEXT" . "#FF4500")
-          ("UNCHECK"   . "#1E90FF")))
-  (global-hl-todo-mode))
+;; (use-package hl-todo
+;;   :config
+;;   (setq hl-todo-keyword-faces
+;;         '(("TODO"   . "#61d290")
+;; 	  ("IMPLEMENT" . "#61d290")
+;;           ("FIXME"  . "#FF0000")
+;;           ("DEBUG"  . "#A020F0")
+;;           ("NEXT" . "#FF4500")
+;;           ("UNCHECK"   . "#1E90FF")))
+;;   (global-hl-todo-mode))
 
-(use-package diff-hl
-  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
-         (after-init . global-diff-hl-mode)
-         (dired-mode . diff-hl-dired-mode)))
+;; (use-package diff-hl
+;;   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
+;;          (after-init . global-diff-hl-mode)
+;;          (dired-mode . diff-hl-dired-mode)))
 
 (if (daemonp)
     (add-hook 'after-make-frame-functions

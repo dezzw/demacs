@@ -5,19 +5,19 @@
   :custom (tab-bar-new-tab-choice "*scratch*"))
 
 (use-package tabspaces
-  :disabled
-  :hook (after-init . tabspaces-mode)
+  :straight (:type git :host github :repo "mclear-tools/tabspaces")
+  :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
+  :commands (tabspaces-switch-or-create-workspace
+             tabspaces-open-or-create-project-and-workspace)
   :custom
-  ;; (tab-bar-show nil)
-
-  (tabspaces-use-filtered-buffers-as-default t)
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
   (tabspaces-include-buffers '("*scratch*"))
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t)
-  :init
+  
+  :config
   ;; Filter Buffers for Consult-Buffer
   (with-eval-after-load 'consult
     ;; hide full buffer list (still available with "b" prefix)
@@ -37,35 +37,6 @@
 
       "Set workspace buffer list for consult-buffer.")
     (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
-
-(use-package beframe
-  :when (daemonp)
-  :config
-  (setq beframe-global-buffers '("*scratch*" "*Messages*"))
-  (beframe-mode 1)
-  (defvar consult-buffer-sources)
-  (declare-function consult--buffer-state "consult")
-
-  (with-eval-after-load 'consult
-    (defface befame-buffer
-      '((t :inherit font-lock-string-face))
-      "Face for `consult' framed buffers.")
-
-    (defvar beframe-consult-source
-      `( :name     "Frame-specific buffers (current frame)"
-         :narrow   ?F
-         :category buffer
-         :face     beframe-buffer
-         :history  beframe-history
-         :items    ,#'beframe-buffer-names
-         :action   ,#'switch-to-buffer
-         :state    ,#'consult--buffer-state))
-
-    (add-to-list 'consult-buffer-sources 'beframe-consult-source))
-
-  (defun my/beframe-items (&optional frame)
-    (beframe-buffer-names frame :sort #'beframe-buffer-sort-visibility))
-  )
 
 (use-package ace-window
   :bind ("C-x o" . ace-window)
