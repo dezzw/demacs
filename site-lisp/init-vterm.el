@@ -11,7 +11,8 @@
   (vterm-max-scrollback 10000)
   :config
   (with-no-warnings
-    (when (posframe-workable-p)
+    (when (and (fboundp #'posframe-workable-p)
+	       (posframe-workable-p))
       (defvar vterm-posframe--frame nil)
       (defun vterm-posframe-toggle ()
         "Toggle `vterm' child frame."
