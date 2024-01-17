@@ -5,6 +5,7 @@
   :custom (tab-bar-new-tab-choice "*scratch*"))
 
 (use-package tabspaces
+  :disabled
   :straight (:type git :host github :repo "mclear-tools/tabspaces")
   :hook (after-init . tabspaces-mode) ;; use this only if you want the minor-mode loaded at startup. 
   :commands (tabspaces-switch-or-create-workspace
@@ -12,7 +13,7 @@
   :custom
   (tabspaces-default-tab "Default")
   (tabspaces-remove-to-default t)
-  (tabspaces-include-buffers '("*scratch*"))
+  (tabspaces-include-buffers '("*scratch*" "*Messages*"))
   ;; sessions
   (tabspaces-session t)
   (tabspaces-session-auto-restore t)
