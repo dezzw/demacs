@@ -44,6 +44,7 @@
 
 (update-load-path)
 
+(require 'init-util)
 (require 'init-package)
 
 (require 'init-base)
@@ -65,6 +66,9 @@
 (require 'init-direnv)
 (require 'init-prog)
 (require 'init-dap)
+;;; lsp config
+;; (require 'init-lspbridge)
+(require 'init-eglot)
 (require 'init-ctags)
 
 ;;; lang

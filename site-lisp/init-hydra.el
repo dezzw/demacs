@@ -1,7 +1,5 @@
 ;; init-hydra.el --- Initialize hydra configurations.	-*- lexical-binding: t -*-
 
-(use-package posframe)
-
 (use-package hydra
   :hook (emacs-lisp-mode . hydra-add-imenu)
   :init

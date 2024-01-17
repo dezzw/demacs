@@ -5,6 +5,18 @@
 ;; (defconst +ebib-bib-dir (expand-file-name "~/Documents/papers/"))
 ;; (defconst +elfeed-enclosure-dir (expand-file-name "~/Downloads/"))
 
+(defun childframe-workable-p ()
+  "Whether childframe is workable."
+  (not (or noninteractive
+           emacs-basic-display
+           (not (display-graphic-p)))))
+
+(defun icons-displayable-p ()
+  "Return non-nil if icons are displayable."
+  (or (featurep 'nerd-icons)
+      (require 'nerd-icons nil t)))
+
+
 ;; Thanks to DOOM Emacs
 (defmacro add-hook! (hooks &rest rest)
   "A convenience macro for adding N functions to M hooks.
@@ -74,67 +86,5 @@ DOCSTRING and BODY are as in `defun'.
        (dolist (targets (list ,@(nreverse where-alist)))
          (dolist (target (cdr targets))
            (advice-add target (car targets) #',symbol))))))
-
-(defmacro +advice-pp-to-prin1! (&rest body)
-  "Define an advice called SYMBOL that map `pp' to `prin1' when called.
-PLACE is the function to which to add the advice, like in `advice-add'.
-
-\(fn SYMBOL &rest [PLACES...]\)"
-  `(progn
-     (dolist (target (list ,@body))
-       (advice-add target :around #'+call-fn-with-pp-to-prin1))))
-
-(defmacro defun-call! (symbol args &rest body)
-  "Define a function and optionally apply it with specified arguments.
-
-\(fn SYMBOL ARGS &optional [DOCSTRING] &optional [:call-with APPLY_ARGS] BODY\)"
-  (declare (indent defun))
-  (let* ((docstring (if (stringp (car body)) (pop body)))
-         (apply-body (if (eq :call-with (car body))
-                         (progn
-                           (cl-assert (eq (pop body) :call-with))
-                           (pop body))
-                       nil)))
-    `(progn
-       (defun ,symbol ,args
-         ,@(if docstring
-               (cons docstring body)
-             body))
-       (apply ',symbol
-              ,(if (listp apply-body)
-                   `(list ,@apply-body)
-                 `(list ,apply-body))))))
-
-(defun +call-fn-with-pp-to-prin1 (fn &rest args)
-  "Call FN with ARGS, map `pp' to `prin1' when called."
-  (cl-letf (((symbol-function #'pp) #'prin1)
-            ((symbol-function #'pp-to-string) #'prin1-to-string))
-    (apply fn args)))
-
-(defun +unfill-region (start end)
-  "Replace newline chars in region from START to END by single spaces.
-This command does the inverse of `fill-region'."
-  (interactive "r")
-  (let ((fill-column most-positive-fixnum))
-    (fill-region start end)))
-
-(defun +temp-buffer-p (buffer)
-  "Return t if BUFFER is temporary."
-  (string-match-p "^ " (buffer-name buffer)))
-
-(defun +num-to-sup-string (num)
-  "Convert NUM to a small string.
-
-Example: 12 -> \"¹²\""
-  (let ((str (number-to-string num))
-        (superscripts "⁰¹²³⁴⁵⁶⁷⁸⁹"))
-    (mapconcat (lambda (c) (char-to-string (elt superscripts (- c ?0)))) str)))
-
-;; theme changed hook
-(defvar +theme-changed-hook nil
-  "Hook run after the theme is changed.")
-(defadvice! +run-theme-changed-hook-a (&rest _)
-  :after #'enable-theme
-  (run-hooks '+theme-changed-hook))
 
 (provide 'init-util)

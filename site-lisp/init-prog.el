@@ -20,10 +20,6 @@
 (use-package restclient
   :mode (("\\.rest\\'" . restclient-mode)))
 
-;;; lsp config
-;; (require 'init-lspbridge)
-(require 'init-eglot)
-
 ;;; try out both developing documents
 (use-package devdocs
   :straight t
