@@ -85,6 +85,7 @@
 (require 'init-nix)
 (require 'init-swift)
 (require 'init-zig)
+(require 'init-rust)
 (require 'init-tex)
 
 ;; terms

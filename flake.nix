@@ -82,39 +82,48 @@
         emacs-patched = (pkgs.emacs-git.override {
           # withXwidgets = true;
           # withGTK3 = true;
-          withSQLite3 = true;
-          withNS = true;
-          withWebP = true;
+          # withSQLite3 = true;
+          # withNS = true;
+          # withWebP = true;
         }).overrideAttrs (old: {
+          configureFlags = (old.configureFlags or []) ++ [
+            "--with-xwidgets" # withXwidgets flag is somehow disabled for darwin.
+          ];
+          
           # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
           buildInputs = old.buildInputs
-            ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
-            [ pkgs.darwin.apple_sdk.frameworks.WebKit ];
+           ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
+             [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
+          
           patches = (old.patches or [ ]) ++ [
-            # Fix OS window role (needed for window managers like yabai)
+            # Don't raise another frame when closing a frame
+            # (pkgs.fetchpatch {
+            #   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/no-frame-refocus-cocoa.patch";
+            #   sha256 = "QLGplGoRpM4qgrIAJIbVJJsa4xj34axwT3LiWt++j/c=";
+            # })
+            # Fix OS window role so that yabai can pick up Emacs
             (pkgs.fetchpatch {
-              url =
-                "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-              sha256 = "sha256-+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
+              # Emacs 29 uses the same patch as 28
+              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
+              sha256 = "+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
             })
             # Use poll instead of select to get file descriptors
             (pkgs.fetchpatch {
-              url =
-                "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
-              sha256 = "sha256-jN9MlD8/ZrnLuP2/HUXXEVVd6A+aRZNYFdZF8ReJGfY=";
+              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
+              sha256 = "jN9MlD8/ZrnLuP2/HUXXEVVd6A+aRZNYFdZF8ReJGfY=";
             })
-            # Enable rounded window with no decoration
+            # Add setting to enable rounded window with no decoration (still
+            # have to alter default-frame-alist)
             (pkgs.fetchpatch {
-              url =
-                "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/round-undecorated-frame.patch";
-              sha256 = "sha256-uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
+              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/round-undecorated-frame.patch";
+              sha256 = "uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
             })
             # Make Emacs aware of OS-level light/dark mode
-            (pkgs.fetchpatch {
-              url =
-                "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-              sha256 = "sha256-oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
-            })
+            # https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
+            # (pkgs.fetchpatch {
+            #   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
+            #   sha256 = "oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
+            # })
           ];
         });
 

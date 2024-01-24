@@ -16,6 +16,7 @@ bookmarks
 eshell
 session.*
 .lsp-session-*
+.dap-breakpoints
 tree-sitter
 result
 recentf
