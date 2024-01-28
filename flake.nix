@@ -124,6 +124,9 @@
             #   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
             #   sha256 = "oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
             # })
+
+	    ./patches/system-appearance.patch
+	    ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
           ];
         });
 

@@ -22,8 +22,8 @@
 
   ;; [motion]
   (meow-motion-overwrite-define-key
-   '("j" . meow-next)
-   '("k" . meow-prev)
+   ;; '("j" . meow-next)
+   ;; '("k" . meow-prev)
    '("<escape>" . ignore))
 
   ;; [leader]
@@ -43,7 +43,13 @@
    '("9" . meow-digit-argument)
    '("0" . meow-digit-argument)
    '("/" . meow-keypad-describe-key)
-   '("?" . meow-cheatsheet))
+   '("?" . meow-cheatsheet)
+
+   ;; common commands 
+   '("a" . org-agenda)
+   '("f" . find-file)
+   '("b" . consult-buffer)
+   )
 
   ;; [normal]
   (meow-normal-define-key

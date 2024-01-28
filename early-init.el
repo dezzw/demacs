@@ -56,6 +56,7 @@
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
 (push '(undecorated-round . t) default-frame-alist)
+(push '(alpha-background . 80) default-frame-alist)
 ;; (push '(ns-transparent-titlebar . t) default-frame-alist)
 ;; (push '(ns-appearance . dark) default-frame-alist)
 ;; (when (featurep 'ns)
@@ -75,4 +76,7 @@
     (progn
       (setq frame-resize-pixelwise  t)
       (menu-bar-mode t)))
+
+(setenv "LSP_USE_PLISTS" "true")
+
 
