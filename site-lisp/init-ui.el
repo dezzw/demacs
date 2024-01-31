@@ -1,13 +1,19 @@
 ;;; -*- lexical-binding: t -*-
 
-(defun my/apply-theme (appearance)
+(use-package color-theme-sanityinc-tomorrow
+  :custom
+  (custom-safe-themes t))
+
+(defun dw/apply-theme (appearance)
   "Load theme, taking current system APPEARANCE into consideration."
   (mapc #'disable-theme custom-enabled-themes)
   (pcase appearance
-    ('light (load-theme 'modus-operandi t))
-    ('dark (load-theme 'modus-vivendi t))))
+    ;; ('light (load-theme 'modus-operandi t))
+    ;; ('dark (load-theme 'modus-vivendi t))))
+    ('light (load-theme 'sanityinc-tomorrow-day))
+    ('dark (load-theme 'sanityinc-tomorrow-night))))
 
-(add-hook 'ns-system-appearance-change-functions #'my/apply-theme)
+(add-hook 'ns-system-appearance-change-functions #'dw/apply-theme)
 
 (use-package nerd-icons)
 

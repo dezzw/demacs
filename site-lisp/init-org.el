@@ -106,7 +106,8 @@
    '((emacs-lisp . t)
      (C . t)
      (shell . t)
-     (python . t)))
+     (python . t)
+     (sql . t)))
 
   (setq org-confirm-babel-evaluate nil))
 

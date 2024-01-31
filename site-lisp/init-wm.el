@@ -5,11 +5,11 @@
   :custom (tab-bar-new-tab-choice "*scratch*")
   :config
   (defface tab-bar-svg-active
-    '((t (:foreground "#a1aeb5")))
+    '((t (:foreground "#191b1c")))
     "Tab bar face for selected tab.")
 
   (defface tab-bar-svg-inactive
-    '((t (:foreground "#cad7de")))
+    '((t (:foreground "#272b2f")))
     "Tab bar face for inactive tabs.")
 
   (defun eli/tab-bar-svg-padding (width string)

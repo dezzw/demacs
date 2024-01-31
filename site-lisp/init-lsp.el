@@ -26,6 +26,7 @@
   ;; General lsp-mode settings
   (setq lsp-completion-provider :none
         lsp-enable-snippet nil
+	lsp-semantic-tokens-enable t
         lsp-enable-indentation nil
 	lsp-idle-delay 0.500
         lsp-keymap-prefix "C-x L")
@@ -96,6 +97,10 @@
 
 (use-package lsp-ui
   :after lsp-mode
+  :bind
+  (:map lsp-ui-mode-map
+	([remap xref-find-definitions] . lsp-ui-peek-find-definitions)
+	([remap xref-find-references] . lsp-ui-peek-find-references))
   :init
   (setq lsp-ui-doc-max-height 8
         lsp-ui-doc-max-width 72         ; 150 (default) is too wide
@@ -127,5 +132,10 @@
     (require 'dap-gdb-lldb)
     (dap-gdb-lldb-setup))
   (setq dap-auto-configure-features '(sessions locals controls tooltip)))
+
+(use-package flycheck)
+
+(use-package consult-lsp
+  :commands (consult-lsp-symbols consult-lsp-diagnostics))
 
 (provide 'init-lsp)

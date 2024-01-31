@@ -22,8 +22,8 @@
 
   ;; [motion]
   (meow-motion-overwrite-define-key
-   ;; '("j" . meow-next)
-   ;; '("k" . meow-prev)
+   '("j" . meow-next)
+   '("k" . meow-prev)
    '("<escape>" . ignore))
 
   ;; [leader]

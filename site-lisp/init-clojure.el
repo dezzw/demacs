@@ -9,8 +9,11 @@
 	      (setq-local lsp-enable-completion-at-point nil)
 	      (lsp-deferred)))))
 
-(use-package cider)
-  ;; :hook (cider-repl-mode . rainbow-delimiters-mode))
+(use-package cider
+  :hook (cider-repl-mode . rainbow-delimiters-mode)
+  :custom
+  (cider-eldoc-display-for-symbol-at-point nil)
+  (cider-font-lock-dynamically nil))
 
 (use-package babashka
   :commands (babashka-command))

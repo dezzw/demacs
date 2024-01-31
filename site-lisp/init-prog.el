@@ -1,11 +1,11 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package elec-pair
-  :ensure nil
+  :straight nil
   :config (electric-pair-mode))
 
 (use-package electric
-  :ensure nil
+  :straight nil
   :config (electric-indent-mode))
 
 (use-package rainbow-mode)
