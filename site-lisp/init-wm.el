@@ -4,13 +4,13 @@
   :ensure nil
   :custom (tab-bar-new-tab-choice "*scratch*")
   :config
-  (defface tab-bar-svg-active
-    '((t (:foreground "#191b1c")))
-    "Tab bar face for selected tab.")
+  ;; (defface tab-bar-svg-active
+  ;;   '((t (:foreground "")))
+  ;;   "Tab bar face for selected tab.")
 
-  (defface tab-bar-svg-inactive
-    '((t (:foreground "#272b2f")))
-    "Tab bar face for inactive tabs.")
+  ;; (defface tab-bar-svg-inactive
+  ;;   '((t (:foreground "#efefef")))
+  ;;   "Tab bar face for inactive tabs.")
 
   (defun eli/tab-bar-svg-padding (width string)
     (let* ((style svg-lib-style-default)
@@ -48,7 +48,7 @@
        'display
        (svg-tag-make
 	name
-	:face (if (eq (car tab) 'current-tab) 'tab-bar-svg-active 'tab-bar-svg-inactive)
+	:face (if (eq (car tab) 'current-tab) 'tab-bar-tab 'tab-bar-tab-inactive)
 	:inverse t :margin 0 :radius 6 :padding padding))))
 
   (setq tab-bar-tab-name-format-function #'eli/tab-bar-tab-name-with-svg))

@@ -151,6 +151,10 @@ org-mode
 (inlsrc "src_" p "{" q "}")
 (title "#+title: " p n "#+author: Daniel Mendler" n "#+language: en")
 
+sql-mode
+
+(ctb "CREATE TABLE IF NOT EXISTS " p " (" n r n ");")
+
 ;; Local Variables:
 ;; mode: lisp-data
 ;; outline-regexp: "[a-z]"

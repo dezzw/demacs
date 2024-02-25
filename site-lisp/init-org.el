@@ -76,11 +76,11 @@
           ("idea" . ?i)))
   )
 
-;; change bullets for headings
-(use-package org-superstar
-  :hook org-mode
-  :custom
-  (org-superstar-remove-leading-stars t))
+;; ;; change bullets for headings
+;; (use-package org-superstar
+;;   :hook org-mode
+;;   :custom
+;;   (org-superstar-remove-leading-stars t))
 
 (use-package visual-fill-column
   :hook org-mode
@@ -182,21 +182,21 @@
         ("tt" "Task" entry (file+olp "~/Documents/Org/Planner/Tasks.org" "Inbox")
          "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1)))
 
-(use-package org-roam
-  :bind
-  (("C-c o l" . org-roam-buffer-toggle)
-   ("C-c o f" . org-roam-node-find)
-   ("C-c o g" . org-roam-graph)
-   ("C-c o i" . org-roam-node-insert)
-   ("C-c o c" . org-roam-capture))
-  :custom
-  (org-roam-directory "~/Documents/Org/Notes")
-  (org-roam-database-connecter 'splite-builtin)
-  (org-roam-completion-everywhere t)
-  (org-roam-completion-system 'default)
+;; (use-package org-roam
+;;   :bind
+;;   (("C-c o l" . org-roam-buffer-toggle)
+;;    ("C-c o f" . org-roam-node-find)
+;;    ("C-c o g" . org-roam-graph)
+;;    ("C-c o i" . org-roam-node-insert)
+;;    ("C-c o c" . org-roam-capture))
+;;   :custom
+;;   (org-roam-directory "~/Documents/Org/Notes")
+;;   (org-roam-database-connecter 'splite-builtin)
+;;   (org-roam-completion-everywhere t)
+;;   (org-roam-completion-system 'default)
 
-  :config
-  (org-roam-db-autosync-mode))
+;;   :config
+;;   (org-roam-db-autosync-mode))
 
 ;; (use-package org-download
 ;;   :hook (org-mode . org-download-enable)
