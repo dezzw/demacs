@@ -1,11 +1,4 @@
-;;; -*- lexical-binding: t -*-
-
-(defun dw/org-mode-setup ()
-  (org-indent-mode)
-  ;; (variable-pitch-mode 1)
-  ;; (auto-fill-mode 0)
-  (setq evil-auto-indent nil)
-  (visual-line-mode 1))
+;; ;;; -*- lexical-binding: t -*-
 
 (use-package org
   :defer
@@ -33,7 +26,6 @@
                    (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
                    "(provide 'org-version)\n")))
               :pin nil)
-  :hook (org-mode . dw/org-mode-setup)
   :config
   (setq org-html-head-include-default-style nil
         org-adapt-indentation t
@@ -74,13 +66,10 @@
           ("emacs" . ?e)
           ("note" . ?n)
           ("idea" . ?i)))
-  )
+)
 
-;; ;; change bullets for headings
-;; (use-package org-superstar
-;;   :hook org-mode
-;;   :custom
-;;   (org-superstar-remove-leading-stars t))
+(use-package org-modern
+  :hook org-mode)
 
 (use-package visual-fill-column
   :hook org-mode
@@ -93,12 +82,6 @@
 
 (use-package org-appear
   :hook org-mode)
-
-;; (use-package org-modern-indent
-;;   :after org
-;;   :config
-;;   (add-hook 'org-mode-hook #'org-modern-indent-mode))
-
 
 (with-eval-after-load "ob"
   (org-babel-do-load-languages
