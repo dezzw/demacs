@@ -58,6 +58,14 @@
                 doc-view-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
+(use-package transwin
+  :config
+  (setq transwin-delta-alpha 5)
+  (setq transwin-parameter-alpha 'alpha-background)
+  :bind
+  ("C-M-=" . transwin-inc)
+  ("C-M--" . transwin-dec)
+  ("C-M-0" . transwin-toggle))
 ;; (use-package hl-todo
 ;;   :config
 ;;   (setq hl-todo-keyword-faces
