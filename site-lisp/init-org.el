@@ -68,8 +68,8 @@
           ("idea" . ?i)))
 )
 
-(use-package org-modern
-  :hook org-mode)
+;; (use-package org-modern
+;;   :hook org-mode)
 
 (use-package visual-fill-column
   :hook org-mode
