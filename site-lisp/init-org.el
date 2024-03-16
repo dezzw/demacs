@@ -26,6 +26,7 @@
                    (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
                    "(provide 'org-version)\n")))
               :pin nil)
+  :hook (org-mode . org-indent-mode)
   :config
   (setq org-html-head-include-default-style nil
         org-adapt-indentation t
@@ -71,6 +72,11 @@
 ;; (use-package org-modern
 ;;   :hook org-mode)
 
+(use-package org-modern-indent
+  :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
+  :config ; add late to hook
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+
 (use-package visual-fill-column
   :hook org-mode
   :custom
@@ -96,7 +102,7 @@
 
 (use-package org-super-agenda
   :hook org-agenda-mode
-  ;; :commands (org-agenda)
+  :commands (org-agenda)
   :init
   (setq org-agenda-skip-scheduled-if-done t
         org-agenda-skip-deadline-if-done t
