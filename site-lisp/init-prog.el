@@ -29,4 +29,13 @@
   :straight t
   :commands (dash-at-point))
 
+(use-package compile
+  :defer t
+  :hook ((compilation-filter . ansi-color-compilation-filter))
+  :bind (("C-x C-m" . recompile))
+  :config
+  (setopt compilation-scroll-output t)
+  (setopt compilation-ask-about-save nil)
+  (require 'ansi-color))
+
 (provide 'init-prog)

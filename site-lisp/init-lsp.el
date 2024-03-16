@@ -10,9 +10,6 @@
   ;; Increase the amount of data emacs reads from processes
   (setq read-process-output-max (* 1024 1024))
   
-  (setq lsp-clients-clangd-args '("--header-insertion-decorators=0"
-                                  "--clang-tidy"
-                                  "--enable-config"))
   ;; Disable features that have great potential to be slow.
   (setq lsp-enable-folding nil
         lsp-enable-text-document-color nil)
