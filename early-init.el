@@ -66,7 +66,7 @@
       inhibit-startup-message t
       inhibit-splash-screen   t
       ring-bell-function      'ignore
-      tab-bar-mode 1
+      ;; tab-bar-mode 1
       pixel-scroll-precision-mode 1)
 
 (setq-default mode-line-format nil)
