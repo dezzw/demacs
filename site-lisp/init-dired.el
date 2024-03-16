@@ -19,8 +19,24 @@
 
 
 (use-package dirvish
-  :commands (dirvish)
+  :straight '(dirvish :type git :repo "alexluigit/dirvish" :depth full)
+  :hook (dirvish-setup . dirvish-emerge-mode)
+  :init
+  (dirvish-override-dired-mode)
+  :custom
+  (dirvish-quick-access-entries ; It's a custom option, `setq' won't work
+   '(("h" "~/"                          "Home")
+     ("d" "~/Downloads/"                "Downloads")
+     ("m" "~/UTM/"                       "UTM")
+     ("t" "~/Desktop/Test/"             "Language Test")))
   :config
-  (dirvish-override-dired-mode))
+  ;; (dirvish-peek-mode) ; Preview files in minibuffer
+  (dirvish-side-follow-mode) ; similar to `treemacs-follow-mode'
+  (setq dirvish-mode-line-format
+        '(:left (sort symlink) :right (vc-info yank index)))
+  (setq dirvish-attributes
+        '(nerd-icons vc-state git-msg))
+  (setq delete-by-moving-to-trash t))
+  
 
 (provide 'init-dired)
