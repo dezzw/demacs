@@ -10,3 +10,5 @@
   (setq tramp-verbose 0)
   (setq tramp-chunksize 2000)
   (setq tramp-use-ssh-controlmaster-options nil))
+
+(provide 'init-tramp)

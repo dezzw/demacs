@@ -75,6 +75,7 @@
 ;;; lang
 (require 'init-treesit)
 (require 'init-web)
+(require 'init-cc)
 (require 'init-python)
 (require 'init-clojure)
 (require 'init-clisp)
@@ -95,4 +96,6 @@
 
 ;; magit
 (require 'init-magit)
+
+(require 'init-tramp)
 ;; (require 'init-telega)
