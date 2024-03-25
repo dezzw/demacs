@@ -62,6 +62,9 @@
 (require 'init-org)
 (require 'init-dired)
 
+;; project management
+(require 'init-project)
+
 ;; prog
 (require 'init-direnv)
 (require 'init-prog)

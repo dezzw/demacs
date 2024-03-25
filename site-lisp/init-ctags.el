@@ -11,8 +11,8 @@
   (require 'citre-config)
   :config
   (setq
-   citre-readtags-program "/etc/profiles/per-user/dez/bin/readtags"
-   citre-ctags-program "/etc/profiles/per-user/dez/bin/ctags"
+   ;; citre-readtags-program "/etc/profiles/per-user/dez/bin/readtags"
+   ;; citre-ctags-program "/etc/profiles/per-user/dez/bin/ctags"
    ;; Set this if you want to always use one location to create a tags file.
    citre-use-project-root-when-creating-tags t
    citre-prompt-language-for-ctags-command t))
