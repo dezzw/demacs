@@ -14,8 +14,7 @@
   };
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
-    emacs-src = {
+    flake-utils.url = "github:numtide/flake-utils"; emacs-src = {
       url = "github:emacs-mirror/emacs";
       flake = false;
     };
@@ -133,12 +132,13 @@
         emacs-augmented =
           ((pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (epkgs:
             with epkgs; [
-              (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
-                inherit (pkgs) fetchFromGitHub;
-              })
+              # (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
+              #   inherit (pkgs) fetchFromGitHub;
+              # })
 
               vterm
               pdf-tools
+	      jinx
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
             ]));
 

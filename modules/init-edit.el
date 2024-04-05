@@ -1,6 +1,23 @@
 ;;; -*- lexical-binding: t; -*-
+
+(setq undo-limit 67108864) ; 64mb.
+(setq undo-strong-limit 100663296) ; 96mb.
+(setq undo-outer-limit 1006632960) ; 960mb.
+
 (use-package vundo
   :commands (vundo))
+
+(use-package undo-fu
+	:config
+	(global-unset-key (kbd "s-z"))
+  (global-set-key (kbd "s-z")   'undo-fu-only-undo)
+  (global-set-key (kbd "s-Z") 'undo-fu-only-redo))
+
+(use-package undo-fu-session
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
+	(undo-fu-session-global-mode))
+
 
 ;; Alternatives to [hungry-delete]
 (setq backward-delete-char-untabify-method 'hungry)
@@ -103,8 +120,8 @@
    '("R" . meow-swap-grab)
    '("s" . meow-kill)
    '("t" . meow-till)
-   '("u" . meow-undo)
-   '("U" . meow-undo-in-selection)
+   '("u" . undo-fu-only-undo)
+   '("U" . undo-fu-only-redo)
    '("v" . meow-visit)
    '("w" . meow-mark-word)
    '("W" . meow-mark-symbol)
