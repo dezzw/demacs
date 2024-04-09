@@ -26,7 +26,9 @@
                    (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
                    "(provide 'org-version)\n")))
               :pin nil)
-  :hook (org-mode . org-indent-mode)
+  :hook
+  ((org-mode . org-indent-mode)
+   (org-mode . visual-line-mode))
   :config
   (setq org-html-head-include-default-style nil
         org-adapt-indentation t

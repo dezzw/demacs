@@ -95,11 +95,6 @@
              [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
           
           patches = (old.patches or [ ]) ++ [
-            # Don't raise another frame when closing a frame
-            # (pkgs.fetchpatch {
-            #   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/no-frame-refocus-cocoa.patch";
-            #   sha256 = "QLGplGoRpM4qgrIAJIbVJJsa4xj34axwT3LiWt++j/c=";
-            # })
             # Fix OS window role so that yabai can pick up Emacs
             (pkgs.fetchpatch {
               # Emacs 29 uses the same patch as 28
@@ -108,8 +103,8 @@
             })
             # Use poll instead of select to get file descriptors
             (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-29/poll.patch";
-              sha256 = "jN9MlD8/ZrnLuP2/HUXXEVVd6A+aRZNYFdZF8ReJGfY=";
+              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/poll.patch";
+              sha256 = "HPuHrsKq17ko8xP8My+IYcJV+PKio4jK41qID6QFXFs=";
             })
             # Add setting to enable rounded window with no decoration (still
             # have to alter default-frame-alist)
@@ -119,12 +114,12 @@
             })
             # Make Emacs aware of OS-level light/dark mode
             # https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
-            # (pkgs.fetchpatch {
-            #   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/system-appearance.patch";
-            #   sha256 = "oM6fXdXCWVcBnNrzXmF0ZMdp8j0pzkLE66WteeCutv8=";
-            # })
+            (pkgs.fetchpatch {
+              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/system-appearance.patch";
+              sha256 = "3QLq91AQ6E921/W9nfDjdOUWR8YVsqBAT/W9c1woqAw=";
+            })
 
-	    ./patches/system-appearance.patch
+	    # ./patches/system-appearance.patch
 	    ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
           ];
         });
@@ -138,7 +133,7 @@
 
               vterm
               pdf-tools
-	      jinx
+	      #jinx
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
             ]));
 

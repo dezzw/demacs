@@ -49,7 +49,7 @@
   :hook (kill-emacs . tabnine-kill-process)
   :config
   (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
-  (add-to-list 'nerd-icons-corfu-mapping `(tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face) t)
+  ;; (add-to-list 'nerd-icons-corfu-mapping `(tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face) t)
   (tabnine-start-process)
   :bind
   (:map  tabnine-completion-map
@@ -61,6 +61,10 @@
 	 ("M-[" . tabnine-previous-completion)
 	 ("M-]" . tabnine-next-completion)))
 
+(use-package jinx
+  :hook (emacs-startup . global-jinx-mode)
+  :bind (("M-$" . jinx-correct)
+         ("C-M-$" . jinx-languages)))
 
 
 (provide 'init-prog)

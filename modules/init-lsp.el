@@ -34,7 +34,7 @@
             (lambda ()
               (setf (alist-get 'lsp-capf completion-category-defaults)
                     '((styles . (orderless flex))))))
-  
+    
   (defun lsp-booster--advice-json-parse (old-fn &rest args)
     "Try to parse bytecode instead of json."
     (or

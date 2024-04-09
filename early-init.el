@@ -74,7 +74,8 @@
 (if (eq system-type 'darwin)
     (progn
       (setq frame-resize-pixelwise  t)
-      (menu-bar-mode t)))
+      (when (display-graphic-p)
+	(menu-bar-mode t))))
 
 (setenv "LSP_USE_PLISTS" "true")
 
