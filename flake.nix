@@ -91,8 +91,8 @@
           
           # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
           buildInputs = old.buildInputs
-           ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
-             [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
+                        ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
+                          [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
           
           patches = (old.patches or [ ]) ++ [
             # Fix OS window role so that yabai can pick up Emacs
@@ -119,8 +119,9 @@
               sha256 = "3QLq91AQ6E921/W9nfDjdOUWR8YVsqBAT/W9c1woqAw=";
             })
 
-	    # ./patches/system-appearance.patch
-	    ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
+	          # ./patches/system-appearance.patch
+	          ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
+            ./patches/0001-Cursor-animation.patch
           ];
         });
 
@@ -133,7 +134,8 @@
 
               vterm
               pdf-tools
-	      #jinx
+              telega
+	            #jinx
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
             ]));
 

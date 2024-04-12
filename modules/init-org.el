@@ -71,8 +71,9 @@
           ("idea" . ?i)))
 )
 
-;; (use-package org-modern
-;;   :hook org-mode)
+(use-package org-modern
+  :straight t
+  :hook org-mode)
 
 (use-package org-modern-indent
   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
@@ -90,6 +91,12 @@
 
 (use-package org-appear
   :hook org-mode)
+
+(use-package org-tidy
+  :hook
+  (org-mode . org-tidy-mode)
+  :custom
+  (org-tidy-properties-style 'fringe))
 
 (with-eval-after-load "ob"
   (org-babel-do-load-languages
