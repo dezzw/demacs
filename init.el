@@ -100,5 +100,8 @@
 ;; magit
 (require 'init-magit)
 
+;; social media
+(require 'init-telega)
+
 (require 'init-tramp)
 ;; (require 'init-telega)

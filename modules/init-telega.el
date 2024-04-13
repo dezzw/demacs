@@ -118,6 +118,8 @@
   :straight t
   :commands (telega)
   :defer t
+  :custom
+  (telega-avatar-workaround-gaps-for '(return t))
   :config
   (add-hook 'telega-root-mode-hook (lambda () (telega-notifications-mode 1))))
 

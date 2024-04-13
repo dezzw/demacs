@@ -133,8 +133,6 @@
 
               vterm
               pdf-tools
-              telega
-	            #jinx
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
             ]));
 
