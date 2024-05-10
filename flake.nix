@@ -14,7 +14,8 @@
   };
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    flake-utils.url = "github:numtide/flake-utils"; emacs-src = {
+    flake-utils.url = "github:numtide/flake-utils";
+    emacs-src = {
       url = "github:emacs-mirror/emacs";
       flake = false;
     };
@@ -22,15 +23,23 @@
       url = "github:nix-community/emacs-overlay";
     };
   };
-  outputs = inputs@{ self, nixpkgs, flake-utils, emacs-overlay, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      flake-utils,
+      emacs-overlay,
+      ...
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs {
           inherit system;
           overlays = [ emacs-overlay.overlay ];
-
         };
-      in rec {
+      in
+      rec {
         dependencies = with pkgs; [
           git
 
@@ -77,64 +86,68 @@
           emacs-all-the-icons-fonts
         ];
 
-        emacs-patched = (pkgs.emacs-git.override {
-          # withXwidgets = true;
-          # withGTK3 = true;
-          # withSQLite3 = true;
-          # withNS = true;
-          # withWebP = true;
-        }).overrideAttrs (old: {
-          configureFlags = (old.configureFlags or []) ++ [
-            "--with-xwidgets" # withXwidgets flag is somehow disabled for darwin.
-          ];
-          
-          # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
-          buildInputs = old.buildInputs
-                        ++ pkgs.lib.optionals pkgs.stdenv.isDarwin
-                          [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
-          
-          patches = (old.patches or [ ]) ++ [
-            # Fix OS window role so that yabai can pick up Emacs
-            (pkgs.fetchpatch {
-              # Emacs 29 uses the same patch as 28
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
-              sha256 = "+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
-            })
-            # Use poll instead of select to get file descriptors
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/poll.patch";
-              sha256 = "HPuHrsKq17ko8xP8My+IYcJV+PKio4jK41qID6QFXFs=";
-            })
-            # Add setting to enable rounded window with no decoration (still
-            # have to alter default-frame-alist)
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/round-undecorated-frame.patch";
-              sha256 = "uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
-            })
-            # Make Emacs aware of OS-level light/dark mode
-            # https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
-            (pkgs.fetchpatch {
-              url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/system-appearance.patch";
-              sha256 = "3QLq91AQ6E921/W9nfDjdOUWR8YVsqBAT/W9c1woqAw=";
-            })
+        emacs-patched =
+          (pkgs.emacs-git.override {
+            # withXwidgets = true;
+            # withGTK3 = true;
+            # withSQLite3 = true;
+            # withNS = true;
+            # withWebP = true;
+          }).overrideAttrs
+            (old: {
+              configureFlags = (old.configureFlags or [ ]) ++ [
+                "--with-xwidgets" # withXwidgets flag is somehow disabled for darwin.
+              ];
 
-	          # ./patches/system-appearance.patch
-	          ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
-            ./patches/0001-Cursor-animation.patch
-          ];
-        });
+              # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
+              buildInputs =
+                old.buildInputs
+                ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
 
-        emacs-augmented =
-          ((pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (epkgs:
-            with epkgs; [
+              patches = (old.patches or [ ]) ++ [
+                # Fix OS window role so that yabai can pick up Emacs
+                (pkgs.fetchpatch {
+                  # Emacs 29 uses the same patch as 28
+                  url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
+                  sha256 = "+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
+                })
+                # Use poll instead of select to get file descriptors
+                (pkgs.fetchpatch {
+                  url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/poll.patch";
+                  sha256 = "HPuHrsKq17ko8xP8My+IYcJV+PKio4jK41qID6QFXFs=";
+                })
+                # Add setting to enable rounded window with no decoration (still
+                # have to alter default-frame-alist)
+                (pkgs.fetchpatch {
+                  url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/round-undecorated-frame.patch";
+                  sha256 = "uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
+                })
+                # Make Emacs aware of OS-level light/dark mode
+                # https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
+                (pkgs.fetchpatch {
+                  url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/system-appearance.patch";
+                  sha256 = "3QLq91AQ6E921/W9nfDjdOUWR8YVsqBAT/W9c1woqAw=";
+                })
+
+                # ./patches/system-appearance.patch
+                ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
+                ./patches/0001-Cursor-animation.patch
+              ];
+            });
+
+        emacs-augmented = (
+          (pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (
+            epkgs: with epkgs; [
               # (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
               #   inherit (pkgs) fetchFromGitHub;
               # })
-
+              diff-hl
               vterm
               pdf-tools
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
-            ]));
+            ]
+          )
+        );
 
         packages.demacs = emacs-augmented;
 
@@ -158,5 +171,6 @@
             fi
           '';
         };
-      });
+      }
+    );
 }

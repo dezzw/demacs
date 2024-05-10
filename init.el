@@ -71,7 +71,7 @@
 (require 'init-dap)
 ;;; lsp config
 ;; (require 'init-lspbridge)
-;; (require 'init-eglot)
+(require 'init-eglot)
 (require 'init-lsp)
 (require 'init-ctags)
 
@@ -92,6 +92,7 @@
 (require 'init-rust)
 (require 'init-tex)
 (require 'init-db)
+(require 'init-lua)
 
 ;; terms
 (require 'init-vterm)

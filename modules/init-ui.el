@@ -66,6 +66,7 @@
   ("C-M-=" . transwin-inc)
   ("C-M--" . transwin-dec)
   ("C-M-0" . transwin-toggle))
+
 ;; (use-package hl-todo
 ;;   :config
 ;;   (setq hl-todo-keyword-faces
@@ -77,10 +78,10 @@
 ;;           ("UNCHECK"   . "#1E90FF")))
 ;;   (global-hl-todo-mode))
 
-;; (use-package diff-hl
-;;   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
-;;          (after-init . global-diff-hl-mode)
-;;          (dired-mode . diff-hl-dired-mode)))
+(use-package diff-hl
+  :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
+         (after-init . global-diff-hl-mode)
+         (dired-mode . diff-hl-dired-mode)))
 
 ;; Child frame
 (when (childframe-workable-p)

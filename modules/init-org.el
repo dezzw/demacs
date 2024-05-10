@@ -202,6 +202,9 @@
 ;;   :custom
 ;;   (org-download-image-dir "./images/"))
 
+;; (use-package org-imagine
+;;   :straight 
+
 (defun org-insert-image ()
   "insert a image from clipboard"
   (interactive)

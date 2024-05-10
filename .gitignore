@@ -1,5 +1,6 @@
 .DS_Store
 tramp
+elpa/
 straight/repos
 straight/build
 straight/build-cache.el
@@ -30,3 +31,4 @@ request/
 devdocs/
 undo-fu-session/
 places
+ielm-history.eld

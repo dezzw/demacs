@@ -177,7 +177,7 @@
 
   (define-key meow-insert-state-keymap (substring meow-two-char-escape-sequence 0 1)
 	      #'meow-two-char-exit-insert-state)
-
+  (add-hook 'meow-insert-exit-hook 'corfu-quit)
   )
 
 (provide 'init-edit)

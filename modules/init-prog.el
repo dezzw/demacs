@@ -2,7 +2,7 @@
 
 (use-package elec-pair
   :straight nil
-  :config (electric-pair-mode))
+  :hook ((prog-mode conf-mode yaml-mode org-mode markdown-mode minibuffer-mode) . electric-pair-mode))
 
 (use-package electric
   :straight nil
