@@ -130,7 +130,7 @@
                 })
 
                 # ./patches/system-appearance.patch
-                ./patches/ns-alpha-background-2024-1-25-9b436cc.patch
+                ./patches/ns-alpha-background.patch
                 ./patches/0001-Cursor-animation.patch
               ];
             });
