@@ -138,10 +138,9 @@
         emacs-augmented = (
           (pkgs.emacsPackagesFor emacs-patched).emacsWithPackages (
             epkgs: with epkgs; [
-              # (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
-              #   inherit (pkgs) fetchFromGitHub;
-              # })
-              diff-hl
+              (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
+                inherit (pkgs) fetchFromGitHub;
+              })
               vterm
               pdf-tools
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
