@@ -70,9 +70,9 @@
 (require 'init-prog)
 (require 'init-dap)
 ;;; lsp config
-;; (require 'init-lspbridge)
+(require 'init-lspbridge)
 (require 'init-eglot)
-(require 'init-lsp)
+;; (require 'init-lsp)
 (require 'init-ctags)
 
 ;;; lang

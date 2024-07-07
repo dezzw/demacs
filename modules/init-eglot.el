@@ -61,4 +61,8 @@
   :bind (:map eglot-mode-map
               ([remap xref-find-apropos] . consult-eglot-symbols)))
 
+(use-package flymake
+  :hook prog-mode
+  :custom (flymake-show-diagnostics-at-end-of-line t))
+
 (provide 'init-eglot)

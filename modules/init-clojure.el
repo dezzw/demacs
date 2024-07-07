@@ -5,10 +5,10 @@
 	   (progn
 	     (rainbow-delimiters-mode)
 	     (hs-minor-mode)
-	     (aggressive-indent-mode)
-	     (setq-local completion-at-point-functions
-			 (list (cape-capf-super #'cider-complete-at-point #'lsp-completion-at-point)))
-	     (lsp-deferred)))))
+	     (aggressive-indent-mode)))))
+	     ;; (setq-local completion-at-point-functions
+	     ;; 		 (list (cape-capf-super #'cider-complete-at-point #'lsp-completion-at-point)))
+	     ;; (lsp-deferred)))))
 
 (use-package cider
   :hook (cider-repl-mode . rainbow-delimiters-mode)

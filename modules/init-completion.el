@@ -138,6 +138,7 @@
 ;;   :commands (consult-applemusic-playlists applemusic-toggle-play))
 
 (use-package corfu
+  :disabled
   :straight (:files (:defaults "extensions/*.el"))
   :hook (((prog-mode conf-mode yaml-mode shell-mode eshell-mode org-mode markdown-mode LaTeX-mode) . corfu-mode)
          ((eshell-mode shell-mode) . (lambda () (setq-local corfu-auto nil)))
@@ -172,6 +173,7 @@
       (corfu-mode 1))))
 
 (use-package corfu-history
+  :disabled
   :straight nil
   :after corfu
   :init
@@ -181,6 +183,7 @@
     (cl-pushnew 'corfu-history savehist-additional-variables)))
 
 (use-package corfu-popupinfo
+  :disabled
   :straight nil
   :after corfu
   :init
@@ -189,6 +192,7 @@
   (setq corfu-popupinfo-delay '(1.0 . 1.0)))
 
 (use-package corfu-quick
+  :disabled
   :straight nil
   :after corfu
   :bind (:map corfu-map
@@ -196,12 +200,14 @@
 
 
 (use-package corfu-terminal
+  :disabled
   :straight t
   :when (not (display-graphic-p))
   :after corfu
   :init (corfu-terminal-mode 1))
 
 (use-package cape
+  :disabled
   :hook ((corfu-mode . +corfu-add-cape-backends)
          ((TeX-mode LaTeX-mode org-mode markdown-mode) . +corfu-add-cape-tex-backends))
   :config
