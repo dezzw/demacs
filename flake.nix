@@ -141,6 +141,10 @@
               (callPackage ./site-packages/lsp-bridge/lsp-bridge.nix {
                 inherit (pkgs) fetchFromGitHub;
               })
+              # (callPackage ./site-packages/holo-layer/holo-layer.nix {
+              #   inherit (pkgs) fetchFromGitHub;
+              # })
+
               vterm
               pdf-tools
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
