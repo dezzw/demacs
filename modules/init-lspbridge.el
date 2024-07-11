@@ -14,7 +14,7 @@
   (acm-backend-yas-match-by-trigger-keyword t)
   (acm-enable-capf t)
   (acm-enable-tabnine t)
-  (acm-enable-tempel t)
+  ;; (acm-enable-tempel t)
   ;; (acm-enable-codeium t)
   ;; (acm-enable-citre t)
   (lsp-bridge-enable-mode-line nil)
