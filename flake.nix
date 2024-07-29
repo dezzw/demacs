@@ -131,7 +131,7 @@
 
                 # ./patches/system-appearance.patch
                 ./patches/ns-alpha-background.patch
-                ./patches/0001-Cursor-animation.patch
+                # ./patches/cursor-animation.patch
               ];
             });
 
