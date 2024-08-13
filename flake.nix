@@ -114,7 +114,7 @@
                 # Use poll instead of select to get file descriptors
                 (pkgs.fetchpatch {
                   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/poll.patch";
-                  sha256 = "HPuHrsKq17ko8xP8My+IYcJV+PKio4jK41qID6QFXFs=";
+                  sha256 = "sha256-bQW9LPmJhMAtP2rftndTdjw0uipPyOp5oXqtIcs7i/Q=";
                 })
                 # Add setting to enable rounded window with no decoration (still
                 # have to alter default-frame-alist)
