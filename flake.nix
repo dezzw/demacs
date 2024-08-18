@@ -129,7 +129,6 @@
                   sha256 = "3QLq91AQ6E921/W9nfDjdOUWR8YVsqBAT/W9c1woqAw=";
                 })
 
-                # ./patches/system-appearance.patch
                 ./patches/ns-alpha-background.patch
                 # ./patches/cursor-animation.patch
               ];
