@@ -34,4 +34,15 @@
   :config
   (setup-esh-help-eldoc))
 
+
+
+(use-package eat
+  :straight t
+  :config
+  ;; For `eat-eshell-mode'.
+(add-hook 'eshell-load-hook #'eat-eshell-mode)
+
+;; For `eat-eshell-visual-command-mode'.
+(add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode))
+
 (provide 'init-eshell)
