@@ -21,7 +21,7 @@
 
 
 (use-package dirvish
-  :straight '(dirvish :type git :repo "alexluigit/dirvish" :depth full)
+  :straight '(dirvish :type git :repo "hlissner/dirvish" :depth full)
   :hook (dirvish-setup . dirvish-emerge-mode)
   :init
   (dirvish-override-dired-mode)
