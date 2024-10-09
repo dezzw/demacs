@@ -23,6 +23,7 @@ result
 recentf
 history
 tabsession.el
+site-packages/EmacsMacOSModule/
 lsp-bridge/
 dev-profile*
 mind-wave/

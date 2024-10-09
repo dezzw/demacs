@@ -4,7 +4,7 @@
   :ensure nil
   :commands (eshell)
   :config
-  (setq eshell-directory-name "~/.dotfiles/Emacs/eshell/")
+  (setq eshell-directory-name (concat user-emacs-directory "eshell/"))
   
   (if (executable-find "exa")
       (defalias 'eshell/ls 'exa)))
@@ -40,9 +40,9 @@
   :straight t
   :config
   ;; For `eat-eshell-mode'.
-(add-hook 'eshell-load-hook #'eat-eshell-mode)
+  (add-hook 'eshell-load-hook #'eat-eshell-mode)
 
-;; For `eat-eshell-visual-command-mode'.
-(add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode))
+  ;; For `eat-eshell-visual-command-mode'.
+  (add-hook 'eshell-load-hook #'eat-eshell-visual-command-mode))
 
 (provide 'init-eshell)

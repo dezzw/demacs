@@ -2,7 +2,7 @@
 
 (use-package tex
   :straight auctex
-  :mode ("\\.tex\\'" . TeX-tex-mode)
+  ;; :mode ("\\.tex\\'" . TeX-tex-mode)
   :custom
   (TeX-parse-self t) ; parse on load
   (TeX-auto-save t)  ; parse on save
@@ -24,20 +24,21 @@
     ;; PDF Tools isn't in `TeX-view-program-list-builtin' on macs.
     (add-to-list 'TeX-view-program-list '("PDF Tools" TeX-pdf-tools-sync-view)))
   
-  (with-eval-after-load 'auctex
-    (defun remove-tex-trash()
-      (interactive)
-      (let ((current-directory default-directory)
-	    (extensions '("\\.log\\'" "\\.out\\'" "\\.aux\\'")))
-	(dolist (ext extensions)
-	  (dolist (file (directory-files current-directory nil ext))
-	    (delete-file (concat current-directory file)))))))
-  (when (featurep 'lsp)
-    (lsp-register-client
-     (make-lsp-client :new-connection (lsp-stdio-connection lsp-clients-digestif-executable)
-                      :major-modes '(plain-tex-mode latex-mode context-mode texinfo-mode LaTeX-mode)
-                      :priority (if (eq lsp-tex-server 'digestif) 1 -1)
-                      :server-id 'digestif))))
+  (defun dw/remove-tex-trash()
+    (interactive)
+    (let ((current-directory default-directory)
+	  (extensions '("\\.log\\'" "\\.out\\'" "\\.aux\\'")))
+      (dolist (ext extensions)
+	(dolist (file (directory-files current-directory nil ext))
+	  (delete-file (concat current-directory file))))))
+  
+  (defun dw/auto-compile-tex ()
+    "Automatically compile TeX file after saving."
+    (when (eq major-mode 'LaTeX-mode)
+      (TeX-command "LaTeX" 'TeX-master-file)))
+
+  ;; Add the function to the after-save-hook
+  (add-hook 'after-save-hook 'dw/auto-compile-tex))
 
 (use-package cdlatex
   :hook (LaTeX-mode . cdlatex-mode)

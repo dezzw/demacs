@@ -236,32 +236,4 @@
   ;; (tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face))
   (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
-(use-package tempel
-  :straight t
-  :bind (:map tempel-map
-              ("TAB" . tempel-next)
-              ("S-<tab>" . tempel-previous))
-  :hook (((prog-mode text-mode) . +tempel-setup-capf)
-         ((prog-mode text-mode) . tempel-abbrev-mode))
-  :custom
-  (tempel-trigger-prefix "\\")
-  :config
-  (defun +tempel-setup-capf ()
-    (push #'tempel-complete completion-at-point-functions)))
-
-
-(use-package tempel-collection
-  :straight t
-  :after tempel)
-
-(use-package yasnippet
-  :disabled
-  :hook
-  (prog-mode . yas-minor-mode)
-  :config
-  (use-package yasnippet-snippets)
-  (yas-reload-all))
-
-
-
 (provide 'init-completion)

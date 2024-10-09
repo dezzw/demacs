@@ -1,5 +1,11 @@
 ;;; -*- lexical-binding: t -*-
 
+(use-package yasnippet
+  :straight t
+  :config
+  (use-package yasnippet-snippets :straight t)
+  (yas-reload-all))
+
 ;; lsp-bridge
 (use-package lsp-bridge
   :straight nil
@@ -10,7 +16,7 @@
   (lsp-bridge-enable-with-tramp t)
   (lsp-bridge-enable-hover-diagnostic t)
 
-  ;; (acm-candidate-match-function 'orderless-flex)
+  (acm-candidate-match-function 'orderless-flex)
   (acm-backend-yas-match-by-trigger-keyword t)
   (acm-enable-capf t)
   (acm-enable-tabnine t)
@@ -22,6 +28,7 @@
   ;; 	      ("C-n" . acm-select-next)
   ;; 	      ("C-p" . acm-select-prev))
   :config
+  (yas-global-mode 1)
   (global-lsp-bridge-mode)
 
   (setq lsp-bridge-get-project-path-by-filepath
