@@ -1,5 +1,7 @@
-;;; -*- lexical-binding: t -*-
+;;; package --- init file -*- lexical-binding: t; -*-
+;;; Commentary:
 
+;;; Code:
 ;;
 ;; Speed up startup
 ;;
@@ -59,7 +61,6 @@
 
 (require 'init-wm)
 
-(require 'init-org)
 (require 'init-dired)
 
 ;; project management
@@ -74,6 +75,8 @@
 (require 'init-eglot)
 ;; (require 'init-lsp)
 (require 'init-ctags)
+(require 'init-jupyter)
+(require 'init-ai)
 
 ;;; lang
 (require 'init-treesit)
@@ -105,4 +108,7 @@
 (require 'init-telega)
 
 (require 'init-tramp)
+(require 'init-org)
 ;; (require 'init-telega)
+
+;;; init.el ends here

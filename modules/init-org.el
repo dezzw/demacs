@@ -1,5 +1,7 @@
-;; ;;; -*- lexical-binding: t -*-
+;;; package --- org-mode related -*- lexical-binding: t; -*-
+;;; Commentary:
 
+;;; Code:
 (use-package org
   :defer
   :straight t
@@ -46,7 +48,10 @@
           ("emacs" . ?e)
           ("note" . ?n)
           ("idea" . ?i)))
-)
+  )
+
+(use-package org-contrib
+  :straight t)
 
 (use-package org-modern
   :straight t
@@ -84,7 +89,8 @@
      (C . t)
      (shell . t)
      (python . t)
-     (sql . t)))
+     (sql . t)
+     (jupyter . t)))
 
   (setq org-confirm-babel-evaluate nil))
 
@@ -208,3 +214,4 @@
   (org-display-inline-images))
 
 (provide 'init-org)
+;;; init-org.el ends here

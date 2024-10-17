@@ -11,19 +11,24 @@
   :straight nil
   :custom
   (lsp-bridge-enable-completion-in-minibuffer t)
+  (lsp-bridge-enable-with-tramp t)
+  ;; ui configuration
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
   (lsp-bridge-signature-show-with-frame-position "top-right")
-  (lsp-bridge-enable-with-tramp t)
+  (lsp-bridge-enable-mode-line nil)
   (lsp-bridge-enable-hover-diagnostic t)
 
+  ;; acm configuration 
   (acm-candidate-match-function 'orderless-flex)
   (acm-backend-yas-match-by-trigger-keyword t)
   (acm-enable-capf t)
   (acm-enable-tabnine t)
+
+  ;;lsp-server configuartion
+  (lsp-bridge-nix-lsp-server 'nixd)
   ;; (acm-enable-tempel t)
   ;; (acm-enable-codeium t)
   ;; (acm-enable-citre t)
-  (lsp-bridge-enable-mode-line nil)
   ;; :bind (:map acm-mode-map
   ;; 	      ("C-n" . acm-select-next)
   ;; 	      ("C-p" . acm-select-prev))

@@ -39,6 +39,7 @@
   (require 'ansi-color))
 
 (use-package tabnine
+  :disabled
   :commands (tabnine-start-proces tabnine-chat)
   ;; :hook (prog-mode . tabnine-mode)
   :straight t
@@ -59,7 +60,18 @@
   ;; 	 ("M-<return>" . tabnine-accept-completion-by-line)
   ;; 	 ("C-g" . tabnine-clear-overlay)
   ;; 	 ("M-[" . tabnine-previous-completion)
-  ;; 	 ("M-]" . tabnine-next-completion)))
+;; 	 ("M-]" . tabnine-next-completion)))
+
+(use-package leetcode
+  :straight t
+  :hook (leetcode-solution-mode .
+          (lambda() (flymake-mode -1)))
+  :custom
+  (leetcode-prefer-language "swift")
+  (leetcode-prefer-sql "mysql")
+  (leetcode-save-solutions t)
+  (leetcode-directory "~/Documents/Leetcode")
+  )
 
 (use-package jinx
   :hook (emacs-startup . global-jinx-mode)
@@ -68,3 +80,4 @@
 
 
 (provide 'init-prog)
+;;; init-prog.el ends here

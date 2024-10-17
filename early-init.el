@@ -77,6 +77,5 @@
       (when (display-graphic-p)
 	(menu-bar-mode t))))
 
-(setenv "LSP_USE_PLISTS" "true")
-
+;;; early-init.el ends here
 

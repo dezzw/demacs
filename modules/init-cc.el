@@ -1,12 +1,9 @@
-;;; -*- lexical-binding: t -*-
+;;; package --- c-family related -*- lexical-binding: t; -*-
+;;; Commentary:
 
-;; (add-hook 'c-ts-mode-hook 'lsp)
-;; (add-hook 'c++-ts-mode-hook 'lsp)
+;;; Code:
 
-;; (when (featurep 'lsp-mode)
-;;   (with-eval-after-load 'lsp-mode
-;;     (setq lsp-clients-clangd-args '("--header-insertion-decorators=0"
-;;                                   "--clang-tidy"
-;;                                   "--enable-config"))))
+(use-package cmake-mode)
 
 (provide 'init-cc)
+;;; init-cc.el ends here
