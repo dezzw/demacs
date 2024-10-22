@@ -1,5 +1,7 @@
-;;; -*- lexical-binding: t -*-
+;;; init-tex.el --- LaTex related -*- lexical-binding: t; -*-
+;;; Commentary:
 
+;;; Code:
 (use-package tex
   :straight auctex
   ;; :mode ("\\.tex\\'" . TeX-tex-mode)
@@ -41,7 +43,8 @@
   ;; Add the function to the after-save-hook
   (add-hook 'after-save-hook (lambda ()
 			       (dw/auto-compile-tex)
-			       (dw/clean-latex-files))))
+			       ;; (dw/clean-latex-files)
+			       )))
 
 
 (use-package cdlatex
@@ -66,3 +69,4 @@
   (save-place-mode 1))
 
 (provide 'init-tex)
+;;; init-tex.el ends here
