@@ -12,6 +12,7 @@
   (TeX-source-correlate-mode t)
   (TeX-source-correlate-method 'synctex
 			       )      ;; Don't start the Emacs server when correlating sources.
+  (TeX-clean-confirm nil)
   (TeX-source-correlate-start-server nil)
   ;; Automatically insert braces after sub/superscript in `LaTeX-math-mode'.
   (TeX-electric-sub-and-superscript t)
@@ -23,14 +24,14 @@
   (when (featurep :system 'macos)
     ;; PDF Tools isn't in `TeX-view-program-list-builtin' on macs.
     (add-to-list 'TeX-view-program-list '("PDF Tools" TeX-pdf-tools-sync-view)))
-  
-  (defun dw/remove-tex-trash()
+
+  (defun dw/clean-latex-files ()
+    "Clean auxiliary LaTeX files and the .auctex-auto folder."
     (interactive)
-    (let ((current-directory default-directory)
-	  (extensions '("\\.log\\'" "\\.out\\'" "\\.aux\\'")))
-      (dolist (ext extensions)
-	(dolist (file (directory-files current-directory nil ext))
-	  (delete-file (concat current-directory file))))))
+  (TeX-clean) ;; Clean TeX files
+  (let ((auto-dir (concat (file-name-directory buffer-file-name) ".auctex-auto")))
+    (when (file-directory-p auto-dir)
+      (delete-directory auto-dir t))))
   
   (defun dw/auto-compile-tex ()
     "Automatically compile TeX file after saving."
@@ -38,7 +39,10 @@
       (TeX-command "LaTeX" 'TeX-master-file)))
 
   ;; Add the function to the after-save-hook
-  (add-hook 'after-save-hook 'dw/auto-compile-tex))
+  (add-hook 'after-save-hook (lambda ()
+			       (dw/auto-compile-tex)
+			       (dw/clean-latex-files))))
+
 
 (use-package cdlatex
   :hook (LaTeX-mode . cdlatex-mode)
