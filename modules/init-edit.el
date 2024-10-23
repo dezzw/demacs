@@ -1,5 +1,7 @@
-;;; -*- lexical-binding: t; -*-
+;;; init-edit --- editing related -*- lexical-binding: t; -*-
+;;; Commentary:
 
+;;; Code:
 (setq undo-limit 67108864) ; 64mb.
 (setq undo-strong-limit 100663296) ; 96mb.
 (setq undo-outer-limit 1006632960) ; 960mb.
@@ -21,6 +23,8 @@
 
 ;; Alternatives to [hungry-delete]
 (setq backward-delete-char-untabify-method 'hungry)
+;; override all minor modes
+;; (bind-key* "DEL" 'backward-delete-char-untabify)
 
 (use-package embrace
   :bind ("C-c ." . embrace-commander)
@@ -180,4 +184,11 @@
   ;; (add-hook 'meow-insert-exit-hook 'corfu-quit)
   )
 
+(use-package meow-tree-sitter
+  :straight t
+  :after meow
+  :config
+  (meow-tree-sitter-register-defaults))
+
 (provide 'init-edit)
+;;; init-edit.el ends here
