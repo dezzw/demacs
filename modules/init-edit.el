@@ -26,6 +26,24 @@
 ;; override all minor modes
 ;; (bind-key* "DEL" 'backward-delete-char-untabify)
 
+;; [puni]
+(use-package puni
+  :straight t
+  :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode)
+  :bind (:map puni-mode-map
+              ("DEL" . +puni-hungry-delete))
+  :config
+  (defun +puni-hungry-delete ()
+    (interactive)
+    (if (looking-back "^[[:blank:]]+")
+        (let* ((puni-mode nil)
+               (original-func (key-binding (kbd "DEL"))))
+          ;; original-func is what `DEL' would be if puni-mode were disabled
+          (if (eq original-func 'delete-backward-char)
+              (backward-delete-char-untabify 1)
+            (call-interactively original-func)))
+      (puni-backward-delete-char))))
+
 (use-package embrace
   :bind ("C-c ." . embrace-commander)
   :hook (org-mode . embrace-org-mode-hook))
