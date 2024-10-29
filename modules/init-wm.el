@@ -4,7 +4,7 @@
   :straight nil
   :when (display-graphic-p)
   :hook (window-setup . tab-bar-mode)
-  ;; :custom (tab-bar-new-tab-choice "*scratch*")
+  :custom (tab-bar-new-tab-choice "*scratch*")
   :config
   (defun eli/tab-bar-svg-padding (width string)
     (let* ((style svg-lib-style-default)
@@ -41,7 +41,7 @@
   (tabspaces-remove-to-default t)
   (tabspaces-include-buffers '("*scratch*" "*Messages*"))
   ;; sessions
-  (tabspaces-session t)
+  ;; (tabspaces-session t)
   ;; (tabspaces-session-auto-restore t)
   
   :config

@@ -29,7 +29,7 @@
 ;; [puni]
 (use-package puni
   :straight t
-  :hook ((prog-mode sgml-mode nxml-mode tex-mode eval-expression-minibuffer-setup) . puni-mode)
+  :hook ((prog-mode sgml-mode nxml-mode LaTeX-mode eval-expression-minibuffer-setup) . puni-mode)
   :bind (:map puni-mode-map
               ("DEL" . +puni-hungry-delete))
   :config
