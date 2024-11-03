@@ -3,7 +3,9 @@
 (use-package dape
   :bind (("<f5>" . dape)
          ("M-<f5>" . dape-hydra/body))
-  :custom (dape-buffer-window-arrangment 'right)
+  :custom
+  ;; (dape-buffer-window-arrangment 'right)
+  (dape-inlay-hints t)
   :pretty-hydra
   ((:title (pretty-hydra-title "Debug" 'codicon "nf-cod-debug")
 	   :color pink :quit-key ("q" "C-g"))

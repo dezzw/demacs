@@ -4,30 +4,52 @@
   :straight nil
   :when (display-graphic-p)
   :hook (window-setup . tab-bar-mode)
-  :custom (tab-bar-new-tab-choice "*scratch*")
+  :custom
+  (tab-bar-separator "")
+  (tab-bar-close-button-show nil)
+  (tab-bar-new-tab-to 'rightmost)
+  (tab-bar-tab-hints t)
+  (tab-bar-new-tab-choice "*scratch*")
+  (tab-bar-select-tab-modifiers '(super))
+  (tab-bar-tab-name-truncated-max 20)
+  (tab-bar-auto-width nil)
+  ;; Add spaces for tab-name
+  (tab-bar-tab-name-function '+tab-bar-tab-name-function)
+  (tab-bar-tab-name-format-function '+tab-bar-tab-name-format-function)
+  (tab-bar-format '(tab-bar-format-menu-bar
+                   tab-bar-format-tabs
+                   tab-bar-format-add-tab
+                   tab-bar-format-align-right))
   :config
-  (defun eli/tab-bar-svg-padding (width string)
-    (let* ((style svg-lib-style-default)
-         (margin      (plist-get style :margin))
-         (txt-char-width  (window-font-width nil 'fixed-pitch))
-         (tag-width (- width (* margin txt-char-width)))
-         (padding (- (/ tag-width txt-char-width) (length string))))
-      padding))
+  (defun tab-bar-format-menu-bar ()
+    "Produce the Menu button for the tab bar that shows the menu bar."
+    `((menu-bar menu-item
+		(format " %s "
+			(nerd-icons-sucicon "nf-custom-emacs"
+                                            :face '(:inherit nerd-icons-purple)))
+		tab-bar-menu-bar :help "Menu Bar")))
 
-  (defun dw/tab-bar-tab-name-with-svg (tab i)
-    (let* ((current-p (eq (car tab) 'current-tab))
-           (name (concat (if tab-bar-tab-hints (format "%d " i) "")
-			 (alist-get 'name tab)))
-           (padding (plist-get svg-lib-style-default :padding)))
-      (propertize
-       name
-       'display
-       (svg-tag-make
-	name
-	:face (if (eq (car tab) 'current-tab) 'tab-bar-tab 'tab-bar-tab-inactive)
-	:inverse t :margin 0 :radius 6 :padding padding))))
+  (defun +tab-bar-tab-name-function ()
+    (let* ((raw-tab-name (buffer-name (window-buffer (minibuffer-selected-window))))
+           (count (length (window-list-1 nil 'nomini)))
+           (truncated-tab-name (if (< (length raw-tab-name)
+                                      tab-bar-tab-name-truncated-max)
+                                   raw-tab-name
+				 (truncate-string-to-width raw-tab-name
+                                                           tab-bar-tab-name-truncated-max
+                                                           nil nil tab-bar-tab-name-ellipsis))))
+      (if (> count 1)
+          (concat truncated-tab-name "(" (number-to-string count) ")")
+	truncated-tab-name)))
 
-  (setq tab-bar-tab-name-format-function #'dw/tab-bar-tab-name-with-svg))
+  (defun +tab-bar-tab-name-format-function (tab i)
+    (let ((face (funcall tab-bar-tab-face-function tab)))
+      (concat
+       ;; change tab-bar's height
+       (propertize " " 'display '(raise 0.25))
+       (propertize (format "%d:" i) 'face `(:inherit ,face :weight ultra-bold))
+       (propertize (concat " " (alist-get 'name tab) " ") 'face face)
+       (propertize " " 'display '(raise -0.25))))))
 
 
 (use-package tabspaces

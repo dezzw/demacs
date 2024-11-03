@@ -15,10 +15,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    emacs-src = {
-      url = "github:emacs-mirror/emacs";
-      flake = false;
-    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
     };
@@ -38,92 +34,50 @@
           inherit system;
           overlays = [ emacs-overlay.overlay ];
         };
+        mps = pkgs.callPackage ./mps.nix {};
       in
       rec {
-        dependencies = with pkgs; [
-          git
-
-          # Language Server
-          ccls
-
-          ruff-lsp
-
-          nodePackages.pyright
-          nodePackages.typescript-language-server
-          nodePackages.vscode-langservers-extracted
-          nodePackages.bash-language-server
-          nodePackages.vscode-css-languageserver-bin
-          nodePackages.vscode-html-languageserver-bin
-          nodePackages.svelte-language-server
-
-          nodePackages.eslint
-
-          python39Packages.pylint
-
-          rnix-lsp
-          nil
-
-          texlab
-
-          zls
-
-          universal-ctags
-
-          # Code Formating
-          nixfmt
-
-          # dirvish
-          imagemagick
-          ffmpegthumbnailer
-          mediainfo
-
-          # org-download
-          pngpaste
-
-          # Spelling checking
-          # enchant
-
-          emacs-all-the-icons-fonts
-        ];
-
         emacs-patched =
           (pkgs.emacs-git.override {
-            # withXwidgets = true;
-            # withGTK3 = true;
-            # withSQLite3 = true;
-            # withNS = true;
-            # withWebP = true;
+            withImageMagick = true;
           }).overrideAttrs
-            (old: {
+            (old: rec {
+
+              name = "emacs-${version}";
+              version = "igc";
+
+              src = pkgs.fetchFromGitHub {
+                owner = "emacs-mirror";
+                repo = "emacs";
+                rev = "a19e818265e80d3dd2043a6a4ef2c4e8a8014f77";
+                hash = "sha256-s73Km3rBhafd8cJXbJi+AWopdXqQPLMANy7wlR0XkqY=";
+              };
+              
               configureFlags = (old.configureFlags or [ ]) ++ [
-                "--with-xwidgets" # withXwidgets flag is somehow disabled for darwin.
+                # "--with-xwidgets" # withXwidgets failed with mps enabled
+                "--with-mps"
+                "--with-native-compilation=aot"
               ];
 
-              # https://github.com/cmacrae/emacs/blob/03b4223e56e10a6d88faa151c5804d30b8680cca/flake.nix#L75
               buildInputs =
                 old.buildInputs
-                ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
+                ++ [mps];
+                # ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
 
               patches = (old.patches or [ ]) ++ [
                 # Fix OS window role so that yabai can pick up Emacs
                 (pkgs.fetchpatch {
-                  # Emacs 29 uses the same patch as 28
                   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-28/fix-window-role.patch";
                   sha256 = "+z/KfsBm1lvZTZNiMbxzXQGRTjkCFO4QPlEK35upjsE=";
                 })
-                # Use poll instead of select to get file descriptors
-                (pkgs.fetchpatch {
-                  url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/poll.patch";
-                  sha256 = "sha256-bQW9LPmJhMAtP2rftndTdjw0uipPyOp5oXqtIcs7i/Q=";
-                })
-                # Add setting to enable rounded window with no decoration (still
-                # have to alter default-frame-alist)
+                
+                # Add setting to enable rounded window with no decoration (still have to alter default-frame-alist)
                 (pkgs.fetchpatch {
                   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/round-undecorated-frame.patch";
                   sha256 = "uYIxNTyfbprx5mCqMNFVrBcLeo+8e21qmBE3lpcnd+4=";
                 })
+                
                 # Make Emacs aware of OS-level light/dark mode
-                # https://github.com/d12frosted/homebrew-emacs-plus#system-appearance-change
                 (pkgs.fetchpatch {
                   url = "https://raw.githubusercontent.com/d12frosted/homebrew-emacs-plus/master/patches/emacs-30/system-appearance.patch";
                   sha256 = "3QLq91AQ6E921/W9nfDjdOUWR8YVsqBAT/W9c1woqAw=";
@@ -141,10 +95,6 @@
                 inherit (pkgs) fetchFromGitHub;
               })
               
-              # (callPackage ./site-packages/holo-layer/holo-layer.nix {
-              #   inherit (pkgs) fetchFromGitHub;
-              # })
-
               vterm
               pdf-tools
               pkgs.emacsPackages.treesit-grammars.with-all-grammars
@@ -161,19 +111,6 @@
         };
         packages.default = packages.demacs;
         apps.default = apps.demacs;
-        devShell = pkgs.mkShell {
-          buildInputs = with pkgs; [ packages.demacs ] ++ dependencies;
-
-          shellHook = ''
-            if [ ! -d $HOME/.emacs.d/ ]; then
-              mkdir -p $HOME/.emacs.d
-              git clone git@github.com:dezzw/demacs.git $HOME/.emacs.d 
-            else
-              cd $HOME/.emacs.d/
-              git pull
-            fi
-          '';
-        };
       }
     );
 }

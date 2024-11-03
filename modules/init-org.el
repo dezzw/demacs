@@ -53,11 +53,11 @@
 (use-package org-contrib
   :straight t)
 
-(use-package org-modern
-  :straight t
-  :hook org-mode
-  :custom
-  (org-modern-fold-stars '(("▶" . "▼") ("▷" . "▽") ("▹" . "▿") ("▸" . "▾") ("⯈" . "⯆"))))
+;; (use-package org-modern
+;;   :straight t
+;;   :hook org-mode
+;;   :custom
+;;   (org-modern-fold-stars '(("▶" . "▼") ("▷" . "▽") ("▹" . "▿") ("▸" . "▾") ("⯈" . "⯆"))))
 
 (use-package org-modern-indent
   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
