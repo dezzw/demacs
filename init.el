@@ -48,6 +48,7 @@
 
 (require 'init-util)
 (require 'init-package)
+(require 'init-env)
 
 (require 'init-base)
 (require 'init-hydra)
@@ -67,7 +68,6 @@
 (require 'init-project)
 
 ;; prog
-(require 'init-direnv)
 (require 'init-prog)
 (require 'init-dap)
 ;;; lsp config

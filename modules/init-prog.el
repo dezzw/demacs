@@ -64,6 +64,7 @@
 
 (use-package leetcode
   :straight t
+  :commands (leetcode)
   :hook (leetcode-solution-mode .
           (lambda() (flymake-mode -1)))
   :custom

@@ -22,11 +22,12 @@
   (load bootstrap-file nil 'nomessage))
 
 (setq straight-use-package-by-default t)
-
 ;; [use-package] config
 (setq use-package-always-demand (daemonp)
       ;; use-package-always-defer (not (daemonp))
+      use-package-verbose t
       use-package-expand-minimally t
       use-package-enable-imenu-support t)
+
 
 (provide 'init-package)

@@ -1,5 +1,6 @@
 
 (use-package clojure-mode
+  :mode ("\\.clj\\'" "\\.cljs\\'" "\\.cljc\\'")
   :hook ((clojure-mode clojurescript-mode clojurec-mode) .
 	 (lambda ()
 	   (progn
@@ -11,6 +12,7 @@
 	     ;; (lsp-deferred)))))
 
 (use-package cider
+  :after clojure-mode
   :hook (cider-repl-mode . rainbow-delimiters-mode)
   :custom
   (cider-eldoc-display-for-symbol-at-point nil)

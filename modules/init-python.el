@@ -4,6 +4,7 @@
 ;;; Code:
 (use-package python
   :straight nil
+  :after python-ts-mode
   :custom
   (python-indent-guess-indent-offset nil)
   (python-indent-guess-indent-offset-verbose nil)

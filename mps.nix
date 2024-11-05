@@ -31,6 +31,8 @@ stdenv.mkDerivation rec {
   buildPhase = ''
             echo "Building MPS on macOS using xcodebuild..."
 
+            echo $PATH
+
             # Set the MACOSX_DEPLOYMENT_TARGET to match the xcodebuild target
             export MACOSX_DEPLOYMENT_TARGET=15.1
 
@@ -43,7 +45,8 @@ stdenv.mkDerivation rec {
             mkdir -p "$DERIVED_DATA"
 
             # Run xcodebuild with the specified DerivedData path
-            /usr/bin/xcodebuild -scheme mps \
+            /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild \
+                                 -scheme mps \
                                  -configuration Release \
                                  -project mps.xcodeproj \
                                  -derivedDataPath "$DERIVED_DATA" \

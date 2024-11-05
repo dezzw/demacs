@@ -1,7 +1,11 @@
-;;; -*- lexical-binding: t -*-
+;;; init-lspbridge.el --- lsp bridge related -*- lexical-binding: t; -*-
+;;; Commentary:
+
+;;; Code:
 
 (use-package yasnippet
   :straight t
+  :after lsp-bridge
   :config
   (use-package yasnippet-snippets :straight t)
   (yas-reload-all))
@@ -9,6 +13,7 @@
 ;; lsp-bridge
 (use-package lsp-bridge
   :straight nil
+  :defer 0.5
   :custom
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-enable-with-tramp t)
@@ -42,3 +47,4 @@
 	    (expand-file-name (locate-dominating-file filepath ".envrc"))))))
 
 (provide 'init-lspbridge)
+;;; init-lspbridge.el ends here

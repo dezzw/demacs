@@ -4,7 +4,7 @@
 ;;; Code:
 (use-package tex
   :straight auctex
-  ;; :mode ("\\.tex\\'" . TeX-tex-mode)
+  :mode ("\\.tex\\'" . LaTeX-mode)
   :custom
   (TeX-parse-self t) ; parse on load
   (TeX-auto-save t)  ; parse on save
@@ -65,8 +65,7 @@
 
 (use-package saveplace-pdf-view
   :straight t
-  :config
-  (save-place-mode 1))
+  :hook (pdf-view-mode . save-place-mode))
 
 (provide 'init-tex)
 ;;; init-tex.el ends here

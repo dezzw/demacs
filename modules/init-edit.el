@@ -10,12 +10,12 @@
   :commands (vundo))
 
 (use-package undo-fu
-  :config
-  (global-unset-key (kbd "s-z"))
-  (global-set-key (kbd "s-z")   'undo-fu-only-undo)
-  (global-set-key (kbd "s-Z") 'undo-fu-only-redo))
+  :bind*
+  (("s-z" . undo-fu-only-undo)
+   ("s-Z" . undo-fu-only-redo)))
 
 (use-package undo-fu-session
+  :after undo-fu
   :config
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
   (undo-fu-session-global-mode))

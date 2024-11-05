@@ -49,8 +49,8 @@
               src = pkgs.fetchFromGitHub {
                 owner = "emacs-mirror";
                 repo = "emacs";
-                rev = "a19e818265e80d3dd2043a6a4ef2c4e8a8014f77";
-                hash = "sha256-s73Km3rBhafd8cJXbJi+AWopdXqQPLMANy7wlR0XkqY=";
+                rev = "000ad84c02fea3a629ef467ea507d90098846d64";
+                hash = "sha256-UBqeIDdXSm+td0/RStjLy0sYlBY5Pmmwedn+6Sn6D98=";
               };
               
               configureFlags = (old.configureFlags or [ ]) ++ [
@@ -59,10 +59,36 @@
                 "--with-native-compilation=aot"
               ];
 
+              # NIX_CFLAGS_COMPILE = "${old.NIX_CFLAGS_COMPILE or ""} -I${mps}/include";
+              # NIX_LDFLAGS = "${old.NIX_LDFLAGS or ""} -L${mps}/lib";
+
+              # preConfigure = ''
+              #   export CPPFLAGS="-I${mps}/include $CPPFLAGS}"
+              #   export LDFLAGS="-L${mps}/lib $LDFLAGS"
+              # '';
+
               buildInputs =
                 old.buildInputs
                 ++ [mps];
-                # ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
+              # ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.darwin.apple_sdk_11_0.frameworks.WebKit ];
+
+              plistBuddy = "/usr/libexec/PlistBuddy";
+              
+              postInstall = old.postInstall + ''
+                app="$out/Applications/Emacs.app"
+                plist="$app/Contents/Info.plist"
+                path="/opt/homebrew/bin:/opt/homebrew/sbin:/Users/dez/.nix-profile/bin:/etc/profiles/per-user/dez/bin:/run/current-system/sw/bin:/nix/var/nix/profiles/default/bin:/usr/local/bin:/usr/bin:/usr/sbin:/bin:/sbin:/Users/dez/.orbstack/bin:/Users/dez/Library/Application Support/JetBrains/Toolbox/scripts:/Users/dez/.local/bin:/Users/dez/.zsh/plugins/powerlevel10k:/Users/dez/.zsh/plugins/autopair:/Users/dez/.zsh/plugins/zsh-nix-shell"
+
+                echo "Injecting PATH into $plist"
+
+                # Use plistBuddy to modify the plist file
+                ${plistBuddy} -c 'Add :LSEnvironment dict' "$plist" || true
+                ${plistBuddy} -c "Add :LSEnvironment:PATH string '$path'" "$plist" || \
+                ${plistBuddy} -c "Set :LSEnvironment:PATH '$path'" "$plist"
+
+                # Update modification time
+                touch "$app"
+              '';
 
               patches = (old.patches or [ ]) ++ [
                 # Fix OS window role so that yabai can pick up Emacs
@@ -85,6 +111,7 @@
 
                 ./patches/ns-alpha-background.patch
                 # ./patches/cursor-animation.patch
+                # ./patches/blur.patch
               ];
             });
 

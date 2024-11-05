@@ -3,7 +3,7 @@
 
 ;;; Code:
 (use-package org
-  :defer
+  :defer t
   :straight t
   :hook
   ((org-mode . org-indent-mode)
@@ -51,16 +51,13 @@
   )
 
 (use-package org-contrib
-  :straight t)
+  :straight t
+  :after org-mode)
 
-;; (use-package org-modern
-;;   :straight t
-;;   :hook org-mode
-;;   :custom
-;;   (org-modern-fold-stars '(("▶" . "▼") ("▷" . "▽") ("▹" . "▿") ("▸" . "▾") ("⯈" . "⯆"))))
 
 (use-package org-modern-indent
   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
+  :after org-mode
   :config ; add late to hook
   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 

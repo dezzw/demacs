@@ -15,9 +15,11 @@
 
 (add-hook 'ns-system-appearance-change-functions #'dw/apply-theme)
 
-(use-package nerd-icons)
+(use-package nerd-icons
+  :defer t)
 
-(use-package svg-tag-mode)
+(use-package svg-tag-mode
+  :defer t)
 
 (use-package doom-modeline
   :hook

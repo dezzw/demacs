@@ -1,18 +1,13 @@
-;;; -*- lexical-binding: t -*-
+;;; init-base.el --- base related -*- lexical-binding: t; -*-
+;;; Commentary:
 
-(use-package gcmh
-  :diminish
-  :hook (emacs-startup . gcmh-mode)
-  :init
-  (setq gcmh-idle-delay 'auto
-        gcmh-auto-idle-delay-factor 10
-        gcmh-high-cons-threshold #x1000000)) ; 16MB
+;;; Code:
 
-(use-package exec-path-from-shell
-  :init
-  (setq exec-path-from-shell-variables '("PATH" "MANPATH")
-          exec-path-from-shell-arguments '("-l"))
-  (exec-path-from-shell-initialize))
+(when (not (fboundp 'igc-stats))
+  (use-package gcmh
+    :diminish
+    :hook (emacs-startup . gcmh-mode)))
+
 
 (use-package emacs
   :straight nil
@@ -65,3 +60,4 @@
   (midnight-mode))
 
 (provide 'init-base)
+;;; init-base.el ends here

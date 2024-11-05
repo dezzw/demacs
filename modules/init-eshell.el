@@ -38,6 +38,7 @@
 
 (use-package eat
   :straight t
+  :commands (eshell)
   :config
   ;; For `eat-eshell-mode'.
   (add-hook 'eshell-load-hook #'eat-eshell-mode)

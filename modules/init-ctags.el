@@ -6,10 +6,8 @@
 	 ("C-x c J" . citre-jump-back)
 	 ("C-x c p" . citre-ace-peek)
 	 ("C-x c u" . citre-update-this-tags-file))
-  :init
-  (require 'citre)
-  (require 'citre-config)
   :config
+  (require 'citre-config)
   (setq
    ;; citre-readtags-program "/etc/profiles/per-user/dez/bin/readtags"
    ;; citre-ctags-program "/etc/profiles/per-user/dez/bin/ctags"
