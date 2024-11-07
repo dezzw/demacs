@@ -2,9 +2,10 @@
 ;;; Commentary:
 
 ;;; Code:
+
 (use-package tex
   :straight auctex
-  :mode ("\\.tex\\'" . LaTeX-mode)
+  :defer t
   :custom
   (TeX-parse-self t) ; parse on load
   (TeX-auto-save t)  ; parse on save
