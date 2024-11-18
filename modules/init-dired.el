@@ -12,9 +12,11 @@
   (delete-by-moving-to-trash t))
 
 (use-package dired-single
+  :straight t
   :commands (dired-single-buffer dired-single-up-directory))
 
 (use-package dired-hide-dotfiles
+  :straight t
   :hook dired-mode
   :bind (:map dired-mode-map
 	      ("." . dired-hide-dotfiles-mode)))

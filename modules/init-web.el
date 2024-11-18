@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package web-mode
+  :straight t
   :mode "\\.html?\\'"
   :config
   (setq-default web-mode-code-indent-offset 2)
@@ -21,6 +22,7 @@
   (setq-default tab-width 2))
 
 (use-package js2-mode
+  :straight t
   :mode "\\.c?js\\'"
   :hook
   (js2-mode . dw/set-js-indentation)
@@ -33,9 +35,11 @@
 
 
 (use-package rjsx-mode
+  :straight t
   :mode "\\.jsx\\'")
 
 (use-package add-node-modules-path
+  :straight t
   :hook
   ((js2-mode . add-node-modules-path)
    (typescript-ts-mode . add-node-modules-path)
@@ -60,9 +64,11 @@
 ;;   (scss-sass-command "sass --no-source-map"))
 
 (use-package svelte-mode
+  :straight t
   :mode "\\.svelte\\'")
 
 (use-package emmet-mode
+  :straight t
   :hook ((web-mode css-ts-mode css-mode js2-mode rjsx-mode tsx-ts-mode) . emmet-mode)
   :config
   (add-to-list 'emmet-jsx-major-modes 'tsx-ts-mode))

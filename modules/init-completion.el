@@ -13,6 +13,7 @@
 
 ;; Enable vertico
 (use-package vertico
+  :straight t
   :demand t
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -41,6 +42,7 @@
   (vertico-posframe-mode 1))
 
 (use-package orderless
+  :straight t
   :init
   (setq completion-styles '(orderless basic)
         completion-category-defaults nil
@@ -48,6 +50,7 @@
 
 ;; Example configuration for Consult
 (use-package consult
+  :straight t
   :bind (([remap bookmark-jump]                 . consult-bookmark)
          ([remap list-registers]                . consult-register)
          ([remap goto-line]                     . consult-goto-line)
@@ -103,12 +106,14 @@
   (setq consult-narrow-key "<"))
 
 (use-package consult-dir
+  :straight t
   :bind (([remap list-directory] . consult-dir)
          :map minibuffer-local-completion-map
          ("C-x C-d" . consult-dir)
          ("C-x C-j" . consult-dir-jump-file)))
 
 (use-package marginalia
+  :straight t
   :custom
   (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
   :config
@@ -116,12 +121,14 @@
 
 ;; Consult users will also want the embark-consult package.
 (use-package embark-consult
+  :straight t
   :after embark
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
 
 (use-package embark
+  :straight t
   :bind
   ("C-." . embark-act)
   ("M-." . embark-dwim)
@@ -224,6 +231,7 @@
 
 (use-package cape
   :disabled
+  :straight t
   :hook ((corfu-mode . +corfu-add-cape-backends)
          ((TeX-mode LaTeX-mode org-mode markdown-mode) . +corfu-add-cape-tex-backends))
   :config
@@ -247,6 +255,7 @@
 ;;   (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point))
 
 (use-package nerd-icons-corfu
+  :straight t
   :after corfu
   :config
   ;; (tabnine ,(nerd-icons-codicon "nf-cod-hubot") :face font-lock-warning-face))

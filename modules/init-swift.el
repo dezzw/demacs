@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package swift-mode
+  :straight t
   :mode "\\.swift\\'"
   :config
   (defun xcode-build()

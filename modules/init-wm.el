@@ -88,6 +88,7 @@
     (add-to-list 'consult-buffer-sources 'consult--source-workspace)))
 
 (use-package ace-window
+  :straight t
   :bind ("C-x o" . ace-window)
   :custom
   (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
@@ -98,6 +99,7 @@
   :config (winner-mode 1))
 
 (use-package popper
+  :straight t
   :bind (:map popper-mode-map
               ("C-h z"       . popper-toggle)
               ("C-<tab>"     . popper-cycle)

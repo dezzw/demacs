@@ -1,6 +1,7 @@
 ;; init-hydra.el --- Initialize hydra configurations.	-*- lexical-binding: t -*-
 
 (use-package hydra
+  :straight t
   :hook (emacs-lisp-mode . hydra-add-imenu)
   :init
   (setq hydra-hint-display-type 'posframe)
@@ -22,6 +23,7 @@
 
 (use-package pretty-hydra
   :demand t
+  :straight t
   :custom (pretty-hydra-default-title-body-format-spec " %s%s")
   :bind ("<f6>" . toggles-hydra/body)
   :hook (emacs-lisp-mode . (lambda ()

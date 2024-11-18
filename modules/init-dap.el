@@ -1,6 +1,7 @@
 ;; init-dap.el --- Initialize DAP configurations.	-*- lexical-binding: t -*-
 
 (use-package dape
+  :straight t
   :bind (("<f5>" . dape)
          ("M-<f5>" . dape-hydra/body))
   :custom

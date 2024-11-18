@@ -22,8 +22,9 @@
   (lsp-bridge-signature-show-with-frame-position "top-right")
   (lsp-bridge-enable-mode-line nil)
   (lsp-bridge-enable-hover-diagnostic t)
+  (lsp-bridge-enable-org-babel t)
 
-  ;; acm configuration 
+  ;; acm configuration
   (acm-candidate-match-function 'orderless-flex)
   (acm-backend-yas-match-by-trigger-keyword t)
   (acm-enable-capf t)
@@ -38,6 +39,9 @@
   ;; 	      ("C-n" . acm-select-next)
   ;; 	      ("C-p" . acm-select-prev))
   :config
+  (add-to-list 'acm-backend-capf-mode-list 'clojure-mode)
+  (add-to-list 'acm-backend-capf-mode-list 'clojurescript-mode)
+  
   (yas-global-mode 1)
   (global-lsp-bridge-mode)
 

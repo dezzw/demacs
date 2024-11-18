@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: angle
+# key: an_
+# --
+\\(\langle $0 \rangle\\)

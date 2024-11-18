@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t -*-
+;;; init-project.el --- python related -*- lexical-binding: t; -*-
+;;; Commentary:
+
+;;; Code:
 
 ;; (defun ct/dir-contains-project-marker (dir)
 ;;   "Checks if `.project' file is present in directory at DIR path."
@@ -16,9 +19,10 @@
   :after project
   :custom
   (project-x-local-identifier
-   '("package.json" "deps.edn" "project.clj" ".envrc" ".tags" ".project")) 
+   '("package.json" "deps.edn" "project.clj" ".envrc" ".tags" ".project"))
   :config
   ;; (setq project-x-save-interval 600)    ;Save project state every 10 min
   (project-x-mode 1))
 
 (provide 'init-project)
+;;; init-project.el ends here

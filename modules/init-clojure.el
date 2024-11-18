@@ -1,5 +1,9 @@
+;;; init-clojure.el --- clojure related -*- lexical-binding: t; -*-
+;;; Commentary:
 
+;;; Code:
 (use-package clojure-mode
+  :straight t
   :mode ("\\.clj\\'" "\\.cljs\\'" "\\.cljc\\'")
   :hook ((clojure-mode clojurescript-mode clojurec-mode) .
 	 (lambda ()
@@ -12,6 +16,7 @@
 	     ;; (lsp-deferred)))))
 
 (use-package cider
+  :straight t
   :after clojure-mode
   :hook (cider-repl-mode . rainbow-delimiters-mode)
   :custom
@@ -19,15 +24,19 @@
   (cider-font-lock-dynamically nil))
 
 (use-package babashka
+  :straight t
   :commands (babashka-command))
 
 (use-package neil
+  :straight t
   :commands (neil-find-clojure-package)
   :config
   (setq neil-prompt-for-version-p nil
         neil-inject-dep-to-project-p t))
 
 (use-package jet
+  :straight t
   :commands (jet))
 
 (provide 'init-clojure)
+;;; init-clojure.el ends here

@@ -49,8 +49,8 @@
               src = pkgs.fetchFromGitHub {
                 owner = "emacs-mirror";
                 repo = "emacs";
-                rev = "000ad84c02fea3a629ef467ea507d90098846d64";
-                hash = "sha256-UBqeIDdXSm+td0/RStjLy0sYlBY5Pmmwedn+6Sn6D98=";
+                rev = "0756b1f2f5452d715396f66d887c137776e360ca";
+                hash = "sha256-nMGNkjxJMV2DQqI4YFeV8vK2cIvYeccUOX+h210wop4=";
               };
               
               configureFlags = (old.configureFlags or [ ]) ++ [

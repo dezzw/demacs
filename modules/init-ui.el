@@ -1,6 +1,7 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package color-theme-sanityinc-tomorrow
+  :straight t
   :custom
   (custom-safe-themes t))
 
@@ -16,12 +17,15 @@
 (add-hook 'ns-system-appearance-change-functions #'dw/apply-theme)
 
 (use-package nerd-icons
+  :straight t
   :defer t)
 
 (use-package svg-tag-mode
+  :straight t
   :defer t)
 
 (use-package doom-modeline
+  :straight t
   :hook
   ((after-init . doom-modeline-mode)
    (doom-modeline-mode . size-indication-mode)
@@ -61,6 +65,7 @@
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package transwin
+  :straight t
   :config
   (setq transwin-delta-alpha 5)
   (setq transwin-parameter-alpha 'alpha-background)
@@ -81,6 +86,7 @@
 ;;   (global-hl-todo-mode))
 
 (use-package diff-hl
+  :straight t
   :hook ((magit-post-refresh . diff-hl-magit-post-refresh)
          (after-init . global-diff-hl-mode)
          (dired-mode . diff-hl-dired-mode)))
@@ -88,6 +94,7 @@
 ;; Child frame
 (when (childframe-workable-p)
   (use-package posframe
+    :straight t
     :hook (after-load-theme . posframe-delete-all)
     :init
     (defface posframe-border

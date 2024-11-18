@@ -48,9 +48,12 @@
 
 (require 'init-util)
 (require 'init-package)
+
 (require 'init-env)
 
 (require 'init-base)
+(require 'init-org)
+
 (require 'init-hydra)
 
 (require 'init-font)
@@ -108,7 +111,6 @@
 (require 'init-telega)
 
 (require 'init-tramp)
-(require 'init-org)
 ;; (require 'init-telega)
 
 ;;; init.el ends here

@@ -28,6 +28,7 @@
 
 
 (use-package eglot-tempel
+  :straight t
   :after (eglot tempel)
   :init
   (eglot-tempel-mode))

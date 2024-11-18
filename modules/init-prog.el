@@ -1,4 +1,7 @@
-;;; -*- lexical-binding: t -*-
+;;; init-prog.el --- prog mode related -*- lexical-binding: t; -*-
+;;; Commentary:
+
+;;; Code:
 
 (use-package elec-pair
   :straight nil
@@ -8,16 +11,21 @@
   :straight nil
   :config (electric-indent-mode))
 
-(use-package rainbow-mode)
+(use-package rainbow-mode
+  :straight t)
 
-(use-package rainbow-delimiters)
+(use-package rainbow-delimiters
+  :straight t)
 
-(use-package aggressive-indent)
+(use-package aggressive-indent
+  :straight t)
 
 (use-package vdiff
+  :straight t
   :commands (vdiff-buffer))
 
 (use-package restclient
+  :straight t
   :mode (("\\.rest\\'" . restclient-mode)))
 
 ;;; try out both developing documents
@@ -39,11 +47,9 @@
   (require 'ansi-color))
 
 (use-package tabnine
-  :disabled
-  :commands (tabnine-start-proces tabnine-chat)
-  ;; :hook (prog-mode . tabnine-mode)
   :straight t
-  :diminish "⌬"
+  ;; :diminish "⌬"
+  :defer t
   :custom
   (tabnine-wait 1)
   (tabnine-minimum-prefix-length 0)
@@ -75,6 +81,7 @@
   )
 
 (use-package jinx
+  :straight t
   :hook (emacs-startup . global-jinx-mode)
   :bind (("M-$" . jinx-correct)
          ("C-M-$" . jinx-languages)))

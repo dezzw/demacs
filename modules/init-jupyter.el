@@ -3,9 +3,11 @@
 
 ;;; Code:
 (use-package jupyter
+  :straight t
   :commands (jupyter-run-repl jupyter-connect-repl))
 
 (use-package ein
+  :straight t
   :commands (ein:run ein:login)
   :custom
   (ein:output-area-inlined-image t))

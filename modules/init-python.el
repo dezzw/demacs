@@ -1,4 +1,4 @@
-;;; package --- python related -*- lexical-binding: t; -*-
+;;; init-python.el --- python related -*- lexical-binding: t; -*-
 ;;; Commentary:
 
 ;;; Code:

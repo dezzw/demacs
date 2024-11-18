@@ -40,9 +40,11 @@
                    :accept-focus t))))))))
 
 (use-package multi-vterm
+  :straight t
   :commands (multi-vterm))
 
 (use-package vterm-toggle
+  :straight t
   :commands  (vterm-toggle-cd))
 
 (provide 'init-vterm)

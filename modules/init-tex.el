@@ -49,6 +49,7 @@
 
 
 (use-package cdlatex
+  :straight t
   :hook (LaTeX-mode . cdlatex-mode)
   :hook (org-mode . org-cdlatex-mode)
   :config

@@ -7,14 +7,17 @@
 (setq undo-outer-limit 1006632960) ; 960mb.
 
 (use-package vundo
+  :straight t
   :commands (vundo))
 
 (use-package undo-fu
+  :straight t
   :bind*
   (("s-z" . undo-fu-only-undo)
    ("s-Z" . undo-fu-only-redo)))
 
 (use-package undo-fu-session
+  :straight t
   :after undo-fu
   :config
   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'"))
@@ -45,10 +48,12 @@
       (puni-backward-delete-char))))
 
 (use-package embrace
-  :bind ("C-c ." . embrace-commander)
+  :straight t
+  :bind* ("C-c ." . embrace-commander)
   :hook (org-mode . embrace-org-mode-hook))
 
 (use-package meow
+  :straight t
   :hook (after-init . meow-global-mode)
   :demand t
   :config

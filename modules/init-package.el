@@ -21,7 +21,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setq straight-use-package-by-default t)
+;; (setq straight-use-package-by-default t)
 ;; [use-package] config
 (setq use-package-always-demand (daemonp)
       ;; use-package-always-defer (not (daemonp))

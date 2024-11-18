@@ -51,6 +51,7 @@ unreadable. Returns the names of envvars that were changed."
 ;;   (exec-path-from-shell-initialize))
 
 (use-package envrc
+  :straight t
   :hook (after-init . dw/maybe-enable-envrc-global-mode)
   :config
   (defun dw/maybe-enable-envrc-global-mode ()
