@@ -2,27 +2,35 @@
 ;;; Commentary:
 
 ;;; Code:
+(use-package project
+  :config
+  (setq project-vc-extra-root-markers '("CMakeLists.txt" ".project")))
 
-;; (defun ct/dir-contains-project-marker (dir)
-;;   "Checks if `.project' file is present in directory at DIR path."
-;;   (interactive)
-;;   (let ((project-marker-path (file-name-concat dir ".tags")))
-;;     (when (file-exists-p project-marker-path)
-;;        dir)))
-;; (customize-set-variable 'project-find-functions
-;;                         (list #'project-try-vc
-;;                               #'ct/dir-contains-project-marker))
+  ;; (defun my-project-try-local (dir)
+  ;;   "Determine if DIR is a project root using `project-vc-extra-root-markers'."
+  ;;   (interactive)
+  ;;   (if-let ((root (seq-some (lambda (marker)
+  ;;                              (locate-dominating-file dir marker))
+  ;;                            project-vc-extra-root-markers)))
+  ;;       (cons 'transient root)))
+
+  ;; (defun my-project-try-vc-with-local-priority (dir)
+  ;;   "Try to find a project root in DIR, prioritizing local markers over VC."
+  ;;   (interactive)
+  ;;   (or (my-project-try-local dir)
+  ;;       (project-try-vc dir))))
+
+  ;; (advice-add 'project-try-vc :override #'my-project-try-vc-with-local-priority))
 
 ;;; use project-x to enhance the project.el
-(use-package project-x
-  :straight (project-x :type git :host github :repo "karthink/project-x")
-  :after project
-  :custom
-  (project-x-local-identifier
-   '("package.json" "deps.edn" "project.clj" ".envrc" ".tags" ".project"))
-  :config
-  ;; (setq project-x-save-interval 600)    ;Save project state every 10 min
-  (project-x-mode 1))
+;; (use-package project-x
+;;   :straight (project-x :type git :host github :repo "karthink/project-x")
+;;   :after project
+;;   :custom
+;;   (project-x-local-identifier
+;;    '("package.json" "deps.edn" "CMakeLists.txt" "project.clj" ".envrc" ".tags" ".project"))
+;;   :config
+;;   (project-x-mode 1))
 
 (provide 'init-project)
 ;;; init-project.el ends here

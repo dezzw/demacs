@@ -42,13 +42,16 @@
   (add-to-list 'acm-backend-capf-mode-list 'clojure-mode)
   (add-to-list 'acm-backend-capf-mode-list 'clojurescript-mode)
   
-  (yas-global-mode 1)
-  (global-lsp-bridge-mode)
-
   (setq lsp-bridge-get-project-path-by-filepath
-	(lambda (filepath)
-          (when (locate-dominating-file filepath ".envrc")
-	    (expand-file-name (locate-dominating-file filepath ".envrc"))))))
+      (lambda (filepath)
+        (or (when-let* ((project (project-current nil (file-name-directory filepath)))
+                        (root (project-root project)))
+              (expand-file-name root))
+            (file-name-directory filepath))))
+
+  (yas-global-mode 1)
+  (global-lsp-bridge-mode))
+
 
 (provide 'init-lspbridge)
 ;;; init-lspbridge.el ends here
