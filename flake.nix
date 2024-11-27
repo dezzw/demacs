@@ -49,13 +49,13 @@
               src = pkgs.fetchFromGitHub {
                 owner = "emacs-mirror";
                 repo = "emacs";
-                rev = "0756b1f2f5452d715396f66d887c137776e360ca";
-                hash = "sha256-nMGNkjxJMV2DQqI4YFeV8vK2cIvYeccUOX+h210wop4=";
+                rev = "0a79b40c0e60ffb8d3591877a8d47d73d7aa4634";
+                hash = "sha256-8SV2c6zGlxhgWSIet9ZiudCSGFyQTNgDa07GH8yUclw=";
               };
               
               configureFlags = (old.configureFlags or [ ]) ++ [
                 # "--with-xwidgets" # withXwidgets failed with mps enabled
-                "--with-mps"
+                "--with-mps=yes"
                 "--with-native-compilation=aot"
               ];
 

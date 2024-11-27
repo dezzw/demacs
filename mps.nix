@@ -6,14 +6,14 @@
 
 stdenv.mkDerivation rec {
   pname = "mps";
-  version = "1.118.0";
+  version = "HEAD";
 
   # Fetch the source code from GitHub
   src = fetchFromGitHub {
     owner = "Ravenbrook";
     repo = "mps";
-    rev = "release-${version}";
-    sha256 = "sha256-3ql3jWLccgnQHKf23B1en+nJ9rxqmHcWd7aBr93YER0="; # Verify this hash
+    rev = "9fd0577cf1231e61c9801c81499e5d16d0743806";
+    sha256 = "sha256-m4BnELLy7G13Z/tG//zOwti1XokeEtonDKfr3kGiHCA=";
   };
 
   # Apply patches after fetching the source
