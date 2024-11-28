@@ -56,7 +56,6 @@
               configureFlags = (old.configureFlags or [ ]) ++ [
                 # "--with-xwidgets" # withXwidgets failed with mps enabled
                 "--with-mps=yes"
-                "--with-native-compilation=aot"
               ];
 
               # NIX_CFLAGS_COMPILE = "${old.NIX_CFLAGS_COMPILE or ""} -I${mps}/include";

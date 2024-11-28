@@ -43,15 +43,6 @@
         org-startup-folded 'content
         org-cycle-separator-lines 2)
 
-  ;; Since we don't want to disable org-confirm-babel-evaluate all
-  ;; of the time, do it around the after-save-hook
-  (defun dw/org-babel-tangle-dont-ask ()
-    ;; Dynamic scoping to the rescue
-    (let ((org-confirm-babel-evaluate nil))
-      (org-babel-tangle)))
-  
-  (add-hook 'org-mode-hook (lambda () (add-hook 'after-save-hook #'dw/org-babel-tangle-dont-ask
-						'run-at-end 'only-in-org-mode)))  
   (if (eq system-type 'darwin)
       (setq org-agenda-files '("~/Documents/Org/Planner")))
     ;; Custom TODO states and Agendas

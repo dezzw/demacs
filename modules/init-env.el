@@ -46,8 +46,7 @@ unreadable. Returns the names of envvars that were changed."
 ;; (use-package exec-path-from-shell
 ;;   :straight t
 ;;   :init
-;;   (setq exec-path-from-shell-variables '("PATH" "MANPATH")
-;;           exec-path-from-shell-arguments '("-l"))
+;;   (setq exec-path-from-shell-variables '("PATH" "MANPATH" "TERM"))
 ;;   (exec-path-from-shell-initialize))
 
 (use-package envrc
