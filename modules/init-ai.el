@@ -13,7 +13,7 @@
   :straight (:host github :repo "MatthewZMD/aidermacs")
   :bind (("C-c a" . aidermacs-transient-menu))
   :custom
-  (aidermacs-args '("--model" "ollama_chat/deepseek-r1:8b"))
+  (aidermacs-args '("gpt-4o"))  ; Changed from deepseek-r1:8b to gpt-4o
   (aidermacs-backend 'vterm)
   :config
   (setenv "OLLAMA_API_BASE" "http://127.0.0.1:11434"))
