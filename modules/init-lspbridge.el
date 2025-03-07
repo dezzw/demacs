@@ -12,15 +12,21 @@
 
 ;; lsp-bridge
 (use-package lsp-bridge
-  :straight nil
+  :straight '(lsp-bridge :type git :host github :repo "manateelazycat/lsp-bridge"
+			 :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+			 :build (:not compile))
   :defer 0.5
   :custom
+  (lsp-bridge-python-command "python-for-lsp-bridge")
+  
   (lsp-bridge-enable-completion-in-minibuffer t)
   (lsp-bridge-enable-with-tramp t)
   ;; ui configuration
   (lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame)
   (lsp-bridge-signature-show-with-frame-position "top-right")
   (lsp-bridge-enable-mode-line nil)
+  (lsp-bridge-enable-hover-diagnostic t)
+  (lsp-bridge-enable-inlay-hint t)
   (lsp-bridge-enable-hover-diagnostic t)
   (lsp-bridge-enable-org-babel t)
 
@@ -43,14 +49,18 @@
   (add-to-list 'acm-backend-capf-mode-list 'clojurescript-mode)
   
   (setq lsp-bridge-get-project-path-by-filepath
-      (lambda (filepath)
-        (or (when-let* ((project (project-current nil (file-name-directory filepath)))
-                        (root (project-root project)))
-              (expand-file-name root))
-            (file-name-directory filepath))))
+	(lambda (filepath)
+          (or (when-let* ((project (project-current nil (file-name-directory filepath)))
+                          (root (project-root project)))
+		(expand-file-name root))
+              (file-name-directory filepath))))
 
   (yas-global-mode 1)
   (global-lsp-bridge-mode))
+
+;; (use-package flymake-bridge
+;;   :straight '(:type git :host github :repo "liuyinz/flymake-bridge")
+;;   :hook (lsp-bridge-mode . flymake-bridge-setup))
 
 
 (provide 'init-lspbridge)

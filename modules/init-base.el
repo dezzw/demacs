@@ -6,6 +6,7 @@
 (when (not (fboundp 'igc-stats))
   (use-package gcmh
     :diminish
+    :straight t
     :hook (emacs-startup . gcmh-mode)))
 
 

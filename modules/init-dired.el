@@ -21,9 +21,15 @@
   :bind (:map dired-mode-map
 	      ("." . dired-hide-dotfiles-mode)))
 
+(use-package osx-trash
+  :straight t
+  :when (eq system-type 'darwin)
+  :config
+  (osx-trash-setup))
+
 
 (use-package dirvish
-  :straight '(dirvish :type git :repo "hlissner/dirvish" :depth full)
+  :straight t
   :hook (dirvish-setup . dirvish-emerge-mode)
   :init
   (dirvish-override-dired-mode)
@@ -44,3 +50,4 @@
   
 
 (provide 'init-dired)
+;;; init-dired.el ends here

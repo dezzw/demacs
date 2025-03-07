@@ -4,7 +4,7 @@
 ;;; Code:
 
 (use-package eshell
-  :ensure nil
+  ;; :ensure nil
   :commands (eshell)
   :config
   (setq eshell-directory-name (concat user-emacs-directory "eshell/"))

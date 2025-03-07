@@ -1,7 +1,6 @@
 ;;; -*- lexical-binding: t -*-
 
 (use-package lua-ts-mode
-  :straight nil
   :mode "\\.lua\\'")
   ;; :config
   ;; (let* ((root (project-root (project-current)))

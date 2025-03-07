@@ -1,4 +1,65 @@
 ;;; -*- lexical-binding: t -*-
+(defun dw/font-setup()
+  (interactive)
+  (set-face-attribute 'default nil
+                      ;; :family "Liga SFMono Nerd Font"
+		      :font "MonaspiceAr Nerd Font Mono"
+                      :height 120)
+
+  (set-face-attribute 'italic nil
+		      :font "MonaspiceRn Nerd Font Mono"
+		      :slant 'italic)
+
+  ;; Set the fixed pitch face
+  ;; (set-face-attribute 'fixed-pitch nil
+  ;; 		    :font "Operator Mono SSm Lig"
+  ;; 		    :weight 'light
+  ;; 		    :height 140)
+
+  ;; Set the variable pitch face
+  ;; (set-face-attribute 'variable-pitch nil
+  ;; 		    :font "Operator Mono SSm Lig"
+  ;; 		    :height 140
+  ;; 		    :weight 'light)
+  (progn
+    (set-face-attribute
+     'font-lock-comment-face nil :inherit 'italic)
+    (set-face-attribute
+     'font-lock-keyword-face nil :inherit 'italic)
+    (set-face-attribute
+     'font-lock-variable-name-face nil :weight 'demibold)
+    (set-face-attribute
+     'font-lock-function-name-face nil :weight 'demibold)))
+
+(use-package ligature
+  :straight t
+  :config
+  ;; Enable the "www" ligature in every possible major mode
+  (ligature-set-ligatures 't '("www"))
+  ;; Enable traditional ligature support in eww-mode, if the
+  ;; `variable-pitch' face supports it
+  (ligature-set-ligatures 'eww-mode '("ff" "fi" "ffi"))
+  ;; Enable all Cascadia Code ligatures in programming modes
+  (ligature-set-ligatures 'prog-mode '("|||>" "<|||" "<==>" "<!--" "####" "~~>" "***" "||=" "||>"
+                                       ":::" "::=" "=:=" "===" "==>" "=!=" "=>>" "=<<" "=/=" "!=="
+                                       "!!." ">=>" ">>=" ">>>" ">>-" ">->" "->>" "-->" "---" "-<<"
+                                       "<~~" "<~>" "<*>" "<||" "<|>" "<$>" "<==" "<=>" "<=<" "<->"
+                                       "<--" "<-<" "<<=" "<<-" "<<<" "<+>" "</>" "###" "#_(" "..<"
+                                       "..." "+++" "/==" "///" "_|_" "www" "&&" "^=" "~~" "~@" "~="
+                                       "~>" "~-" "**" "*>" "*/" "||" "|}" "|]" "|=" "|>" "|-" "{|"
+                                       "[|" "]#" "::" ":=" ":>" ":<" "$>" "==" "=>" "!=" "!!" ">:"
+                                       ">=" ">>" ">-" "-~" "-|" "->" "--" "-<" "<~" "<*" "<|" "<:"
+                                       "<$" "<=" "<>" "<-" "<<" "<+" "</" "#{" "#[" "#:" "#=" "#!"
+                                       "##" "#(" "#?" "#_" "%%" ".=" ".-" ".." ".?" "+>" "++" "?:"
+                                       "?=" "?." "??" ";;" "/*" "/=" "/>" "//" "__" "~~" "(*" "*)"
+                                       "\\\\" "://"))
+  ;; Enables ligature checks globally in all buffers. You can also do it
+  ;; per mode with `ligature-mode'.
+  (global-ligature-mode t))
+
+;; (use-package unicode-fonts
+;;   :config
+;;   (unicode-fonts-setup))
 
 (use-package color-theme-sanityinc-tomorrow
   :straight t
@@ -12,9 +73,11 @@
     ;; ('light (load-theme 'modus-operandi t))
     ;; ('dark (load-theme 'modus-vivendi t))))
     ('light (load-theme 'sanityinc-tomorrow-day))
-    ('dark (load-theme 'sanityinc-tomorrow-night))))
+    ('dark (load-theme 'sanityinc-tomorrow-night)))
+  (dw/font-setup))
 
 (add-hook 'ns-system-appearance-change-functions #'dw/apply-theme)
+;; (add-hook 'enable-theme-functions #'dw/font-setup)
 
 (use-package nerd-icons
   :straight t
@@ -61,7 +124,8 @@
 		pdf-view-mode-hook
                 xwidget-webkit-mode-hook
                 eaf-mode-hook
-                doc-view-mode-hook))
+                doc-view-mode-hook
+		telega-chat-mode-hook))
   (add-hook mode (lambda () (display-line-numbers-mode 0))))
 
 (use-package transwin
@@ -122,8 +186,20 @@
               (lambda (frame)
 		(setq doom-modeline-icon t)
 		(with-selected-frame frame
-		  (dw/set-fonts))))
+		  (dw/font-setup))))
   (if (display-graphic-p)
-      (dw/set-fonts)))
+      (dw/font-setup)))
+
+(use-package ultra-scroll
+  :straight '(:type git :host github :repo "jdtsmith/ultra-scroll")
+  :init
+  (setq scroll-conservatively 101 ; important!
+        scroll-margin 0) 
+  :config
+  (ultra-scroll-mode 1))
+
+(use-package image-slicing
+  :straight '(:type git :host github :repo "ginqi7/image-slicing")
+  :defer t)
 
 (provide 'init-ui)

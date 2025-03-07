@@ -58,6 +58,7 @@
 
 ;; [consult-eglot] Eglot support for consult
 (use-package consult-eglot
+  :straight t
   :after consult eglot
   :bind (:map eglot-mode-map
               ([remap xref-find-apropos] . consult-eglot-symbols)))

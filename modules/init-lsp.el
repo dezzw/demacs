@@ -2,11 +2,14 @@
 ;;; LSP
 ;; Should boost performance with lsp
 ;; https://emacs-lsp.github.io/lsp-mode/page/performance/
+
+;;; Code:
 (use-package lsp-mode
+  :straight t
   :bind ((:map lsp-mode-map
                ("M-<return>" . lsp-execute-code-action)))
   :commands (lsp lsp-deferred)
-  :init
+  :init  
   ;; Increase the amount of data emacs reads from processes
   (setq read-process-output-max (* 1024 1024))
   
@@ -30,11 +33,12 @@
   
   ;; to enable the lenses
   (add-hook 'lsp-mode-hook #'lsp-lens-mode)
+  ;; (add-hook 'lsp-mode-hook #'lsp-inlay-hints-mode)
   (add-hook 'lsp-completion-mode-hook
             (lambda ()
               (setf (alist-get 'lsp-capf completion-category-defaults)
                     '((styles . (orderless flex))))))
-    
+  
   (defun lsp-booster--advice-json-parse (old-fn &rest args)
     "Try to parse bytecode instead of json."
     (or
@@ -65,6 +69,7 @@
   (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
 
 (use-package lsp-tailwindcss
+  :straight t
   :after (:all lsp (:any lsp-tailwindcss-major-modes))
   :init
   (setq lsp-tailwindcss-add-on-mode t)
@@ -72,14 +77,17 @@
 	(append '(tsx-ts-mode) lsp-tailwindcss-major-modes)))
 
 (use-package lsp-sourcekit
+  :straight t
   :hook (swift-mode . lsp-deferred)
   :config
   (setq lsp-sourcekit-executable "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/sourcekit-lsp"))
 
 (use-package lsp-haskell
+  :straight t
   :hook (haskell-mode . lsp-deferred))
 
 (use-package lsp-java
+  :straight t
   :hook (java-mode . lsp-deferred)
   :config
   (require 'lsp-java-boot)
@@ -88,11 +96,14 @@
   (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode))
 
 (use-package lsp-pyright
+  :straight t
+  :custom (lsp-pyright-langserver-command "basedpyright")
   :hook ((python-mode python-ts-mode) . (lambda ()
 					  (require 'lsp-pyright)
-					  (lsp-deferred))))
+					  (lsp))))
 
 (use-package lsp-ui
+  :straight t
   :after lsp-mode
   :bind
   (:map lsp-ui-mode-map
@@ -102,11 +113,11 @@
   (setq lsp-ui-doc-max-height 8
         lsp-ui-doc-max-width 72         ; 150 (default) is too wide
         lsp-ui-doc-delay 0.75           ; 0.2 (default) is too naggy
-  	;; lsp-ui doc
-  	lsp-ui-doc-show-with-mouse nil  ; don't disappear on mouseover
-  	lsp-ui-doc-show-with-cursor t
+  		;; lsp-ui doc
+  		lsp-ui-doc-show-with-mouse nil  ; don't disappear on mouseover
+  		lsp-ui-doc-show-with-cursor t
 	;; lsp-ui sideline
-  	lsp-ui-sideline-show-hover nil
+  		lsp-ui-sideline-show-hover nil
 	lsp-ui-sideline-show-code-actions nil
 	;; lsp signature
 	lsp-signature-render-documentation nil
@@ -114,6 +125,7 @@
 
 ;;; Debugging
 (use-package dap-mode
+  :straight t
   :commands (dap-debug dap-debug-last)
   :bind (:map dap-mode-map
 	      ("C-x D D" . dap-debug)
@@ -130,9 +142,11 @@
     (dap-gdb-lldb-setup))
   (setq dap-auto-configure-features '(sessions locals controls tooltip)))
 
-(use-package flycheck)
+(use-package flycheck
+  :straight t)
 
 (use-package consult-lsp
+  :straight t
   :commands (consult-lsp-symbols consult-lsp-diagnostics))
 
 (provide 'init-lsp)

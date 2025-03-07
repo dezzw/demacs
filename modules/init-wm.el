@@ -8,7 +8,7 @@
   (tab-bar-separator "")
   (tab-bar-close-button-show nil)
   (tab-bar-new-tab-to 'rightmost)
-  (tab-bar-tab-hints t)
+  (tab-bar-tab-hints nil)
   (tab-bar-new-tab-choice "*scratch*")
   (tab-bar-select-tab-modifiers '(super))
   (tab-bar-tab-name-truncated-max 20)
@@ -17,9 +17,9 @@
   (tab-bar-tab-name-function '+tab-bar-tab-name-function)
   (tab-bar-tab-name-format-function '+tab-bar-tab-name-format-function)
   (tab-bar-format '(tab-bar-format-menu-bar
-                   tab-bar-format-tabs
-                   tab-bar-format-add-tab
-                   tab-bar-format-align-right))
+                    tab-bar-format-tabs
+                    tab-bar-format-add-tab
+                    tab-bar-format-align-right))
   :config
   (defun tab-bar-format-menu-bar ()
     "Produce the Menu button for the tab bar that shows the menu bar."
@@ -47,7 +47,7 @@
       (concat
        ;; change tab-bar's height
        (propertize " " 'display '(raise 0.25))
-       (propertize (format "%d:" i) 'face `(:inherit ,face :weight ultra-bold))
+       ;; (propertize (format "%d:" i) 'face `(:inherit ,face :weight ultra-bold))
        (propertize (concat " " (alist-get 'name tab) " ") 'face face)
        (propertize " " 'display '(raise -0.25))))))
 

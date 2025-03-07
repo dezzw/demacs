@@ -4,7 +4,7 @@
 ;;; Code:
 (use-package clojure-mode
   :straight t
-  :mode ("\\.clj\\'" "\\.cljs\\'" "\\.cljc\\'")
+  :mode ("\\.clj\\'" "\\.cljc\\'")
   :hook ((clojure-mode clojurescript-mode clojurec-mode) .
 	 (lambda ()
 	   (progn

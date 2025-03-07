@@ -6,27 +6,27 @@
   :defer
   :straight `(org
               :fork (:host nil
-                     :repo "https://git.tecosaur.net/tec/org-mode.git"
-                     :branch "dev"
-                     :remote "tecosaur")
+			   :repo "https://git.tecosaur.net/tec/org-mode.git"
+			   :branch "dev"
+			   :remote "tecosaur")
               :files (:defaults "etc")
               :build t
               :pre-build
               (with-temp-file "org-version.el"
-               (require 'lisp-mnt)
-               (let ((version
-                      (with-temp-buffer
-                        (insert-file-contents "lisp/org.el")
-                        (lm-header "version")))
-                     (git-version
-                      (string-trim
+		(require 'lisp-mnt)
+		(let ((version
                        (with-temp-buffer
-                         (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
-                         (buffer-string)))))
-                (insert
-                 (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
-                 (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
-                 "(provide 'org-version)\n")))
+                         (insert-file-contents "lisp/org.el")
+                         (lm-header "version")))
+                      (git-version
+                       (string-trim
+			(with-temp-buffer
+                          (call-process "git" nil t nil "rev-parse" "--short" "HEAD")
+                          (buffer-string)))))
+                  (insert
+                   (format "(defun org-release () \"The release version of Org.\" %S)\n" version)
+                   (format "(defun org-git-version () \"The truncate git commit hash of Org mode.\" %S)\n" git-version)
+                   "(provide 'org-version)\n")))
               :pin nil)
   :hook
   ((org-mode . org-indent-mode)
@@ -34,6 +34,15 @@
   :config
   (setq org-html-head-include-default-style nil
         org-adapt-indentation t
+	;;; begin org-modern
+	org-tags-column 0
+	org-auto-align-tags nil
+	org-catch-invisible-edits 'show-and-error
+	org-special-ctrl-a/e t
+	org-insert-heading-respect-content t
+	org-pretty-entities t
+	org-agenda-tags-column 0
+        ;;; end org-modern
         org-hide-emphasis-markers t
         org-src-fontify-natively t
         org-src-tab-acts-natively t
@@ -45,7 +54,7 @@
 
   (if (eq system-type 'darwin)
       (setq org-agenda-files '("~/Documents/Org/Planner")))
-    ;; Custom TODO states and Agendas
+  ;; Custom TODO states and Agendas
   (setq org-todo-keywords
         '((sequence "TODO(t)" "NEXT(n)" "TBA(b)" "|" "DONE(d!)")))
 
@@ -81,7 +90,7 @@
   ;; Block C-n, C-p etc from opening up previews when using auto-mode
   (setq org-latex-preview-auto-ignored-commands
         '(next-line previous-line mwheel-scroll
-          scroll-up-command scroll-down-command))
+		    scroll-up-command scroll-down-command))
 
   ;; Enable consistent equation numbering
   (setq org-latex-preview-numbered t)
@@ -94,6 +103,11 @@
   ;; More immediate live-previews -- the default delay is 1 second
   (setq org-latex-preview-live-debounce 0.25))
 
+(use-package org-modern
+  :straight t
+  :after org
+  :hook ((org-mode . org-modern-mode)
+	 (org-agenda-finalize . org-modern-agenda)))
 
 (use-package org-modern-indent
   :straight (org-modern-indent :type git :host github :repo "jdtsmith/org-modern-indent")
@@ -123,17 +137,17 @@
   :custom
   (org-tidy-properties-style 'fringe))
 
-;; (with-eval-after-load "ob"
-;;   (org-babel-do-load-languages
-;;    'org-babel-load-languages
-;;    '((emacs-lisp . t)
-;;      (C . t)
-;;      (shell . t)
-;;      (python . t)
-;;      (sql . t)
-;;      (jupyter . t)))
+(with-eval-after-load "ob"
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (C . t)
+     (shell . t)
+     (python . t)
+     (sql . t)
+     (java . t)))
 
-;;   (setq org-confirm-babel-evaluate nil))
+  (setq org-confirm-babel-evaluate nil))
 
 (use-package org-super-agenda
   :straight t

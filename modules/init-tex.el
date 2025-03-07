@@ -57,7 +57,7 @@
   (setq cdlatex-use-dollar-to-ensure-math nil))
 
 (use-package pdf-tools
-  :straight nil
+  :straight t
   :mode ("\\.pdf\\'" . pdf-view-mode)
   :commands
   (TeX-pdf-tools-sync-view)

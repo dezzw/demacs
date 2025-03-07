@@ -151,12 +151,14 @@
 (push '(vertical-scroll-bars . nil) default-frame-alist)
 (push '(horizontal-scroll-bars . nil) default-frame-alist)
 (push '(undecorated-round . t) default-frame-alist)
+;; (push '(undecorated . t) default-frame-alist)
 
 (setq make-backup-files       nil
       auto-save-default       nil
       ring-bell-function      'ignore
       ;; tab-bar-mode 1
-      pixel-scroll-precision-mode 1)
+      ;; pixel-scroll-precision-mode 1
+      )
 
 
 (if (eq system-type 'darwin)
@@ -164,6 +166,8 @@
       (setq frame-resize-pixelwise  t)
       (when (display-graphic-p)
 	(menu-bar-mode t))))
+
+(setenv "LSP_USE_PLISTS" "true")
 
 ;;; early-init.el ends here
 

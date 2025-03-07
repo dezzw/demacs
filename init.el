@@ -49,14 +49,14 @@
 (require 'init-util)
 (require 'init-package)
 
+(require 'init-base)
+
 (require 'init-env)
 
-(require 'init-base)
 (require 'init-org)
 
 (require 'init-hydra)
 
-(require 'init-font)
 (require 'init-ui)
 
 (require 'init-edit)
@@ -75,7 +75,7 @@
 (require 'init-dap)
 ;;; lsp config
 (require 'init-lspbridge)
-(require 'init-eglot)
+;; (require 'init-eglot)
 ;; (require 'init-lsp)
 (require 'init-ctags)
 (require 'init-jupyter)
@@ -110,7 +110,11 @@
 ;; social media
 (require 'init-telega)
 
+(require 'init-leetcode)
+
 (require 'init-tramp)
-;; (require 'init-telega)
+(require 'init-telega)
+
+(require 'init-tools)
 
 ;;; init.el ends here

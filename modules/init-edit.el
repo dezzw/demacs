@@ -49,8 +49,17 @@
 
 (use-package embrace
   :straight t
-  :bind* ("C-c ." . embrace-commander)
+  :after meow
+  ;; :bind* ("C-c ." . embrace-commander)
   :hook (org-mode . embrace-org-mode-hook))
+
+(use-package avy
+  :straight t
+  :after meow
+  :custom
+  (avy-timeout-seconds 0.4)
+  (avy-all-windows nil)
+  (avy-keys '(?a ?r ?s ?t ?n ?e ?i ?o)))
 
 (use-package meow
   :straight t
@@ -123,8 +132,10 @@
    '("c" . meow-change)
    '("d" . meow-delete)
    '("D" . meow-backward-delete)
-   '("e" . meow-next-word)
-   '("E" . meow-next-symbol)
+   ;; '("e" . meow-next-word)
+   ;; '("E" . meow-next-symbol)
+   '("e" . embrace-add)
+   '("E" . embrace-commander)
    '("f" . meow-find)
    '("g" . meow-cancel-selection)
    '("G" . meow-grab)
@@ -146,9 +157,9 @@
    '("q" . meow-quit)
    '("Q" . meow-goto-line)
    '("r" . meow-replace)
-   '("R" . meow-swap-grab)
+   '("R" . undo-redo)
    '("s" . meow-kill)
-   '("t" . meow-till)
+   '("t" . avy-goto-char-timer)
    '("u" . undo-fu-only-undo)
    '("U" . undo-fu-only-redo)
    '("v" . meow-visit)
@@ -204,8 +215,8 @@
 
   (define-key meow-insert-state-keymap (substring meow-two-char-escape-sequence 0 1)
 	      #'meow-two-char-exit-insert-state)
-  ;; (add-hook 'meow-insert-exit-hook 'corfu-quit)
-  )
+  (if (featurep 'corfu)
+      (add-hook 'meow-insert-exit-hook 'corfu-quit)))
 
 (use-package meow-tree-sitter
   :straight t
