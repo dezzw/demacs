@@ -6,11 +6,8 @@
 (use-package leetcode
   :straight '(:type git :host github :repo "ginqi7/leetcode-emacs")
   :commands (leetcode-list-all)
-  :custom
-  (leetcode-language "java"))
-
-(use-package ctable
-  :straight t)
+  :config
+  (setq leetcode-language "java"))
 
 (provide 'init-leetcode)
 ;;; init-leetcode.el ends here
